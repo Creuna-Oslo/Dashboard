@@ -18,10 +18,9 @@ const Notification = ({ meta, user, repository, time, type }) => {
   }
 
   const notificationType = notificationTypes[type];
-  const shouldShowBranchName = type === 'push';
 
   return (
-    <div className={cn('notification', `theme-${type}`)}>
+    <div className={cn('notification', notificationType.className)}>
       <img src={user.avatar} />
       {notificationType.icon && (
         <div className="notification-icon">
@@ -36,7 +35,7 @@ const Notification = ({ meta, user, repository, time, type }) => {
           }}
         />
         <b>{`${repository.name}${
-          shouldShowBranchName ? '/' + repository.branch : ''
+          repository.branch ? '/' + repository.branch : ''
         }`}</b>
       </div>
 

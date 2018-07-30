@@ -5,6 +5,27 @@ const getUser = user => ({
 
 // All exported functions expect a GitHub webhooks payload object. Function names must correspond to GitHub event names.
 
+const issues = payload => {
+  const { action, issue, repository } = payload;
+
+  // Only notify when issues are opened and closed
+  if (!["opened", "closed"].includes(action)) {
+    return false;
+  }
+
+  return {
+    meta: {
+      number: issue.number,
+      title: issue.title
+    },
+    repository: {
+      name: repository.name
+    },
+    type: action === "opened" ? "issueOpen" : "issueClose",
+    user: getUser(issue.user)
+  };
+};
+
 const pull_request = payload => {
   const { action, number } = payload;
   const pr = payload.pull_request;
@@ -25,7 +46,6 @@ const pull_request = payload => {
       title: pr.title
     },
     repository: {
-      branch: pr.base.ref,
       name: pr.base.repo.name
     },
     type: merged ? "prMerge" : "prOpen",
@@ -48,6 +68,7 @@ const push = payload => {
 };
 
 module.exports = {
+  issues,
   pull_request,
   push
 };

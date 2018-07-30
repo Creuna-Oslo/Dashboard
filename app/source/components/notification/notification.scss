@@ -5,6 +5,7 @@
   padding: 10px 20px 10px 15px;
   border-radius: 10px;
   margin-top: 10px;
+  color: #333;
 
   img {
     flex-shrink: 0;
@@ -17,7 +18,17 @@
     display: inline-block;
   }
 
-  &.theme-prOpen {
+  &.theme-issue-close {
+    background-color: $red;
+    color: white;
+
+    .notification-icon {
+      background-color: $bright-red;
+    }
+  }
+
+  &.theme-pull-request,
+  &.theme-issue-open {
     background-color: $green;
     color: white;
 
@@ -26,7 +37,7 @@
     }
   }
 
-  &.theme-prMerge {
+  &.theme-merge {
     background-color: $purple;
     color: white;
 
@@ -57,5 +68,5 @@
 .notification-time {
   flex-shrink: 0;
   margin-left: auto;
-  opacity: 0.5;
+  opacity: 0.6;
 }
