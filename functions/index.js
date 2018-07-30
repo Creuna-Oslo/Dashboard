@@ -3,27 +3,28 @@ const functions = require("firebase-functions");
 
 admin.initializeApp(functions.config().firebase);
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
 exports.onGitHubHook = functions.https.onRequest((request, response) => {
-  console.log(request.headers);
-  console.log(request.body);
-  response.status(200).send();
-  // const { pusher, repository, sender, size } = request.payload;
-  // const notification = {
-  //   pusher: {
-  //     name: pusher.name,
-  //     sender: sender.avatar_url
-  //   },
-  //   repository: {
-  //     name: repository.name
-  //   },
-  //   size
-  // };
-  // console.log(notification);
+  const eventType = request.headers["x-github-event"];
+
+  if (eventType === "push") {
+    const { pusher, ref, repository, sender, size } = request.body;
+
+    const notification = {
+      pusher: {
+        name: pusher.name,
+        sender: sender.avatar_url
+      },
+      repository: {
+        branch: ref.split("/").pop(),
+        name: repository.name
+      },
+      size,
+      type: "push"
+    };
+
+    console.log(notification);
+    response.status(200).send();
+  } else {
+    response.status(500).send(`Unsupported event ${eventType}`);
+  }
 });
