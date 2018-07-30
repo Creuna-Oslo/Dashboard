@@ -1,9 +1,10 @@
 import * as firebase from 'firebase/app';
 import 'firebase/database';
-// import 'firebase/functions';
 import React from 'react';
 
 import firebaseInit from '../../../firebase-init.json';
+
+import Notifications from './notifications';
 
 // This file renders the basic html pages when running the mockup
 class Main extends React.Component {
@@ -16,8 +17,11 @@ class Main extends React.Component {
     firebase
       .database()
       .ref('notifications')
+      .orderByChild('time')
+      .limitToFirst(20)
       .on('value', snapshot => {
-        this.setState({ notifications: snapshot.val() });
+        snapshot.val() &&
+          this.setState({ notifications: Object.values(snapshot.val()) });
       });
   }
 
@@ -25,9 +29,8 @@ class Main extends React.Component {
     return (
       <div>
         <h1>Creuna Dashboard</h1>
-        {this.state.notifications.map(notification => (
-          <h3 key={notification}>{notification}</h3>
-        ))}
+
+        <Notifications items={this.state.notifications} />
       </div>
     );
   }

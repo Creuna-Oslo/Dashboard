@@ -12,7 +12,12 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
   const eventHandler = gitHubEventHandlers[eventType];
 
   if (eventHandler) {
-    database.ref("notifications").push(eventHandler(request.body));
+    // Negative timestamp because Firebase doesn't support ordering in reverse order (newest first).
+    const notification = Object.assign({}, eventHandler(request.body), {
+      time: -new Date().getTime()
+    });
+
+    database.ref("notifications").push(notification);
 
     response.status(200).send(`Successfully added ${eventType} event data`);
   } else {
