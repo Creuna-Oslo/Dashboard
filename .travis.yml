@@ -3,7 +3,6 @@ node_js: "lts/*"
 cache: yarn
 install:
   - cd app && yarn
-  - cd ../functions && yarn
 script:
   - yarn test
 deploy:
