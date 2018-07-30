@@ -3,7 +3,6 @@
     ".read": true,
     ".write": false,
 
-    "foo": {},
     "notifications": {
       ".indexOn": ["time"]
     }
