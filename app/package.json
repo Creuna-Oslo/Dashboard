@@ -1,6 +1,6 @@
 {
   "name": "dashboard",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Asbjørn Hegdahl <asbjorn.hegdahl@creuna.no>",
   "license": "MIT",
   "scripts": {
