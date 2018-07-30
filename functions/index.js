@@ -11,8 +11,8 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 
     const notification = {
       pusher: {
-        name: pusher.name,
-        sender: sender.avatar_url
+        avatar: sender.avatar_url,
+        name: pusher.name
       },
       repository: {
         branch: ref.split("/").pop(),
