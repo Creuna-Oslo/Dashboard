@@ -11,7 +11,7 @@ admin.initializeApp(functions.config().firebase);
 // });
 
 exports.onGitHubHook = functions.https.onRequest((request, response) => {
-  console.log(request);
+  console.log(request.body);
   // const { pusher, repository, sender, size } = request.payload;
   // const notification = {
   //   pusher: {
