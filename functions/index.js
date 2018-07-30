@@ -7,7 +7,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
   const eventType = request.headers["x-github-event"];
 
   if (eventType === "push") {
-    const { pusher, ref, repository, sender, size } = request.body;
+    const { commits, pusher, ref, repository, sender, size } = request.body;
 
     const notification = {
       pusher: {
@@ -18,7 +18,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
         branch: ref.split("/").pop(),
         name: repository.name
       },
-      size,
+      size: size || commits.length,
       type: "push"
     };
 
