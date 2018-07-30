@@ -3,9 +3,9 @@ node_js: "lts/*"
 cache: yarn
 install:
   - cd app && yarn
+  - cd ../functions && yarn
 script:
-  - yarn test
-  - yarn build
+  - cd ../app && yarn test
 before_deploy: cd .. # go back to root before deploying
 deploy:
   provider: firebase
