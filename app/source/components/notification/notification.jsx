@@ -8,23 +8,33 @@ JavascriptTimeAgo.locale(en);
 
 import TimeAgo from 'react-time-ago/no-tooltip';
 
-import getText from './get-text';
+import notificationTypes from './notification-types';
 
-const supportedTypes = Object.keys(getText);
+import Icon from '../icon';
 
 const Notification = ({ meta, user, repository, time, type }) => {
-  if (!supportedTypes.includes(type)) {
+  if (!notificationTypes[type]) {
     return null;
   }
 
+  const notificationType = notificationTypes[type];
   const shouldShowBranchName = type === 'push';
 
   return (
     <div className={cn('notification', `theme-${type}`)}>
       <img src={user.avatar} />
+      {notificationType.icon && (
+        <div className="notification-icon">
+          <Icon name={notificationType.icon} />
+        </div>
+      )}
       <div className="notification-text">
         <b className="notification-username">{user.name}</b>
-        <span dangerouslySetInnerHTML={{ __html: `${getText[type](meta)} ` }} />
+        <span
+          dangerouslySetInnerHTML={{
+            __html: `${notificationType.text(meta)} `
+          }}
+        />
         <b>{`${repository.name}${
           shouldShowBranchName ? '/' + repository.branch : ''
         }`}</b>
@@ -43,7 +53,7 @@ Notification.propTypes = {
   user: PropTypes.object,
   repository: PropTypes.object,
   time: PropTypes.number,
-  type: PropTypes.oneOf(supportedTypes)
+  type: PropTypes.oneOf(Object.keys(notificationTypes))
 };
 
 Notification.defaultProps = {

@@ -11,6 +11,7 @@ html {
 }
 
 body {
+  @include fluid-type(320px, 1280px, 14px, 18px);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

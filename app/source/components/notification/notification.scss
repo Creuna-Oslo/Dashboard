@@ -7,10 +7,10 @@
   margin-top: 10px;
 
   img {
+    flex-shrink: 0;
     width: 40px;
     height: 40px;
     border-radius: 100%;
-    margin-right: 15px;
   }
 
   b {
@@ -20,12 +20,34 @@
   &.theme-prOpen {
     background-color: $green;
     color: white;
+
+    .notification-icon {
+      background-color: $bright-green;
+    }
   }
 
   &.theme-prMerge {
     background-color: $purple;
     color: white;
+
+    .notification-icon {
+      background-color: $bright-purple;
+    }
   }
+}
+
+.notification-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  height: 30px;
+  width: 30px;
+  margin-left: -10px;
+  margin-right: 15px;
+  border-radius: 100%;
+  background-color: white;
 }
 
 .notification-username {
