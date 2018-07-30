@@ -1,5 +1,5 @@
 const push = ({ size }) => {
-  return `pushed ${size > 1 ? `${size} committs` : 'a commit'} to`;
+  return `pushed ${size > 1 ? `${size} commits` : 'a commit'} to`;
 };
 
 module.exports = {
