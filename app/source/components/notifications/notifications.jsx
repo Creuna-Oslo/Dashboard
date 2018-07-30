@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import getNotificationText from './get-notification-text';
+import Notification from '../notification';
 
 const Notifications = ({ items }) => (
   <div className="notifications">
-    {items.map(
-      item =>
-        getNotificationText[item.type] ? (
-          <p key={item.time}>{getNotificationText[item.type](item)}</p>
-        ) : null
-    )}
+    {items.map(item => (
+      <Notification key={item.time} {...item} />
+    ))}
   </div>
 );
 

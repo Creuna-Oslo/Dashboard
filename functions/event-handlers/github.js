@@ -7,7 +7,7 @@ const push = payload => {
       branch: ref.split("/").pop(),
       name: repository.name
     },
-    size: size || commits.length,
+    meta: { size: size || commits.length },
     type: "push",
     user: {
       avatar: sender.avatar_url,

@@ -1,0 +1,24 @@
+.notification {
+  display: flex;
+  align-items: center;
+  background-color: whitesmoke;
+  padding: 10px 20px 10px 15px;
+  border-radius: 10px;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin-right: 5px;
+  }
+
+  b {
+    display: inline-block;
+    margin: 0 0.5em;
+  }
+}
+
+.notification-time {
+  margin-left: auto;
+  color: gray;
+}

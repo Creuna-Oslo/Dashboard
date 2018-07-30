@@ -2,9 +2,9 @@ import * as firebase from 'firebase/app';
 import 'firebase/database';
 import React from 'react';
 
-import firebaseInit from '../../../firebase-init.json';
+import firebaseInit from '../../../../firebase-init.json';
 
-import Notifications from './notifications';
+import Notifications from '../notifications';
 
 // This file renders the basic html pages when running the mockup
 class Main extends React.Component {
@@ -27,7 +27,7 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="main">
         <h1>Creuna Dashboard</h1>
 
         <Notifications items={this.state.notifications} />
