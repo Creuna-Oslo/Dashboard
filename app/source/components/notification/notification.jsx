@@ -15,9 +15,11 @@ const Notification = ({ meta, user, repository, time, type }) =>
   supportedTypes[type] ? (
     <div className="notification">
       <img src={user.avatar} />
-      <b className="notification-username">{user.name}</b>
-      <span>{`${getText[type](meta)} `}</span>
-      <b>{`${repository.name}/${repository.branch}`}</b>
+      <div className="notification-text">
+        <b className="notification-username">{user.name}</b>
+        <span>{`${getText[type](meta)} `}</span>
+        <b>{`${repository.name}/${repository.branch}`}</b>
+      </div>
 
       {/* Timestamps are stored as negative numbers in Firebase. */}
       <div className="notification-time">
