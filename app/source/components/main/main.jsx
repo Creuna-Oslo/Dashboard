@@ -20,8 +20,15 @@ class Main extends React.Component {
       .orderByChild('time')
       .limitToFirst(20)
       .on('value', snapshot => {
-        snapshot.val() &&
-          this.setState({ notifications: Object.values(snapshot.val()) });
+        if (snapshot.val()) {
+          const notifications = [];
+
+          // Sadly, forEach is the only way to ensure correct order of items from Firebase, forcing us to do this the old way
+          snapshot.forEach(notification => {
+            notifications.push(notification.val());
+          });
+          this.setState({ notifications });
+        }
       });
   }
 

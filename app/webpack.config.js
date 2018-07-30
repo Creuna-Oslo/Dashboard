@@ -28,7 +28,7 @@ module.exports = (env = {}, options = {}) => {
     },
     devtool: shouldMinify ? 'source-map' : 'cheap-module-eval-source-map',
     entry: {
-      static: ['babel-polyfill', 'whatwg-fetch', './source/app.js']
+      site: ['babel-polyfill', 'whatwg-fetch', './source/app.js']
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
