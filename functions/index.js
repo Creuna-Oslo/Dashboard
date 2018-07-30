@@ -9,12 +9,13 @@ const database = admin.database();
 
 exports.onGitHubHook = functions.https.onRequest((request, response) => {
   const eventType = request.headers["x-github-event"];
+  const eventHandler = gitHubEventHandlers[eventType];
 
-  if (gitHubEventHandlers[eventType]) {
-    database.ref("notifications").push(gitHubEventHandlers(request.body));
+  if (eventHandler) {
+    database.ref("notifications").push(eventHandler(request.body));
 
-    response.status(200).send();
+    response.status(200).send(`Successfully added ${eventType} event data`);
   } else {
-    response.status(500).send(`Unsupported event ${eventType}`);
+    response.status(500).send(`Unsupported event type '${eventType}'`);
   }
 });
