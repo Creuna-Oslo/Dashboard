@@ -5,6 +5,7 @@ install:
   - cd app && yarn
 script:
   - yarn test
+  - yarn build
 before_deploy: cd .. # go back to root before deploying
 deploy:
   provider: firebase

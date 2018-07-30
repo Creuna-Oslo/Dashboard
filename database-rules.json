@@ -1,4 +1,5 @@
 {
+  "foo": {},
   "rules": {
     ".read": true,
     ".write": false,
