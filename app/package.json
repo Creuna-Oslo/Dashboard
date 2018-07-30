@@ -8,7 +8,8 @@
     "build": "webpack --mode=production",
     "dev": "webpack-dev-server --mode=development",
     "lint": "eslint --ext js,jsx ./source",
-    "lint:fix": "eslint --ext js,jsx ./source --fix"
+    "lint:fix": "eslint --ext js,jsx ./source --fix",
+    "test": "eslint ./source"
   },
   "dependencies": {
     "@creuna/utils": "^0.3.3",

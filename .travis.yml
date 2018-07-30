@@ -1,0 +1,15 @@
+language: node_js
+node_js: "lts/*"
+cache: yarn
+install:
+  - cd app && yarn
+  - cd ../functions && yarn
+script:
+  - yarn test
+deploy:
+  provider: firebase
+  token: $FIREBASE_TOKEN
+  project: creuna-dashboard
+  on:
+    branch: master
+  skip_cleanup: true
