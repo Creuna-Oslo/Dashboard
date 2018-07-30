@@ -16,6 +16,16 @@
   b {
     display: inline-block;
   }
+
+  &.theme-prOpen {
+    background-color: $green;
+    color: white;
+  }
+
+  &.theme-prMerge {
+    background-color: $purple;
+    color: white;
+  }
 }
 
 .notification-username {
@@ -25,5 +35,5 @@
 .notification-time {
   flex-shrink: 0;
   margin-left: auto;
-  color: gray;
+  opacity: 0.5;
 }
