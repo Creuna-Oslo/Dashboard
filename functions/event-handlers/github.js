@@ -54,10 +54,18 @@ const pull_request = payload => {
 };
 
 const push = payload => {
-  const { commits, ref, repository, sender, size } = payload;
+  const { commits, ref, repository, sender } = payload;
+
+  // Ignore pushes without commits (branch addition/deletion) and pushes that include commits made by GitHub (Merge pushes)
+  if (
+    !commits.length ||
+    commits.find(({ committer }) => committer.username === "web-flow")
+  ) {
+    return false;
+  }
 
   return {
-    meta: { size: size || commits.length },
+    meta: { size: commits.length },
     repository: {
       branch: ref.split("/").pop(),
       name: repository.name

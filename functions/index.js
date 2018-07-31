@@ -21,7 +21,6 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
     return;
   }
 
-  database.ref("debug").push(JSON.stringify(request.body));
   database.ref("notifications").push(
     Object.assign({}, notification, {
       // Negative timestamp because Firebase doesn't support ordering in reverse order (newest first)
