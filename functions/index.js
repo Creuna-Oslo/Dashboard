@@ -33,8 +33,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 });
 
 exports.onTravisHook = functions.https.onRequest((request, response) => {
-  database.ref("debug").push(request.body);
-  const buildStatus = travisEventHandler(request.body.payload);
+  const buildStatus = travisEventHandler(JSON.parse(request.body.payload));
 
   if (!buildStatus) {
     response.status(200).send("Skipping");
