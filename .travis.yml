@@ -17,3 +17,5 @@ deploy:
   on:
     branch: master
   skip_cleanup: true
+notifications:
+  webhooks: $WEBHOOKS_URL
