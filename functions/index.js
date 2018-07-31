@@ -4,8 +4,6 @@ const functions = require("firebase-functions");
 const gitHubEventHandlers = require("./event-handlers/github");
 const travisEventHandler = require("./event-handlers/travis");
 
-v;
-
 admin.initializeApp(functions.config().firebase);
 const database = admin.database();
 
@@ -46,6 +44,6 @@ exports.onTravisHook = functions.https.onRequest((request, response) => {
   database
     .ref("builds")
     .child(id)
-    .update(buildStatus);
+    .update(Object.assign(buildStatus, { time: new Date().getTime() }));
   response.status(200).send("Added build status");
 });

@@ -24,6 +24,15 @@
     }
   }
 
+  &.theme-failed {
+    background-color: $red;
+    color: white;
+
+    .build-icon {
+      background-color: $bright-red;
+    }
+  }
+
   &.theme-started {
     background-color: $yellow;
 
@@ -32,7 +41,7 @@
         transform: rotate(0deg);
       }
       to {
-        transform: rotate(360deg);
+        transform: rotate(180deg);
       }
     }
 
@@ -52,4 +61,10 @@
   margin-right: 15px;
   background-color: rgba(white, 0.3);
   border-radius: 100%;
+}
+
+.build-time {
+  align-self: flex-start;
+  margin-left: auto;
+  opacity: 0.6;
 }
