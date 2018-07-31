@@ -8,7 +8,6 @@ admin.initializeApp(functions.config().firebase);
 const database = admin.database();
 
 exports.onGitHubHook = functions.https.onRequest((request, response) => {
-  database.ref("debug").push(request.body);
   const eventType = request.headers["x-github-event"];
   const eventHandler = gitHubEventHandlers[eventType];
   const notification = eventHandler && eventHandler(request.body);
