@@ -33,12 +33,13 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 });
 
 exports.onTravisHook = functions.https.onRequest((request, response) => {
-  const buildStatus = travisEventHandler(request.body);
-  const { id } = buildStatus;
+  console.log(request);
+  // const buildStatus = travisEventHandler(request.body);
+  // const { id } = buildStatus;
 
-  database
-    .ref("builds")
-    .child(id)
-    .update(buildStatus);
+  // database
+  //   .ref("builds")
+  //   .child(id)
+  //   .update(buildStatus);
   response.status(200).send();
 });
