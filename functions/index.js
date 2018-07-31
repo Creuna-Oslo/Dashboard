@@ -33,7 +33,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 });
 
 exports.onNPMHook = functions.https.onRequest((request, response) => {
-  database.ref('debug').push(request.body);
+  database.ref("debug").push(JSON.stringify(request.body));
   response.status(200).send();
 });
 
