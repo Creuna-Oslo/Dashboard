@@ -1,5 +1,9 @@
 .builds {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 15px;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
 }

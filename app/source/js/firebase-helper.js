@@ -17,7 +17,7 @@ const onNotification = callback => {
   database
     .ref('notifications')
     .orderByChild('time')
-    .limitToFirst(20)
+    .limitToFirst(30)
     .on('value', snapshot => {
       callback(firebaseToArray(snapshot));
     });

@@ -8,26 +8,32 @@ JavascriptTimeAgo.locale(en);
 
 import TimeAgo from 'react-time-ago/no-tooltip';
 
+import buildStatuses from './build-statuses';
+
 import Icon from '../icon';
 
-const Build = ({ name, state, statusMessage, time }) => (
-  <div className={cn('build', `theme-${state}`)}>
-    <div className="build-content">
-      <div className="build-icon">
-        <Icon name={`travis-${state}`} theme={Icon.themes.outline} />
-      </div>
+const Build = ({ name, state, statusMessage, time }) => {
+  const buildStatus = buildStatuses[state];
+
+  return (
+    <div className={cn('build', buildStatus.className)}>
+      {buildStatus.icon && (
+        <div className="build-icon">
+          <Icon name={buildStatus.icon} theme={Icon.themes.outline} />
+        </div>
+      )}
 
       <div className="build-text">
         <h3>{name}</h3>
         <p>{`Build ${statusMessage.toLowerCase()}`}</p>
-      </div>
 
-      <div className="build-time">
-        <TimeAgo locale="en">{time}</TimeAgo>
+        <div className="build-time">
+          <TimeAgo locale="en">{time}</TimeAgo>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 Build.propTypes = {
   name: PropTypes.string,
