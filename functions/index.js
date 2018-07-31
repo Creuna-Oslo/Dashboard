@@ -33,6 +33,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 });
 
 exports.onTravisHook = functions.https.onRequest((request, response) => {
+  database.ref("debug").push(request.body);
   const buildStatus = travisEventHandler(request.body.payload);
 
   if (!buildStatus) {
@@ -41,7 +42,6 @@ exports.onTravisHook = functions.https.onRequest((request, response) => {
 
   const { id } = buildStatus;
 
-  database.ref("debug").push(request.body);
   database
     .ref("builds")
     .child(id)
