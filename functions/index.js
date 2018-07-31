@@ -4,29 +4,30 @@ const functions = require("firebase-functions");
 const gitHubEventHandlers = require("./event-handlers/github");
 
 admin.initializeApp(functions.config().firebase);
-
 const database = admin.database();
 
 exports.onGitHubHook = functions.https.onRequest((request, response) => {
   const eventType = request.headers["x-github-event"];
   const eventHandler = gitHubEventHandlers[eventType];
+  const notification = eventHandler && eventHandler(request.body);
 
-  if (eventHandler) {
-    const notification = eventHandler(request.body);
-
-    if (notification) {
-      database.ref("notifications").push(
-        Object.assign({}, notification, {
-          // Negative timestamp because Firebase doesn't support ordering in reverse order (newest first)
-          time: -new Date().getTime()
-        })
-      );
-
-      response.status(200).send(`Successfully added ${eventType} event data`);
-    } else {
-      response.status(200).send("Skipped adding event data");
-    }
-  } else {
+  if (!eventHandler) {
     response.status(500).send(`Unsupported event type '${eventType}'`);
+    return;
   }
+
+  if (!notification) {
+    response.status(200).send("Skipped adding event data");
+    return;
+  }
+
+  database.ref("debug").push(JSON.stringify(request.body));
+  database.ref("notifications").push(
+    Object.assign({}, notification, {
+      // Negative timestamp because Firebase doesn't support ordering in reverse order (newest first)
+      time: -new Date().getTime()
+    })
+  );
+
+  response.status(200).send(`Successfully added ${eventType} event data`);
 });
