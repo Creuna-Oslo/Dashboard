@@ -4,6 +4,8 @@ const functions = require("firebase-functions");
 const gitHubEventHandlers = require("./event-handlers/github");
 const travisEventHandler = require("./event-handlers/travis");
 
+v;
+
 admin.initializeApp(functions.config().firebase);
 const database = admin.database();
 

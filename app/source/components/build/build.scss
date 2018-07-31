@@ -1,0 +1,55 @@
+.build {
+  display: flex;
+  align-items: center;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  padding: 10px 20px 10px 15px;
+
+  h3 {
+    margin: 0;
+    font-size: 1em;
+  }
+
+  p {
+    margin: 0;
+    margin-top: 5px;
+  }
+
+  &.theme-passed {
+    background-color: $green;
+    color: white;
+
+    .build-icon {
+      background-color: $bright-green;
+    }
+  }
+
+  &.theme-started {
+    background-color: $yellow;
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .build-icon {
+      background-color: $bright-yellow;
+      animation: rotate 1.5s infinite;
+    }
+  }
+}
+
+.build-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  margin-right: 15px;
+  background-color: rgba(white, 0.3);
+  border-radius: 100%;
+}

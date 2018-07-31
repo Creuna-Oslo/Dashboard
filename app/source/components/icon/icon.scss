@@ -1,3 +1,8 @@
 .icon {
   fill: currentColor;
+
+  &.theme-outline {
+    fill: transparent;
+    stroke: currentColor;
+  }
 }

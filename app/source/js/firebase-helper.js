@@ -7,6 +7,12 @@ import firebaseToArray from './firebase-to-array';
 firebase.initializeApp(firebaseInit);
 const database = firebase.database();
 
+const onBuildStatus = callback => {
+  database.ref('builds').on('value', snapshot => {
+    callback(firebaseToArray(snapshot));
+  });
+};
+
 const onNotification = callback => {
   database
     .ref('notifications')
@@ -18,5 +24,6 @@ const onNotification = callback => {
 };
 
 module.exports = {
+  onBuildStatus,
   onNotification
 };
