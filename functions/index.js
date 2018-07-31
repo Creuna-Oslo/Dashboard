@@ -32,6 +32,11 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
   response.status(200).send(`Successfully added ${eventType} event data`);
 });
 
+exports.onNPMHook = functions.https.onRequest((request, response) => {
+  console.log(request.body);
+  response.status(200).send();
+});
+
 exports.onTravisHook = functions.https.onRequest((request, response) => {
   const buildStatus = travisEventHandler(JSON.parse(request.body.payload));
 
