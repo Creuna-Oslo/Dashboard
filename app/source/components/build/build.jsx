@@ -12,17 +12,19 @@ import Icon from '../icon';
 
 const Build = ({ name, state, statusMessage, time }) => (
   <div className={cn('build', `theme-${state}`)}>
-    <div className="build-icon">
-      <Icon name={`travis-${state}`} theme={Icon.themes.outline} />
-    </div>
+    <div className="build-content">
+      <div className="build-icon">
+        <Icon name={`travis-${state}`} theme={Icon.themes.outline} />
+      </div>
 
-    <div className="build-text">
-      <h3>{name}</h3>
-      <p>{`Build ${statusMessage.toLowerCase()}`}</p>
-    </div>
+      <div className="build-text">
+        <h3>{name}</h3>
+        <p>{`Build ${statusMessage.toLowerCase()}`}</p>
+      </div>
 
-    <div className="build-time">
-      <TimeAgo locale="en">{time}</TimeAgo>
+      <div className="build-time">
+        <TimeAgo locale="en">{time}</TimeAgo>
+      </div>
     </div>
   </div>
 );
