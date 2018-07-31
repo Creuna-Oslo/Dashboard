@@ -2,6 +2,7 @@ const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 
 const gitHubEventHandlers = require("./event-handlers/github");
+const travisEventHandler = require("./event-handlers/travis");
 
 admin.initializeApp(functions.config().firebase);
 const database = admin.database();
@@ -29,4 +30,15 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
   );
 
   response.status(200).send(`Successfully added ${eventType} event data`);
+});
+
+exports.onTravisHook = functions.https.onRequest((request, response) => {
+  const buildStatus = travisEventHandler(request.body);
+  const { id } = buildStatus;
+
+  database
+    .ref("builds")
+    .child(id)
+    .update(buildStatus);
+  response.status(200).send();
 });
