@@ -33,13 +33,18 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 });
 
 exports.onTravisHook = functions.https.onRequest((request, response) => {
-  console.log(request);
-  // const buildStatus = travisEventHandler(request.body);
-  // const { id } = buildStatus;
+  const buildStatus = travisEventHandler(request.body.payload);
 
-  // database
-  //   .ref("builds")
-  //   .child(id)
-  //   .update(buildStatus);
-  response.status(200).send();
+  if (!buildStatus) {
+    response.status(200).send("Skipping");
+  }
+
+  const { id } = buildStatus;
+
+  database.ref("debug").push(request.body);
+  database
+    .ref("builds")
+    .child(id)
+    .update(buildStatus);
+  response.status(200).send("Added build status");
 });
