@@ -19,6 +19,6 @@ deploy:
   skip_cleanup: true
 notifications:
   webhooks:
-    on_start: change
+    on_start: always
     urls:
       - secure: "57UTgIlbdUnmNkUFU7IPRoqyprkIAkyUhApZz70fkUg4Iw7OoWwLx0bsxA2fNpu1LtVldqAEFlqiQYxY96UDuRPs4l8vHs4Q1osAKVDy+VIn8C7wHGh5JplzY6Nq5Y/f/NlkZTR2kL7qwM0ut8pHyyJC000Y9vsJQVr/BR/7FoT1aMb/Jg/Hqfnu2IKHkW117Ma+jes4rLjyqy/jnaCqEq9v3MnwKuyGf1W4AHRIlbl40RzsyKN0E4RatxDjM1WLAWDRqoYeh2QDVoc0ZwqW99IS0a7VCNRSCnhYyzDYE+oiAtUSGsD9zbRjS6Jc/IITaSk/MWcRT2PRRzwIy742sMWAk+lUsrTVlLRI8kVgWZXvEuqDG5fVDrYDrXOdKj5aJEFdZoLOF+1dBnh5eIQFWHnzKcV+2X2Y3ycy68BCrUMK6OwFp4bLkDujhcRhnpZTxrj+JeN2/RMf4+0J8GIE+d2GWlspEtN50SCtgYfj6Pr5g0GIrQ1enbz+ZhEDEEbnuh7B3DNSP/onef38u1wBL+wVY7NO8DSnSWDPLUDlGdU8zwrS8A/+j9TN3wCvm12GQ4dHmbIaq3tjVESu6cKNGogpwq0hUx9/aBfCf68KkwB+v6f21nY8hwgOfEm0DD71uULU2GeerQu9XtSyCgSyo6aMmWXMo1xTXmkdO4k8UII="
