@@ -5,8 +5,11 @@ install:
   - cd app && yarn
   - cd ../functions && yarn
 script:
-  - cd ../app && yarn test
-before_deploy: cd .. # go back to root before deploying
+  - yarn lint # "test" cloud functions
+  - cd ../app && yarn test # test client
+before_deploy:
+  - yarn build # build static site
+  - cd .. # deploy needs to be run from root
 deploy:
   provider: firebase
   token: $FIREBASE_TOKEN
