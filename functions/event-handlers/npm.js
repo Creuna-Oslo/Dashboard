@@ -3,13 +3,13 @@ const functions = require("firebase-functions");
 
 module.exports = request => {
   const signature = request.headers["x-npm-signature"];
-  console.log(request._body);
-  console.log(Buffer.from(request._body));
+  // console.log(request._body);
+  console.log(Buffer.from(request.body));
 
   // From: https://github.com/npm/npm-hook-receiver/blob/master/index.js#L24
   const expected = crypto
     .createHmac("sha256", functions.config().npm.secret)
-    .update(request._body)
+    .update(Buffer.from(request.body))
     .digest("hex");
   if (signature !== "sha256=" + expected) {
     console.log("Bad signature");
