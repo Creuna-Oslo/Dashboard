@@ -1,7 +1,7 @@
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 
-const gitHubEventHandlers = require("./event-handlers/github");
+const gitHubEventHandler = require("./event-handlers/github");
 const NPMEventHandler = require("./event-handlers/npm");
 const travisEventHandler = require("./event-handlers/travis");
 
@@ -9,15 +9,7 @@ admin.initializeApp(functions.config().firebase);
 const database = admin.database();
 
 exports.onGitHubHook = functions.https.onRequest((request, response) => {
-  // TODO: Move all request handling to github.js
-  const eventType = request.headers["x-github-event"];
-  const eventHandler = gitHubEventHandlers[eventType];
-  const notification = eventHandler && eventHandler(request.body);
-
-  if (!eventHandler) {
-    response.status(500).send(`Unsupported event type '${eventType}'`);
-    return;
-  }
+  const notification = gitHubEventHandler(request);
 
   if (!notification) {
     response.status(200).send("Skipped adding event data");
@@ -31,7 +23,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
     })
   );
 
-  response.status(200).send(`Successfully added ${eventType} event data`);
+  response.status(200).send(`Successfully added event data`);
 });
 
 exports.onNPMHook = functions.https.onRequest((request, response) => {
@@ -46,8 +38,7 @@ exports.onNPMHook = functions.https.onRequest((request, response) => {
 });
 
 exports.onTravisHook = functions.https.onRequest((request, response) => {
-  // TODO: Move all request handling to travis.js
-  const buildStatus = travisEventHandler(JSON.parse(request.body.payload));
+  const buildStatus = travisEventHandler(request);
 
   if (!buildStatus) {
     response.status(200).send("Skipping");

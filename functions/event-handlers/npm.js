@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const functions = require("firebase-functions");
 
+// Expects an express request object from an npm webhook
 module.exports = request => {
   const signature = request.headers["x-npm-signature"];
 

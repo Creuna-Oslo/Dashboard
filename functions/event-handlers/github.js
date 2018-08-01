@@ -75,8 +75,20 @@ const push = payload => {
   };
 };
 
-module.exports = {
+const eventHandlers = {
   issues,
   pull_request,
   push
+};
+
+// Expects an express request object from a GitHub webhook
+module.exports = request => {
+  const eventType = request.headers["x-github-event"];
+  const eventHandler = eventHandlers[eventType];
+
+  if (!eventHandler) {
+    throw new Error(`Unsupported event type '${eventType}'`);
+  }
+
+  return eventHandler(request.body);
 };

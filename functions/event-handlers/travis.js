@@ -1,4 +1,8 @@
-module.exports = payload => {
+// Expects an express request object from a Travis webhook
+module.exports = request => {
+  // Travis request bodies have a single key: payload. The content of body.payload is a json string which needs to be parsed
+  const payload = JSON.parse(request.body.payload);
+
   if (!payload) {
     return false;
   }
