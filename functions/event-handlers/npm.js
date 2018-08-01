@@ -7,11 +7,11 @@ module.exports = request => {
   // From: https://github.com/npm/npm-hook-receiver/blob/master/index.js#L24
   const expected = crypto
     .createHmac("sha256", functions.config().npm.secret)
-    .update(Buffer.from(request.rawBody))
+    .update(request.rawBody)
     .digest("hex");
   if (signature !== "sha256=" + expected) {
-    console.log(typeof request.rawBody);
     console.log("Bad signature");
+    console.log(Buffer.isBuffer(request.rawBody));
     console.log(signature);
     console.log("sha256=" + expected);
   }
