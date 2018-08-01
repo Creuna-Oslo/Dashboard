@@ -40,7 +40,7 @@ exports.onNPMHook = functions.https.onRequest((request, response) => {
   const package = NPMEventHandler(request);
   database
     .ref("packages")
-    .child(package.name)
+    .child(package.id)
     .update(package);
   response.status(200).send();
 });

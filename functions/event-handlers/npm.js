@@ -11,11 +11,19 @@ module.exports = request => {
     .digest("hex");
   if (signature !== "sha256=" + expected) {
     console.log("Bad signature");
+    console.log(signature);
+    console.log(functions.config().npm.secret.length);
   }
 
   const { body } = request;
   const { name } = body;
   const version = body.payload["dist-tags"].latest;
 
-  return { name, version };
+  // Remove namespace from id because Firebase will interpret this as a new json object
+  return {
+    name,
+    id: name.replace("@creuna/", ""),
+    time: new Date().getTime(),
+    version
+  };
 };
