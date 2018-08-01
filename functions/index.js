@@ -35,7 +35,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 });
 
 exports.onNPMHook = functions.https.onRequest((request, response) => {
-  database.ref("debug").push(request.rawBody);
+  database.ref("debug").push(JSON.stringify(request.body));
 
   const package = NPMEventHandler(request);
   database
