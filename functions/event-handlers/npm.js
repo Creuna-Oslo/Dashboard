@@ -15,17 +15,14 @@ module.exports = request => {
   }
 
   const { body } = request;
-  const { event, name } = body;
+  const { name } = body;
   const version = body.payload["dist-tags"].latest;
 
   // Remove namespace from id because Firebase will interpret this as a new json object
   return {
-    package: {
-      name,
-      id: name.replace("@creuna/", ""),
-      time: new Date().getTime(),
-      version
-    },
-    shouldRemove: event === "package:unpublish"
+    name,
+    id: name.replace("@creuna/", ""),
+    time: new Date().getTime(),
+    version
   };
 };
