@@ -12,7 +12,7 @@ module.exports = request => {
   if (signature !== "sha256=" + expected) {
     console.log("Bad signature");
     console.log(signature);
-    console.log(functions.config().npm.secret.length);
+    console.log("sha256=" + expected);
   }
 
   const { body } = request;
