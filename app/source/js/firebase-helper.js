@@ -23,7 +23,14 @@ const onNotification = callback => {
     });
 };
 
+const onPackageUpdate = callback => {
+  database.ref('packages').on('value', snapshot => {
+    callback(firebaseToArray(snapshot));
+  });
+};
+
 module.exports = {
   onBuildStatus,
-  onNotification
+  onNotification,
+  onPackageUpdate
 };

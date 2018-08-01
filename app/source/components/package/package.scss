@@ -1,0 +1,23 @@
+.package {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 20px 10px 15px;
+  background-color: whitesmoke;
+  border-radius: 10px;
+
+  h3 {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 1em;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.package-time {
+  margin-left: auto;
+  opacity: 0.6;
+}

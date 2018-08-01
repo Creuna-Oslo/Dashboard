@@ -37,11 +37,15 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 exports.onNPMHook = functions.https.onRequest((request, response) => {
   database.ref("debug").push(JSON.stringify(request.body));
 
-  const package = NPMEventHandler(request);
-  database
-    .ref("packages")
-    .child(package.id)
-    .update(package);
+  const { package, shouldRemove } = NPMEventHandler(request);
+  const ref = database.ref("packages").child(package.id);
+
+  if (shouldRemove) {
+    ref.remove();
+  } else {
+    ref.update(package);
+  }
+
   response.status(200).send();
 });
 
