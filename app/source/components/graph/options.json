@@ -1,0 +1,32 @@
+{
+  "elements": {
+    "point": {
+      "radius": 0,
+      "hitRadius": 10,
+      "hoverRadius": 5
+    },
+    "line": {
+      "borderColor": "white",
+      "borderWidth": 2,
+      "backgroundColor": "transparent"
+    }
+  },
+  "legend": { "display": false },
+  "maintainAspectRatio": false,
+  "scales": {
+    "xAxes": [
+      {
+        "display": false,
+        "type": "linear"
+      }
+    ],
+    "yAxes": [
+      {
+        "display": false
+      }
+    ]
+  },
+  "tooltips": {
+    "enabled": false
+  }
+}

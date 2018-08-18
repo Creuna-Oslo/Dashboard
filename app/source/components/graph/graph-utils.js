@@ -1,3 +1,32 @@
+import merge from 'lodash/merge';
+
+import options from './options.json';
+
+function getChartProps(data) {
+  const points = getPoints(data);
+  const maxX = Math.max(...points.map(p => p.x));
+  const minX = Math.min(...points.map(p => p.x));
+  const maxY = Math.max(...points.map(p => p.y));
+
+  return {
+    data: canvas => ({
+      datasets: [
+        {
+          data: points,
+          borderColor: getGradient(canvas, points),
+          backgroundColor: getGradient(canvas, points, 0.2)
+        }
+      ]
+    }),
+    options: merge(options, {
+      scales: {
+        xAxes: [{ ticks: { min: minX, max: maxX } }],
+        yAxes: [{ ticks: { max: Math.max(10, maxY) } }]
+      }
+    })
+  };
+}
+
 function getPoints(data) {
   const todayTime = new Date().setUTCHours(0, 0, 0, 0);
 
@@ -36,52 +65,18 @@ function getPoints(data) {
   return points;
 }
 
-function getOptions(data) {
-  const points = getPoints(data);
-  const maxX = Math.max(...points.map(p => p.x));
-  const minX = Math.min(...points.map(p => p.x));
-  const maxY = Math.max(...points.map(p => p.y));
+function getGradient(canvas, points, alpha = 1) {
+  if (!points || !points.length) return 'white';
 
-  return {
-    animation: {
-      duration: 0
-    },
-    elements: {
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 5
-      },
-      line: {
-        borderColor: 'white',
-        borderWidth: 2,
-        backgroundColor: 'transparent'
-      }
-    },
-    legend: { display: false },
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: [
-        {
-          display: false,
-          type: 'linear',
-          ticks: { min: minX, max: maxX }
-        }
-      ],
-      yAxes: [
-        {
-          display: false,
-          ticks: { max: Math.max(10, maxY) }
-        }
-      ]
-    },
-    tooltips: {
-      enabled: false
-    }
-  };
+  const ctx = canvas.getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, canvas.offsetWidth, 0);
+
+  gradient.addColorStop(0, `rgba(93, 110, 206, ${alpha})`); // leftmost
+  gradient.addColorStop(1, `rgba(111, 238, 255, ${alpha})`); // rightmost
+
+  return gradient;
 }
 
 export default {
-  getOptions,
-  getPoints
+  getChartProps
 };
