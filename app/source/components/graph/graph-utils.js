@@ -2,7 +2,7 @@ import merge from 'lodash/merge';
 
 import options from './options.json';
 
-function getChartProps(data) {
+function getChartProps(data, theme) {
   const points = getPoints(data);
   const maxX = Math.max(...points.map(p => p.x));
   const minX = Math.min(...points.map(p => p.x));
@@ -13,8 +13,8 @@ function getChartProps(data) {
       datasets: [
         {
           data: points,
-          borderColor: getGradient(canvas, points),
-          backgroundColor: getGradient(canvas, points, 0.2)
+          borderColor: getGradient(canvas, points, theme),
+          backgroundColor: getGradient(canvas, points, theme, 0.3)
         }
       ]
     }),
@@ -65,14 +65,14 @@ function getPoints(data) {
   return points;
 }
 
-function getGradient(canvas, points, alpha = 1) {
+function getGradient(canvas, points, theme, alpha = 1) {
   if (!points || !points.length) return 'white';
 
   const ctx = canvas.getContext('2d');
   const gradient = ctx.createLinearGradient(0, 0, canvas.offsetWidth, 0);
 
-  gradient.addColorStop(0, `rgba(93, 110, 206, ${alpha})`); // leftmost
-  gradient.addColorStop(1, `rgba(111, 238, 255, ${alpha})`); // rightmost
+  gradient.addColorStop(0, theme.left(alpha));
+  gradient.addColorStop(1, theme.right(alpha));
 
   return gradient;
 }
