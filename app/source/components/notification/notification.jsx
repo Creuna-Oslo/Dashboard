@@ -5,6 +5,7 @@ import cn from 'classnames';
 
 import notificationTypes from './notification-types';
 
+import Card from '../card';
 import Icon from '../icon';
 import Time from '../time';
 
@@ -16,30 +17,32 @@ const Notification = ({ meta, user, repository, time, type }) => {
   const notificationType = notificationTypes[type];
 
   return (
-    <div className={cn('notification', notificationType.className)}>
-      <img src={user.avatar} />
-      {notificationType.icon && (
-        <div className="notification-icon">
-          <Icon name={notificationType.icon} />
+    <Card>
+      <div className={cn('notification', notificationType.className)}>
+        <img src={user.avatar} />
+        {notificationType.icon && (
+          <div className="notification-icon">
+            <Icon name={notificationType.icon} />
+          </div>
+        )}
+        <div className="notification-text">
+          <b className="notification-username">{user.name}</b>
+          <span
+            dangerouslySetInnerHTML={{
+              __html: `${notificationType.text(meta)} `
+            }}
+          />
+          <b>{`${repository.name}${
+            repository.branch ? '/' + repository.branch : ''
+          }`}</b>
         </div>
-      )}
-      <div className="notification-text">
-        <b className="notification-username">{user.name}</b>
-        <span
-          dangerouslySetInnerHTML={{
-            __html: `${notificationType.text(meta)} `
-          }}
-        />
-        <b>{`${repository.name}${
-          repository.branch ? '/' + repository.branch : ''
-        }`}</b>
-      </div>
 
-      {/* Timestamps are stored as negative numbers in Firebase. */}
-      <div className="notification-time">
-        <Time time={-time} />
+        {/* Timestamps are stored as negative numbers in Firebase. */}
+        <div className="notification-time">
+          <Time time={-time} />
+        </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

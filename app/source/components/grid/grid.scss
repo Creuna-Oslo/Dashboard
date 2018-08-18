@@ -3,11 +3,31 @@
   grid-template-columns: 1fr;
   gap: 20px;
 
-  @media (min-width: $breakpoint-l) {
+  > div {
+    min-width: 0;
+  }
+
+  @media (min-width: $breakpoint-m) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (min-width: $breakpoint-xl) {
+  @media (min-width: $breakpoint-l) {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: 2000px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (min-width: 2500px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  @media (min-width: 3000px) {
+    grid-template-columns: repeat(7, 1fr);
   }
 }

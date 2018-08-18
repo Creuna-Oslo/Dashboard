@@ -1,3 +1,11 @@
+.build-status {
+  display: flex;
+}
+
+.build-status-text {
+  margin-top: 3px;
+}
+
 .build-status-icon {
   flex-shrink: 0;
   display: flex;

@@ -1,0 +1,28 @@
+.package {
+  display: flex;
+}
+
+.package-text {
+  margin-top: 3px;
+}
+
+.package-published-text {
+  opacity: 0.5;
+}
+
+.package-version {
+  font-weight: bold;
+}
+
+.package-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  margin-right: 15px;
+  background-color: rgba(white, 0.3);
+  border-radius: 100%;
+  background-image: linear-gradient(150deg, $bright-red, $red);
+}

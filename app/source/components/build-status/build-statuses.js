@@ -27,5 +27,5 @@ export default state => {
     }
   };
 
-  return statuses[state];
+  return statuses[state] || {};
 };

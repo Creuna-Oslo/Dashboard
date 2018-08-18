@@ -6,17 +6,25 @@ import Card from '../card';
 import buildStatuses from '../build-status/build-statuses';
 
 import BuildStatus from '../build-status';
+import Package from '../package';
 
 const Project = ({ build, issues, name, npm }) => (
   <Card theme={buildStatuses(build.state).theme}>
     <div className="project">
       <h3>{name}</h3>
-      <BuildStatus {...build} />
-      <p>Issues: {issues}</p>
+      <p className="project-issues">
+        Open issues: <b>{issues}</b>
+      </p>
+      <hr />
+      {build && (
+        <div className="project-build">
+          <BuildStatus {...build} />
+        </div>
+      )}
       {npm && (
-        <p>
-          NPM: {npm.name} v{npm.version}
-        </p>
+        <div className="project-package">
+          <Package {...npm} />
+        </div>
       )}
     </div>
   </Card>
@@ -30,14 +38,7 @@ Project.propTypes = {
   }),
   issues: PropTypes.number,
   name: PropTypes.string,
-  npm: PropTypes.shape({
-    name: PropTypes.string,
-    version: PropTypes.string
-  })
-};
-
-Project.defaultProps = {
-  build: {}
+  npm: PropTypes.object
 };
 
 export default Project;

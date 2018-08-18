@@ -2,6 +2,8 @@ import React from 'react';
 
 import firebase from 'js/firebase-helper';
 
+import FlipMotion from 'react-flip-motion';
+
 import Grid from '../grid';
 import Notifications from '../notifications';
 import Project from '../project';
@@ -25,19 +27,15 @@ class Main extends React.Component {
   render() {
     return (
       <div className="main">
-        <h1>Creuna Dashboard</h1>
-
-        <Grid>
-          <h2>Projects</h2>
+        <FlipMotion component={Grid}>
           {this.state.projects.map(project => (
             <Project key={project.name} {...project} />
           ))}
+        </FlipMotion>
 
-          <div>
-            <h2>GitHub activity</h2>
-            <Notifications items={this.state.notifications} />
-          </div>
-        </Grid>
+        <div className="notifications">
+          <Notifications items={this.state.notifications} />
+        </div>
       </div>
     );
   }

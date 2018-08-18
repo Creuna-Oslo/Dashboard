@@ -5,6 +5,7 @@ import cn from 'classnames';
 
 import Icon from '../icon';
 import Time from '../time';
+import Text from './text';
 
 import buildStatuses from './build-statuses';
 
@@ -18,8 +19,14 @@ const BuildStatus = ({ branch, pullRequest, state, statusMessage, time }) => {
           <Icon name={icon} theme={Icon.themes.outline} />
         </div>
       )}
-      Build {statusMessage.toLowerCase()} on <b>{branch}</b>
-      <Time time={time} />
+      <div className="build-status-text">
+        <Text
+          branch={branch}
+          pullRequest={pullRequest}
+          statusMessage={statusMessage}
+        />
+        <Time time={time} />
+      </div>
     </div>
   );
 };
@@ -32,7 +39,4 @@ BuildStatus.propTypes = {
   time: PropTypes.number
 };
 
-BuildStatus.defaultProps = {
-  statusMessage: ''
-};
 export default BuildStatus;
