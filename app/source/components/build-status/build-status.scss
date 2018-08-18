@@ -1,0 +1,38 @@
+.build-status-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  margin-right: 15px;
+  background-color: rgba(white, 0.3);
+  border-radius: 100%;
+
+  &.travis-passed {
+    background-image: linear-gradient(150deg, $bright-green, $green);
+  }
+
+  &.travis-failed {
+    background-image: linear-gradient(150deg, $bright-red, $red);
+  }
+
+  &.travis-started {
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(180deg);
+      }
+    }
+
+    background-color: $bright-yellow;
+    background-image: linear-gradient(150deg, $bright-yellow, $yellow);
+    color: $dark-gray;
+
+    svg {
+      animation: rotate 1.5s infinite;
+    }
+  }
+}
