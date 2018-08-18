@@ -1,11 +1,14 @@
 .notification {
   display: flex;
   align-items: center;
-  background-color: whitesmoke;
-  padding: 10px 20px 10px 15px;
-  border-radius: 10px;
-  margin-top: 10px;
-  color: #333;
+  background-image: linear-gradient(
+    160deg,
+    $medium-gray,
+    rgba($medium-gray, 0.3)
+  );
+  padding: 20px 25px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(black, 0.1);
 
   img {
     flex-shrink: 0;
@@ -19,30 +22,24 @@
   }
 
   &.theme-issue-close {
-    background-color: $red;
-    color: white;
-
     .notification-icon {
       background-color: $bright-red;
+      background-image: linear-gradient(150deg, $bright-red, $red);
     }
   }
 
   &.theme-pull-request,
   &.theme-issue-open {
-    background-color: $green;
-    color: white;
-
     .notification-icon {
       background-color: $bright-green;
+      background-image: linear-gradient(150deg, $bright-green, $green);
     }
   }
 
   &.theme-merge {
-    background-color: $purple;
-    color: white;
-
     .notification-icon {
       background-color: $bright-purple;
+      background-image: linear-gradient(150deg, $bright-purple, $purple);
     }
   }
 }
@@ -58,7 +55,7 @@
   margin-left: -10px;
   margin-right: 15px;
   border-radius: 100%;
-  background-color: white;
+  background-image: linear-gradient(150deg, $medium-gray, $dark-gray);
 }
 
 .notification-username {

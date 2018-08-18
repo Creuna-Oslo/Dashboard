@@ -1,9 +1,14 @@
 .build {
   display: flex;
   align-items: center;
-  padding: 10px 20px 10px 15px;
-  background-color: whitesmoke;
-  border-radius: 10px;
+  padding: 20px 25px;
+  background-image: linear-gradient(
+    150deg,
+    $medium-gray,
+    rgba($medium-gray, 0.3)
+  );
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(black, 0.1);
 
   h3 {
     width: 100%;
@@ -17,11 +22,10 @@
   }
 
   &.theme-passed {
-    background-color: $green;
     color: white;
 
     .build-icon {
-      background-color: $bright-green;
+      background-image: linear-gradient(150deg, $bright-green, $green);
     }
   }
 
@@ -31,11 +35,17 @@
 
     .build-icon {
       background-color: $bright-red;
+      background-image: linear-gradient(150deg, $bright-red, $red);
     }
   }
 
   &.theme-started {
     background-color: $yellow;
+    background-image: linear-gradient(
+      150deg,
+      $medium-gray,
+      rgba($medium-gray, 0.4)
+    );
 
     @keyframes rotate {
       from {
@@ -48,7 +58,12 @@
 
     .build-icon {
       background-color: $bright-yellow;
-      animation: rotate 1.5s infinite;
+      background-image: linear-gradient(150deg, $bright-yellow, $yellow);
+      color: $dark-gray;
+
+      svg {
+        animation: rotate 1.5s infinite;
+      }
     }
   }
 }
@@ -64,8 +79,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   margin-right: 15px;
   background-color: rgba(white, 0.3);
   border-radius: 100%;
@@ -74,7 +89,7 @@
 .build-time {
   align-self: flex-start;
   margin-left: auto;
-  opacity: 0.6;
+  opacity: 0.5;
   white-space: nowrap;
   padding-left: 10px;
 }

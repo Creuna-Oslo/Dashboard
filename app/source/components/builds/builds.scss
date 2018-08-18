@@ -3,7 +3,7 @@
   grid-gap: 10px;
   grid-template-columns: 1fr;
 
-  @media (min-width: 768px) {
+  @media (min-width: $breakpoint-m) {
     grid-template-columns: 1fr 1fr;
   }
 }
