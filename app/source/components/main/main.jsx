@@ -2,23 +2,17 @@ import React from 'react';
 
 import firebase from 'js/firebase-helper';
 
-import Builds from '../builds';
 import Grid from '../grid';
 import Notifications from '../notifications';
 import Project from '../project';
 
 class Main extends React.Component {
   state = {
-    builds: [],
     notifications: [],
     projects: []
   };
 
   componentDidMount() {
-    firebase.onBuildStatus(builds => {
-      this.setState({ builds });
-    });
-
     firebase.onNotification(notifications => {
       this.setState({ notifications });
     });
@@ -38,11 +32,6 @@ class Main extends React.Component {
           {this.state.projects.map(project => (
             <Project key={project.name} {...project} />
           ))}
-
-          <div>
-            <h2>Build status</h2>
-            <Builds items={this.state.builds} />
-          </div>
 
           <div>
             <h2>GitHub activity</h2>

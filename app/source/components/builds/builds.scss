@@ -1,9 +1,0 @@
-.builds {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr;
-
-  @media (min-width: $breakpoint-m) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
