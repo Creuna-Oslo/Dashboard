@@ -7,12 +7,24 @@ module.exports = request => {
     return false;
   }
 
-  const { branch, repository, state, status_message } = payload;
-  const { id, name } = repository;
+  const {
+    branch,
+    pull_request, // Boolean that indicates whether the build was triggered by a PR
+    pull_request_number,
+    pull_request_title,
+    repository,
+    state,
+    status_message
+  } = payload;
 
-  if (branch !== "master") {
-    return false;
-  }
-
-  return { id, name, state, statusMessage: status_message };
+  return {
+    branch,
+    pullRequest: pull_request && {
+      number: pull_request_number,
+      title: pull_request_title
+    },
+    repositoryName: repository.name,
+    state,
+    statusMessage: status_message
+  };
 };

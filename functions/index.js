@@ -40,15 +40,11 @@ exports.onNPMHook = functions.https.onRequest((request, response) => {
 exports.onTravisHook = functions.https.onRequest((request, response) => {
   const buildStatus = travisEventHandler(request);
 
-  if (!buildStatus) {
-    response.status(200).send("Skipping");
-  }
-
-  const { id } = buildStatus;
-
   database
-    .ref("builds")
-    .child(id)
+    .ref("projects")
+    .child(buildStatus.repositoryName)
+    .child("build")
     .update(Object.assign(buildStatus, { time: new Date().getTime() }));
+
   response.status(200).send("Added build status");
 });
