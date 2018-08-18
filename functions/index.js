@@ -40,7 +40,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 exports.onNPMHook = functions.https.onRequest((request, response) => {
   const package = NPMEventHandler(request);
 
-  projectRef(package.repositoryName).update({ package });
+  projectRef(package.repositoryName).update({ npm: package });
 
   response.status(200).send("Done processing NPM webhook");
 });
