@@ -13,8 +13,8 @@ const themes = {
     right: alpha => `rgba(255, 133, 97, ${alpha})`
   },
   yellow: {
-    left: alpha => `rgba(255, 133, 97, ${alpha - 0.1})`,
-    right: alpha => `rgba(255, 235, 59, ${alpha - 0.1})`
+    left: alpha => `rgba(255, 133, 97, ${alpha})`,
+    right: alpha => `rgba(255, 235, 59, ${alpha})`
   }
 };
 
