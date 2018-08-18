@@ -3,8 +3,6 @@ const getUser = user => ({
   name: user.login
 });
 
-// All exported functions expect a GitHub webhooks payload object. Function names must correspond to GitHub event names.
-
 const issues = payload => {
   const { action, issue, repository } = payload;
 
@@ -75,20 +73,28 @@ const push = payload => {
   };
 };
 
+const getRepositoryMeta = request => {
+  const { repository } = request;
+
+  return { name: repository.name, issues: repository.open_issues };
+};
+
+// The names of the event handlers must match the event name from the 'x-github-event' header.
 const eventHandlers = {
   issues,
   pull_request,
   push
 };
 
+const noop = () => {};
+
 // Expects an express request object from a GitHub webhook
 module.exports = request => {
   const eventType = request.headers["x-github-event"];
-  const eventHandler = eventHandlers[eventType];
+  const eventHandler = eventHandlers[eventType] || noop;
 
-  if (!eventHandler) {
-    throw new Error(`Unsupported event type '${eventType}'`);
-  }
-
-  return eventHandler(request.body);
+  return {
+    notification: eventHandler(request.body),
+    repository: getRepositoryMeta(request)
+  };
 };

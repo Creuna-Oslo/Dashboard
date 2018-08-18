@@ -8,22 +8,26 @@ const travisEventHandler = require("./event-handlers/travis");
 admin.initializeApp(functions.config().firebase);
 const database = admin.database();
 
-exports.onGitHubHook = functions.https.onRequest((request, response) => {
-  const notification = gitHubEventHandler(request);
+const projectRef = repositoryName =>
+  database.ref("projects").child(repositoryName);
 
-  if (!notification) {
-    response.status(200).send("Skipped adding event data");
-    return;
+exports.onGitHubHook = functions.https.onRequest((request, response) => {
+  const { notification, repository } = gitHubEventHandler(request);
+
+  projectRef(repository.name)
+    .child("issues")
+    .update(repository.issues);
+
+  if (notification) {
+    database.ref("notifications").push(
+      Object.assign({}, notification, {
+        // Negative timestamp because Firebase doesn't support ordering in reverse order (newest first)
+        time: -new Date().getTime()
+      })
+    );
   }
 
-  database.ref("notifications").push(
-    Object.assign({}, notification, {
-      // Negative timestamp because Firebase doesn't support ordering in reverse order (newest first)
-      time: -new Date().getTime()
-    })
-  );
-
-  response.status(200).send(`Successfully added event data`);
+  response.status(200).send("Done processing GitHub webhook");
 });
 
 exports.onNPMHook = functions.https.onRequest((request, response) => {
@@ -34,17 +38,15 @@ exports.onNPMHook = functions.https.onRequest((request, response) => {
     .child(package.id)
     .update(package);
 
-  response.status(200).send();
+  response.status(200).send("Done processing NPM webhook");
 });
 
 exports.onTravisHook = functions.https.onRequest((request, response) => {
   const buildStatus = travisEventHandler(request);
 
-  database
-    .ref("projects")
-    .child(buildStatus.repositoryName)
+  projectRef(buildStatus.repositoryName)
     .child("build")
     .update(Object.assign(buildStatus, { time: new Date().getTime() }));
 
-  response.status(200).send("Added build status");
+  response.status(200).send("Done processing Travis webhook");
 });
