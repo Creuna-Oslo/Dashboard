@@ -1,4 +1,8 @@
 .project {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   h3 {
     font-size: 2em;
     margin: 0;
@@ -8,18 +12,36 @@
   }
 
   hr {
+    width: 100%;
     opacity: 0.2;
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin: 20px 0;
   }
 }
 
 .project-issues {
   font-size: 1.2em;
   margin-top: 5px;
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }
 
 .project-package {
   margin-top: 10px;
+}
+
+.project-activity {
+  width: calc(100% + 50px);
+  margin-left: -25px;
+  margin-bottom: -20px;
+  margin-top: auto;
+
+  p {
+    display: inline-block;
+    margin: 0;
+    margin-left: 25px;
+    padding: 5px 10px;
+    font-weight: bold;
+    opacity: 0.4;
+    background-color: rgba(black, 0.2);
+    border-radius: 20px;
+  }
 }

@@ -17,7 +17,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
   // Update 'name' and 'issues' in project
   projectRef(repository.name).update(repository);
 
-  const currentDayStartTime = new Date().setHours(0, 0, 0, 0);
+  const currentDayStartTime = new Date().setUTCHours(0, 0, 0, 0);
 
   // Update activity count for current day
   projectRef(repository.name)

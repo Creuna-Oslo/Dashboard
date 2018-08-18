@@ -9,7 +9,9 @@ const themes = {
 };
 
 const Card = ({ children, theme }) => (
-  <div className={cn('card', theme)}>{children}</div>
+  <div className={cn('card', theme)}>
+    <div className="card-content">{children}</div>
+  </div>
 );
 
 Card.propTypes = {
