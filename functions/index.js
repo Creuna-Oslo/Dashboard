@@ -14,9 +14,8 @@ const projectRef = repositoryName =>
 exports.onGitHubHook = functions.https.onRequest((request, response) => {
   const { notification, repository } = gitHubEventHandler(request);
 
-  projectRef(repository.name)
-    .child("issues")
-    .update(repository.issues);
+  // Update 'name' and 'issues' in project
+  projectRef(repository.name).update(repository);
 
   const currentDayStartTime = new Date().setHours(0, 0, 0, 0);
 
@@ -41,19 +40,16 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 exports.onNPMHook = functions.https.onRequest((request, response) => {
   const package = NPMEventHandler(request);
 
-  projectRef(package.repositoryName)
-    .child("package")
-    .update(package);
+  projectRef(package.repositoryName).update({ package });
 
   response.status(200).send("Done processing NPM webhook");
 });
 
 exports.onTravisHook = functions.https.onRequest((request, response) => {
   const buildStatus = travisEventHandler(request);
+  const build = Object.assign(buildStatus, { time: new Date().getTime() });
 
-  projectRef(buildStatus.repositoryName)
-    .child("build")
-    .update(Object.assign(buildStatus, { time: new Date().getTime() }));
+  projectRef(buildStatus.repositoryName).update({ build });
 
   response.status(200).send("Done processing Travis webhook");
 });
