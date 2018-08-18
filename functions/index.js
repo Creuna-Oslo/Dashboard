@@ -33,9 +33,8 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
 exports.onNPMHook = functions.https.onRequest((request, response) => {
   const package = NPMEventHandler(request);
 
-  database
-    .ref("packages")
-    .child(package.id)
+  projectRef(package.repositoryName)
+    .child("package")
     .update(package);
 
   response.status(200).send("Done processing NPM webhook");

@@ -1,6 +1,24 @@
 const crypto = require("crypto");
 const functions = require("firebase-functions");
 
+const getRepositoryName = repository => {
+  if (!repository) {
+    return;
+  }
+
+  const repositoryUrl =
+    typeof repository === "string" ? repository : repository.url;
+
+  // Expects repository URL to be something like this: "git+https://github.com/Creuna-Oslo/repo-name.git"
+  return (
+    repositoryUrl &&
+    repositoryUrl
+      .split("/")
+      .pop()
+      .replace(".git", "")
+  );
+};
+
 // Expects an express request object from an npm webhook
 module.exports = request => {
   const signature = request.headers["x-npm-signature"];
@@ -16,14 +34,13 @@ module.exports = request => {
   }
 
   const { body } = request;
-  const { name } = body;
-  const version = body.payload["dist-tags"].latest;
+  const { name, payload } = body;
 
   // Remove namespace from id because Firebase will interpret this as a new json object
   return {
     name,
-    id: name.replace("@creuna/", ""),
+    repositoryName: getRepositoryName(payload.repository) || name,
     time: new Date().getTime(),
-    version
+    version: payload["dist-tags"].latest
   };
 };
