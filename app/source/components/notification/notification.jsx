@@ -2,15 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import cn from 'classnames';
-import JavascriptTimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
-JavascriptTimeAgo.locale(en);
-
-import TimeAgo from 'react-time-ago/no-tooltip';
 
 import notificationTypes from './notification-types';
 
 import Icon from '../icon';
+import Time from '../time';
 
 const Notification = ({ meta, user, repository, time, type }) => {
   if (!notificationTypes[type]) {
@@ -41,7 +37,7 @@ const Notification = ({ meta, user, repository, time, type }) => {
 
       {/* Timestamps are stored as negative numbers in Firebase. */}
       <div className="notification-time">
-        <TimeAgo locale="en">{-time}</TimeAgo>
+        <Time time={-time} />
       </div>
     </div>
   );

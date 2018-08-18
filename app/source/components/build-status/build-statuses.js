@@ -1,11 +1,11 @@
-import Card from '../card';
+import Card from 'components/card';
 
-export default (build = {}) => {
-  if (!build.state) {
+export default state => {
+  if (!state) {
     return {};
   }
 
-  return {
+  const statuses = {
     errored: {
       icon: 'travis-failed',
       theme: Card.themes.red
@@ -26,4 +26,6 @@ export default (build = {}) => {
       theme: Card.themes.yellow
     }
   };
+
+  return statuses[state];
 };

@@ -3,18 +3,15 @@ import PropTypes from 'prop-types';
 
 import Card from '../card';
 
-import buildStatuses from './build-statuses';
+import buildStatuses from '../build-status/build-statuses';
+
+import BuildStatus from '../build-status';
 
 const Project = ({ build, issues, name, npm }) => (
-  <Card theme={buildStatuses(build).theme}>
+  <Card theme={buildStatuses(build.state).theme}>
     <div className="project">
       <h3>{name}</h3>
-      {build &&
-        build.statusMessage && (
-          <p>
-            Build {build.statusMessage.toLowerCase()} on <b>{build.branch}</b>
-          </p>
-        )}
+      <BuildStatus {...build} />
       <p>Issues: {issues}</p>
       {npm && (
         <p>
@@ -37,6 +34,10 @@ Project.propTypes = {
     name: PropTypes.string,
     version: PropTypes.string
   })
+};
+
+Project.defaultProps = {
+  build: {}
 };
 
 export default Project;
