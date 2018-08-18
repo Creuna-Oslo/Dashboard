@@ -51,5 +51,10 @@ exports.onTravisHook = functions.https.onRequest((request, response) => {
 
   projectRef(buildStatus.repositoryName).update({ build });
 
+  // Update name in case the package does not have a 'repository' field in its package.json. In these cases, there is no connection between the npm package and a GitHub repo. '<project-name>.name' in the database will therefore not have been set by the GitHub webhook handler and needs to be added.
+  projectRef(buildStatus.repositoryName)
+    .child("name")
+    .transaction(name => name || buildStatus.repositoryName);
+
   response.status(200).send("Done processing Travis webhook");
 });
