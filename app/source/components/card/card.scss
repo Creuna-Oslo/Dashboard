@@ -16,7 +16,7 @@
     background-color: $yellow;
     background-image: linear-gradient(
       150deg,
-      $medium-gray,
+      $medium-gray 20%,
       rgba($medium-gray, 0.4)
     );
   }

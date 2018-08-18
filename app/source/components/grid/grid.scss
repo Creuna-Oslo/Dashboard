@@ -1,7 +1,9 @@
 .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+
   @media (min-width: $breakpoint-l) {
-    display: grid;
-    gap: 20px;
     grid-template-columns: repeat(2, 1fr);
   }
 

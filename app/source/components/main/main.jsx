@@ -5,14 +5,12 @@ import firebase from 'js/firebase-helper';
 import Builds from '../builds';
 import Grid from '../grid';
 import Notifications from '../notifications';
-import Packages from '../packages';
 import Project from '../project';
 
 class Main extends React.Component {
   state = {
     builds: [],
     notifications: [],
-    packages: [],
     projects: []
   };
 
@@ -23,10 +21,6 @@ class Main extends React.Component {
 
     firebase.onNotification(notifications => {
       this.setState({ notifications });
-    });
-
-    firebase.onPackageUpdate(packages => {
-      this.setState({ packages });
     });
 
     firebase.onProjectUpdate(projects => {
@@ -40,16 +34,10 @@ class Main extends React.Component {
         <h1>Creuna Dashboard</h1>
 
         <Grid>
-          <div>
-            <h2>Projects</h2>
-            {this.state.projects.map(project => (
-              <Project key={project.name} {...project} />
-            ))}
-          </div>
-          <div>
-            <h2>NPM packages</h2>
-            <Packages items={this.state.packages} />
-          </div>
+          <h2>Projects</h2>
+          {this.state.projects.map(project => (
+            <Project key={project.name} {...project} />
+          ))}
 
           <div>
             <h2>Build status</h2>

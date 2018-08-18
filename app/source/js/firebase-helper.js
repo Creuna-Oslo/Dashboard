@@ -23,12 +23,6 @@ const onNotification = callback => {
     });
 };
 
-const onPackageUpdate = callback => {
-  database.ref('packages').on('value', snapshot => {
-    callback(firebaseToArray(snapshot));
-  });
-};
-
 const onProjectUpdate = callback => {
   database.ref('projects').on('value', snapshot => {
     callback(firebaseToArray(snapshot));
@@ -38,6 +32,5 @@ const onProjectUpdate = callback => {
 module.exports = {
   onBuildStatus,
   onNotification,
-  onPackageUpdate,
   onProjectUpdate
 };
