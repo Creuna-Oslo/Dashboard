@@ -95,6 +95,6 @@ module.exports = request => {
 
   return {
     notification: eventHandler(request.body),
-    repository: getRepositoryMeta(request)
+    repository: getRepositoryMeta(request.body)
   };
 };

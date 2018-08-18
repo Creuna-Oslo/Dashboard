@@ -18,6 +18,14 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
     .child("issues")
     .update(repository.issues);
 
+  const currentDayStartTime = new Date().setHours(0, 0, 0, 0);
+
+  // Update activity count for current day
+  projectRef
+    .child("activity")
+    .child(currentDayStartTime)
+    .transaction(activityCount => (activityCount || 0) + 1);
+
   if (notification) {
     database.ref("notifications").push(
       Object.assign({}, notification, {
