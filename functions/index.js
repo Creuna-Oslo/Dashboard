@@ -20,7 +20,7 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
   const currentDayStartTime = new Date().setHours(0, 0, 0, 0);
 
   // Update activity count for current day
-  projectRef
+  projectRef(repository.name)
     .child("activity")
     .child(currentDayStartTime)
     .transaction(activityCount => (activityCount || 0) + 1);
