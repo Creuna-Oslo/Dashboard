@@ -11,7 +11,8 @@ class Main extends React.Component {
   state = {
     builds: [],
     notifications: [],
-    packages: []
+    packages: [],
+    projects: []
   };
 
   componentDidMount() {
@@ -25,6 +26,10 @@ class Main extends React.Component {
 
     firebase.onPackageUpdate(packages => {
       this.setState({ packages });
+    });
+
+    firebase.onProjectUpdate(projects => {
+      this.setState({ projects });
     });
   }
 
