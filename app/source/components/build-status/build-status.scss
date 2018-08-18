@@ -19,10 +19,12 @@
 
   &.travis-passed {
     background-image: linear-gradient(150deg, $bright-green, $green);
+    box-shadow: 0 0 20px rgba($green, 0.3);
   }
 
   &.travis-failed {
     background-image: linear-gradient(150deg, $bright-red, $red);
+    box-shadow: 0 0 20px rgba($bright-red, 0.3);
   }
 
   &.travis-started {
@@ -35,8 +37,8 @@
       }
     }
 
-    background-color: $bright-yellow;
     background-image: linear-gradient(150deg, $bright-yellow, $yellow);
+    box-shadow: 0 0 20px rgba($yellow, 0.3);
     color: $dark-gray;
 
     svg {
