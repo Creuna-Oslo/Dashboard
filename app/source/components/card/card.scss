@@ -1,0 +1,23 @@
+.card {
+  padding: 20px 25px;
+  background-image: linear-gradient(
+    150deg,
+    $medium-gray,
+    rgba($medium-gray, 0.3)
+  );
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(black, 0.1);
+
+  &.theme-red {
+    background-color: $red;
+  }
+
+  &.theme-yellow {
+    background-color: $yellow;
+    background-image: linear-gradient(
+      150deg,
+      $medium-gray,
+      rgba($medium-gray, 0.4)
+    );
+  }
+}
