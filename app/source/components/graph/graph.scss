@@ -1,7 +1,10 @@
 .graph {
   width: 100%;
+  box-shadow: inset 0px -30px 60px -30px rgba($blue, 0.5);
 
   canvas {
     width: 100%;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
   }
 }
