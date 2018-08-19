@@ -23,7 +23,9 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
   projectRef(repository.name)
     .child("activity")
     .child(currentDayStartTime)
-    .transaction(activityCount => (activityCount || 0) + 1);
+    .transaction(
+      activityCount => (activityCount || 0) + repository.activityCount
+    );
 
   if (notification) {
     database.ref("notifications").push(

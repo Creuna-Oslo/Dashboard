@@ -74,9 +74,14 @@ const push = payload => {
 };
 
 const getRepositoryMeta = request => {
-  const { repository } = request;
+  const { commits, repository } = request;
 
-  return { name: repository.name, issues: repository.open_issues };
+  return {
+    // 'commits' are only available in 'push' payloads. Fall back to 1
+    activityCount: commits ? commits.length : 1,
+    name: repository.name,
+    issues: repository.open_issues
+  };
 };
 
 // The names of the event handlers must match the event name from the 'x-github-event' header.
