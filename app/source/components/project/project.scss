@@ -13,8 +13,11 @@
 
   hr {
     width: 100%;
-    opacity: 0.2;
+    opacity: 0.8;
     margin: 20px 0;
+    border: none;
+    border-top: 1px solid #989898;
+    mix-blend-mode: overlay;
   }
 }
 

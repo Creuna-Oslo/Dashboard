@@ -1,6 +1,26 @@
 .graph {
   width: 100%;
-  box-shadow: inset 0px -30px 60px -30px rgba($blue, 0.5);
+  background-image: linear-gradient(
+    rgba($blue, 0.01) 30%,
+    rgba($blue, 0.2) 80%,
+    rgba($blue, 0.5) 100%
+  );
+
+  &.theme-yellow {
+    background-image: linear-gradient(
+      rgba($yellow, 0.01) 30%,
+      rgba($yellow, 0.15) 80%,
+      rgba($yellow, 0.3) 100%
+    );
+  }
+
+  &.theme-red {
+    background-image: linear-gradient(
+      rgba($red, 0.01) 30%,
+      rgba($red, 0.2) 80%,
+      rgba($red, 0.5) 100%
+    );
+  }
 
   canvas {
     width: 100%;

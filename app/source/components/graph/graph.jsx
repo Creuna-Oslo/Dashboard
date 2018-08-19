@@ -1,20 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Line } from 'react-chartjs-2';
+
+import cn from 'classnames';
+
 import graphUtils from './graph-utils';
 
 const themes = {
   default: {
-    left: alpha => `rgba(93, 110, 206, ${alpha})`,
-    right: alpha => `rgba(111, 238, 255, ${alpha})`
+    canvas: {
+      left: alpha => `rgba(93, 110, 206, ${alpha})`,
+      right: alpha => `rgba(111, 238, 255, ${alpha})`
+    }
   },
   red: {
-    left: alpha => `rgba(234, 55, 108, ${alpha})`,
-    right: alpha => `rgba(255, 133, 97, ${alpha})`
+    className: 'theme-red',
+    canvas: {
+      left: alpha => `rgba(234, 55, 108, ${alpha})`,
+      right: alpha => `rgba(255, 133, 97, ${alpha})`
+    }
   },
   yellow: {
-    left: alpha => `rgba(255, 133, 97, ${alpha})`,
-    right: alpha => `rgba(255, 235, 59, ${alpha})`
+    className: 'theme-yellow',
+    canvas: {
+      left: alpha => `rgba(255, 133, 97, ${alpha})`,
+      right: alpha => `rgba(255, 235, 59, ${alpha})`
+    }
   }
 };
 
@@ -24,8 +36,8 @@ const Graph = ({ data, theme }) => {
   }
 
   return (
-    <div className="graph">
-      <Line height={40} {...graphUtils.getChartProps(data, theme)} />
+    <div className={cn('graph', theme.className)}>
+      <Line height={40} {...graphUtils.getChartProps(data, theme.canvas)} />
     </div>
   );
 };
