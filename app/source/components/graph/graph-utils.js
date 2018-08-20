@@ -4,8 +4,8 @@ import options from './options.json';
 
 function getChartProps(data, theme) {
   const points = getPoints(data);
-  const maxX = Math.max(...points.map(p => p.x));
-  const minX = Math.min(...points.map(p => p.x));
+  const lastMonthStartTime = new Date().getTime() - 60 * 60 * 24 * 30 * 1000;
+  const lastDayStartTime = new Date().setHours(0, 0, 0, 0);
   const maxY = Math.max(...points.map(p => p.y));
 
   return {
@@ -20,7 +20,7 @@ function getChartProps(data, theme) {
     }),
     options: merge(options, {
       scales: {
-        xAxes: [{ ticks: { min: minX, max: maxX } }],
+        xAxes: [{ ticks: { min: lastMonthStartTime, max: lastDayStartTime } }],
         yAxes: [{ ticks: { max: Math.max(10, maxY) } }]
       }
     })

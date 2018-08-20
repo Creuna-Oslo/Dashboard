@@ -10,7 +10,7 @@ import Graph from '../graph';
 import Package from '../package';
 
 const Project = ({ activity, build, issues, name, npm }) => {
-  const buildStatus = buildStatuses(build.state);
+  const buildStatus = build ? buildStatuses(build.state) : {};
 
   return (
     <Card theme={buildStatus.theme}>
