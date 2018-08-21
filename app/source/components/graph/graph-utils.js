@@ -1,11 +1,7 @@
-import merge from 'lodash/merge';
-
-import options from './options.json';
+import time from 'js/time-helper';
 
 function getChartProps(data, theme) {
   const points = getPoints(data);
-  const lastMonthStartTime = new Date().getTime() - 60 * 60 * 24 * 30 * 1000;
-  const lastDayStartTime = new Date().setHours(0, 0, 0, 0);
   const maxY = Math.max(...points.map(p => p.y));
 
   return {
@@ -18,40 +14,68 @@ function getChartProps(data, theme) {
         }
       ]
     }),
-    options: merge(options, {
+    options: {
+      elements: {
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 5
+        },
+        line: {
+          borderColor: 'white',
+          borderWidth: 2,
+          backgroundColor: 'transparent'
+        }
+      },
+      legend: { display: false },
+      maintainAspectRatio: false,
+      tooltips: {
+        enabled: false
+      },
       scales: {
-        xAxes: [{ ticks: { min: lastMonthStartTime, max: lastDayStartTime } }],
-        yAxes: [{ ticks: { max: Math.max(10, maxY) } }]
+        xAxes: [
+          {
+            display: false,
+            type: 'linear',
+            ticks: { min: time.thisMonth(), max: time.today() }
+          }
+        ],
+        yAxes: [{ display: false, ticks: { max: Math.max(15, maxY) } }]
       }
-    })
+    }
   };
 }
 
 function getPoints(data) {
-  const todayTime = new Date().setUTCHours(0, 0, 0, 0);
+  // Add point for today if it doesn't exist (avoids clipping on the right side)
+  if (!data.hasOwnProperty(time.today())) {
+    data[time.today()] = 0;
+  }
 
-  // Add point for today if it doesn't exist
-  if (!data.hasOwnProperty(todayTime)) {
-    data[todayTime] = 0;
+  // Add point for one month ago if it doesn't exist (avoids clipping on the left side)
+  if (!data.hasOwnProperty(time.thisMonth())) {
+    data[time.thisMonth()] = 0;
   }
 
   // Data is an object with timestamps as keys.
-  const processedData = Object.entries(data).reduce((accum, [time, value]) => {
-    const dayBeforeTime = time - 60 * 60 * 24 * 1000;
-    const lastMonthStartTime = new Date().getTime() - 60 * 60 * 24 * 30 * 1000;
+  const processedData = Object.entries(data).reduce(
+    (accum, [timestamp, value]) => {
+      const dayBeforeTime = time.dayBefore(timestamp);
 
-    if (time < lastMonthStartTime) {
-      // Don't include items older than 30 days
-      return accum;
-    }
+      if (timestamp < time.thisMonth()) {
+        // Don't include items older than 30 days
+        return accum;
+      }
 
-    // Since a repository might not have activity every day, there will be some holes in the data, which will result in the slope of the graph being wrong. To fix this, insert a data point before each non-zero point, if that point doesn't already exist.
-    if (!accum.hasOwnProperty(dayBeforeTime)) {
-      return Object.assign(accum, { [dayBeforeTime]: 0, [time]: value });
-    }
+      // Since a repository might not have activity every day, there will be some holes in the data, which will result in the slope of the graph being wrong. To fix this, insert a data point before each non-zero point, if that point doesn't already exist.
+      if (!accum.hasOwnProperty(dayBeforeTime)) {
+        return Object.assign(accum, { [dayBeforeTime]: 0, [timestamp]: value });
+      }
 
-    return Object.assign(accum, { [time]: value });
-  }, {});
+      return Object.assign(accum, { [timestamp]: value });
+    },
+    {}
+  );
 
   const points = Object.entries(processedData)
     .sort(([key], [otherKey]) => otherKey > key)
