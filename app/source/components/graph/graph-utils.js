@@ -61,15 +61,20 @@ function getPoints(data) {
   const processedData = Object.entries(data).reduce(
     (accum, [timestamp, value]) => {
       const dayBeforeTime = time.dayBefore(timestamp);
+      const dayAfterTime = time.dayAfter(timestamp);
 
       if (timestamp < time.thisMonth()) {
         // Don't include items older than 30 days
         return accum;
       }
 
-      // Since a repository might not have activity every day, there will be some holes in the data, which will result in the slope of the graph being wrong. To fix this, insert a data point before each non-zero point, if that point doesn't already exist.
+      // Since a repository might not have activity every day, there will be some holes in the data, which will result in the slope of the graph being wrong. To fix this, insert a data point before and/or after each non-zero point, if those points doesn't already exist.
       if (!accum.hasOwnProperty(dayBeforeTime)) {
-        return Object.assign(accum, { [dayBeforeTime]: 0, [timestamp]: value });
+        Object.assign(accum, { [dayBeforeTime]: 0 });
+      }
+
+      if (!accum.hasOwnProperty(dayAfterTime)) {
+        Object.assign(accum, { [dayAfterTime]: 0 });
       }
 
       return Object.assign(accum, { [timestamp]: value });
@@ -78,11 +83,11 @@ function getPoints(data) {
   );
 
   const points = Object.entries(processedData)
-    .sort(([key], [otherKey]) => otherKey > key)
+    .sort(([key], [otherKey]) => key - otherKey)
     .reduce(
       (accum, [key, value]) =>
-        // return 0.1 instead of 0 to avoid graph clipping
-        accum.concat({ x: parseInt(key), y: value || 0.1 }),
+        // return 0.3 instead of 0 to avoid graph clipping
+        accum.concat({ x: parseInt(key), y: value || 0.3 }),
       []
     );
 
