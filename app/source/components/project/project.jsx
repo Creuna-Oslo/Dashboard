@@ -11,6 +11,7 @@ import Package from '../package';
 
 const Project = ({ activity, build, issues, name, npm }) => {
   const buildStatus = build ? buildStatuses(build.state) : {};
+  const showLines = Boolean(build || npm);
 
   return (
     <Card theme={buildStatus.theme}>
@@ -23,7 +24,7 @@ const Project = ({ activity, build, issues, name, npm }) => {
         ) : (
           <p className="project-issues">No open issues! ✨</p>
         )}
-        <hr />
+        {showLines && <hr />}
         {build && (
           <div className="project-build">
             <BuildStatus {...build} />
@@ -34,9 +35,9 @@ const Project = ({ activity, build, issues, name, npm }) => {
             <Package {...npm} />
           </div>
         )}
+        {showLines && <hr />}
         {activity && (
           <React.Fragment>
-            <hr />
             <div className="project-activity">
               <p>Activity</p>
               <Graph data={activity} theme={buildStatus.graphTheme} />
