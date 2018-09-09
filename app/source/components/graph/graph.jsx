@@ -31,7 +31,7 @@ const themes = {
 };
 
 const Graph = ({ data, theme }) => {
-  if (Object.keys(data).length < 2) {
+  if (!Object.keys(data).length) {
     return null;
   }
 
