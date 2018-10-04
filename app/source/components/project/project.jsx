@@ -19,7 +19,7 @@ const Project = ({ activity, build, issues, name, npm }) => {
         <h3>{name}</h3>
         {issues ? (
           <p className="project-issues">
-            Open issues: <b>{issues}</b>
+            <b>{issues}</b> open issues
           </p>
         ) : (
           <p className="project-issues">No open issues! ✨</p>
@@ -39,7 +39,6 @@ const Project = ({ activity, build, issues, name, npm }) => {
         {activity && (
           <React.Fragment>
             <div className="project-activity">
-              <p>Activity</p>
               <Graph data={activity} theme={buildStatus.graphTheme} />
             </div>
           </React.Fragment>
