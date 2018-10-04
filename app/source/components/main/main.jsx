@@ -4,6 +4,7 @@ import firebase from 'js/firebase-helper';
 
 import FlipMotion from 'react-flip-motion';
 
+import DebounceRender from '../debounce-render';
 import Grid from '../grid';
 import Notifications from '../notifications';
 import Project from '../project';
@@ -29,7 +30,9 @@ class Main extends React.Component {
       <div className="main">
         <FlipMotion component={Grid}>
           {this.state.projects.map(project => (
-            <Project key={project.name} {...project} />
+            <DebounceRender key={project.name} wait={200}>
+              <Project {...project} />
+            </DebounceRender>
           ))}
         </FlipMotion>
 

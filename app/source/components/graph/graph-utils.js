@@ -15,6 +15,7 @@ function getChartProps(data, theme) {
       ]
     }),
     options: {
+      animation: { duration: 0 },
       elements: {
         point: {
           radius: 0,
