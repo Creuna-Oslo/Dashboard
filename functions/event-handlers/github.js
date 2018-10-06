@@ -79,8 +79,9 @@ const getRepositoryMeta = request => {
   return {
     // 'commits' are only available in 'push' payloads. Fall back to 1
     activityCount: commits ? commits.length : 1,
+    issues: repository.open_issues,
     name: repository.name,
-    issues: repository.open_issues
+    url: repository.html_url
   };
 };
 

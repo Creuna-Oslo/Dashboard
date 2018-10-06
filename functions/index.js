@@ -15,8 +15,9 @@ exports.onGitHubHook = functions.https.onRequest((request, response) => {
   const { notification, repository } = gitHubEventHandler(request);
 
   projectRef(repository.name).update({
+    issues: repository.issues,
     name: repository.name,
-    issues: repository.issues
+    url: repository.url
   });
 
   const currentDayStartTime = new Date().setUTCHours(0, 0, 0, 0);

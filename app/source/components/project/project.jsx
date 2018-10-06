@@ -9,14 +9,16 @@ import BuildStatus from '../build-status';
 import Graph from '../graph';
 import Package from '../package';
 
-const Project = ({ activity, build, issues, name, npm }) => {
+const Project = ({ activity, build, issues, name, npm, url }) => {
   const buildStatus = build ? buildStatuses(build.state) : {};
   const showLines = Boolean(build || npm);
 
   return (
     <Card theme={buildStatus.theme}>
       <div className="project">
-        <h3>{name}</h3>
+        <h3>
+          <a href={url}>{name}</a>
+        </h3>
         {issues ? (
           <p className="project-issues">
             <b>{issues}</b> open issues
@@ -57,7 +59,8 @@ Project.propTypes = {
   }),
   issues: PropTypes.number,
   name: PropTypes.string,
-  npm: PropTypes.object
+  npm: PropTypes.object,
+  url: PropTypes.string
 };
 
 export default Project;
