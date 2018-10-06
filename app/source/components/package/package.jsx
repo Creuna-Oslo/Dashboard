@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from '../icon';
+import Link from '../link';
 import Time from '../time';
 
 const Package = ({ time, url, version }) => (
-  <a href={url} className="package">
+  <Link url={url} className="package">
     <div className="package-icon">
       <Icon name="npm" />
     </div>
@@ -16,7 +17,7 @@ const Package = ({ time, url, version }) => (
         <Time time={time} />
       </div>
     </div>
-  </a>
+  </Link>
 );
 
 Package.propTypes = {

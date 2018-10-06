@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Card from '../card';
-
 import buildStatuses from '../build-status/build-statuses';
 
 import BuildStatus from '../build-status';
+import Card from '../card';
 import Graph from '../graph';
+import Link from '../link';
 import Package from '../package';
 
 const Project = ({ activity, build, issues, name, npm, url }) => {
@@ -17,7 +17,7 @@ const Project = ({ activity, build, issues, name, npm, url }) => {
     <Card theme={buildStatus.theme}>
       <div className="project">
         <h3>
-          <a href={url}>{name}</a>
+          <Link url={url}>{name}</Link>
         </h3>
         {issues ? (
           <p className="project-issues">
