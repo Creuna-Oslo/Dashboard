@@ -4,16 +4,24 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import Icon from '../icon';
+import Link from '../link';
 import Time from '../time';
 import Text from './text';
 
 import buildStatuses from './build-statuses';
 
-const BuildStatus = ({ branch, pullRequest, state, statusMessage, time }) => {
+const BuildStatus = ({
+  branch,
+  pullRequest,
+  state,
+  statusMessage,
+  time,
+  url
+}) => {
   const icon = buildStatuses(state).icon;
 
   return (
-    <div className="build-status">
+    <Link className="build-status" url={url}>
       {icon && (
         <div className={cn('build-status-icon', icon)}>
           <Icon name={icon} theme={Icon.themes.outline} />
@@ -27,7 +35,7 @@ const BuildStatus = ({ branch, pullRequest, state, statusMessage, time }) => {
         />
         <Time time={time} />
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -36,7 +44,8 @@ BuildStatus.propTypes = {
   pullRequest: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   state: PropTypes.string,
   statusMessage: PropTypes.string,
-  time: PropTypes.number
+  time: PropTypes.number,
+  url: PropTypes.string
 };
 
 export default BuildStatus;

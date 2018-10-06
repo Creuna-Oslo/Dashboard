@@ -9,6 +9,7 @@ module.exports = request => {
 
   const {
     branch,
+    build_url,
     pull_request, // Boolean that indicates whether the build was triggered by a PR
     pull_request_number,
     pull_request_title,
@@ -25,6 +26,7 @@ module.exports = request => {
     },
     repositoryName: repository.name,
     state,
-    statusMessage: status_message
+    statusMessage: status_message,
+    url: build_url
   };
 };
