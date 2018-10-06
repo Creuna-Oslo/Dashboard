@@ -41,3 +41,7 @@ functions.config().npm.secret;
 ```
 
 More about environment variables [here](https://firebase.google.com/docs/functions/config-env#set_environment_configuration_for_your_project).
+
+## NPM package urls
+
+NPM does not include a URL to a package in webhook payloads, so this is created manually in `./event-handlers/npm.js`

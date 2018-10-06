@@ -41,6 +41,7 @@ module.exports = request => {
     name,
     repositoryName: getRepositoryName(payload.repository) || name,
     time: new Date().getTime(),
+    url: `https://www.npmjs.com/package/${name}`,
     version: payload["dist-tags"].latest
   };
 };

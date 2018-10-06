@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import Icon from '../icon';
 import Time from '../time';
 
-const Package = ({ version, time }) => (
-  <div className="package">
+const Package = ({ time, url, version }) => (
+  <a href={url} className="package">
     <div className="package-icon">
       <Icon name="npm" />
     </div>
@@ -16,11 +16,12 @@ const Package = ({ version, time }) => (
         <Time time={time} />
       </div>
     </div>
-  </div>
+  </a>
 );
 
 Package.propTypes = {
-  version: PropTypes.string,
-  time: PropTypes.number
+  time: PropTypes.number,
+  url: PropTypes.string,
+  version: PropTypes.string
 };
 export default Package;
