@@ -10,7 +10,7 @@ Database access is set in `database-rules.json`. Read access is disabled by defa
 
 If you're not receiving any data for a field you should check if that field has read access set to `true`.
 
-A global `".read": true` should not be set (unless you want weekly emails from Google reminding you of your insecure database rules).
+A global `'.read': true` should not be set (unless you want weekly emails from Google reminding you of your insecure database rules).
 
 ## Firebase init
 
