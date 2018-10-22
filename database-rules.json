@@ -1,10 +1,14 @@
 {
   "rules": {
-    ".read": true,
     ".write": false,
 
     "notifications": {
-      ".indexOn": ["time"]
+      ".indexOn": ["time"],
+      ".read": true
+    },
+
+    "projects": {
+      ".read": true
     }
   }
 }
