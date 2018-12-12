@@ -9,9 +9,7 @@ import Graph from '../graph';
 import Link from '../link';
 import Package from '../package';
 
-const canBePlural = (count, text) => {
-  return count === 1 ? text.concat('s') : text;
-};
+const canBePlural = (count, text) => (count === 1 ? text.concat('s') : text);
 
 const Project = ({ activity, build, issues, name, npm, url }) => {
   const buildStatus = build ? buildStatuses(build.state) : {};
