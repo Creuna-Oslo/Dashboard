@@ -9,6 +9,8 @@ import Graph from '../graph';
 import Link from '../link';
 import Package from '../package';
 
+const pluralizeLabel = (count, text) => (count === 1 ? text.concat('s') : text);
+
 const Project = ({ activity, build, issues, name, npm, url }) => {
   const buildStatus = build ? buildStatuses(build.state) : {};
   const showLines = Boolean(build || npm);
@@ -21,7 +23,7 @@ const Project = ({ activity, build, issues, name, npm, url }) => {
         </h3>
         {issues ? (
           <p className="project-issues">
-            <b>{issues}</b> open issues
+            <b>{issues}</b> {pluralizeLabel(issues, 'open issue')}
           </p>
         ) : (
           <p className="project-issues">No open issues! ✨</p>
