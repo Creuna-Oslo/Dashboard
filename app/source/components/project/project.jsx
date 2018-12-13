@@ -9,7 +9,7 @@ import Graph from '../graph';
 import Link from '../link';
 import Package from '../package';
 
-const pluralizeLabel = (count, text) => (count === 1 ? text.concat('s') : text);
+const pluralizeLabel = (count, text) => (count === 1 ? text : text.concat('s'));
 
 const Project = ({ activity, build, issues, name, npm, url }) => {
   const buildStatus = build ? buildStatuses(build.state) : {};
