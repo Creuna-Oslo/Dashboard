@@ -41,11 +41,9 @@ const Project = ({ activity, build, issues, name, npm, url }) => {
         )}
         {showLines && <hr />}
         {activity && (
-          <React.Fragment>
-            <div className="project-activity">
-              <Graph data={activity} theme={buildStatus.graphTheme} />
-            </div>
-          </React.Fragment>
+          <div className="project-activity">
+            <Graph data={activity} theme={buildStatus.graphTheme} />
+          </div>
         )}
       </div>
     </Card>
