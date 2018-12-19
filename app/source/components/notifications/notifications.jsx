@@ -1,23 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import FlipMotion from 'react-flip-motion';
 
+import firebase from 'js/firebase-helper';
 import Notification from '../notification';
 
-const Notifications = ({ items }) => (
-  <FlipMotion className="notifications">
-    {items.map(item => (
-      <Notification key={item.time} {...item} />
-    ))}
-  </FlipMotion>
-);
+class Notifications extends React.Component {
+  state = {
+    notifications: []
+  };
 
-Notifications.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape(Notification.propTypes))
-};
+  componentDidMount() {
+    firebase.onNotification(notifications => {
+      this.setState({ notifications });
+    });
+  }
 
-Notifications.defaultProps = {
-  items: []
-};
+  render() {
+    return (
+      <FlipMotion className="notifications">
+        {this.state.notifications.map(item => (
+          <Notification key={item.time} {...item} />
+        ))}
+      </FlipMotion>
+    );
+  }
+}
 
 export default Notifications;

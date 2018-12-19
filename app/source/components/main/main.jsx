@@ -1,34 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import firebase from 'js/firebase-helper';
+const Main = ({ children }) => <div className="main">{children}</div>;
 
-import Notifications from '../notifications';
-import Projects from '../projects';
-
-class Main extends React.Component {
-  state = {
-    notifications: [],
-    projects: []
-  };
-
-  componentDidMount() {
-    firebase.onNotification(notifications => {
-      this.setState({ notifications });
-    });
-
-    firebase.onProjectUpdate(projects => {
-      this.setState({ projects });
-    });
-  }
-
-  render() {
-    return (
-      <div className="main">
-        <Projects items={this.state.projects} />
-        <Notifications items={this.state.notifications} />
-      </div>
-    );
-  }
-}
+Main.propTypes = {
+  children: PropTypes.node
+};
 
 export default Main;

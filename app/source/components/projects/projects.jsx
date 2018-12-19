@@ -1,27 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import FlipMotion from 'react-flip-motion';
 
 import DebounceRender from '../debounce-render';
+import firebase from 'js/firebase-helper';
 import Grid from '../grid';
 import Project from '../project';
 
-const Projects = ({ items }) => (
-  <FlipMotion className="projects" component={Grid}>
-    {items.map(project => (
-      <DebounceRender key={project.name} wait={200}>
-        <Project {...project} />
-      </DebounceRender>
-    ))}
-  </FlipMotion>
-);
+class Projects extends React.Component {
+  state = {
+    projects: []
+  };
 
-Projects.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape(Project.propTypes))
-};
+  componentDidMount() {
+    firebase.onProjectUpdate(projects => {
+      this.setState({ projects });
+    });
+  }
 
-Projects.defaultProps = {
-  items: []
-};
+  render() {
+    return (
+      <FlipMotion className="projects" component={Grid}>
+        {this.state.projects.map(project => (
+          <DebounceRender key={project.name} wait={200}>
+            <Project {...project} />
+          </DebounceRender>
+        ))}
+      </FlipMotion>
+    );
+  }
+}
 
 export default Projects;

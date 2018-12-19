@@ -7,11 +7,6 @@
     "es6": true,
     "node": true
   },
-  "globals": {
-    "describe": true,
-    "it": true,
-    "browser": true
-  },
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -48,6 +43,7 @@
     "react/no-direct-mutation-state": 2,
     "react/no-multi-comp": 1,
     "react/no-unused-prop-types": 1,
+    "react/no-typos": 2,
     "react/prefer-stateless-function": 1,
     "react/prop-types": 1,
     "react/react-in-jsx-scope": 2,
@@ -58,5 +54,10 @@
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "semi": 1
+  },
+  "settings": {
+    "react": {
+      "version": "16.3"
+    }
   }
 }
