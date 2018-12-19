@@ -4,6 +4,13 @@ const issueClose = {
   text: ({ number, title }) => `closed issue <b>#${number} ${title}</b> in`
 };
 
+const issueComment = {
+  className: 'theme-issue-comment',
+  icon: 'issue-comment',
+  text: ({ number, title }) =>
+    `commented on issue <b>#${number} ${title}</b> in`
+};
+
 const issueOpen = {
   className: 'theme-issue-open',
   icon: 'issue-opened',
@@ -32,6 +39,7 @@ const push = {
 
 module.exports = {
   issueClose,
+  issueComment,
   issueOpen,
   prMerge,
   prOpen,
