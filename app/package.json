@@ -21,7 +21,7 @@
     "dev": "node scripts/create-static-site-files && webpack-dev-server --mode=development --env.static",
     "lint": "eslint --ext js,jsx ./source",
     "lint:fix": "eslint --ext js,jsx ./source --fix",
-    "test:ui": "testcafe chrome:headless ./tests/*.js"
+    "test:ui": "testcafe chrome:headless ./ui-tests/*.tests.js"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
