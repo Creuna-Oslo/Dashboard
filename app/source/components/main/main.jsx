@@ -36,9 +36,7 @@ class Main extends React.Component {
           ))}
         </FlipMotion>
 
-        <div className="notifications">
-          <Notifications items={this.state.notifications} />
-        </div>
+        <Notifications items={this.state.notifications} />
       </div>
     );
   }
