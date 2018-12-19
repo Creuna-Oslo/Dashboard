@@ -12,7 +12,7 @@ const Notifications = ({ items }) => (
 );
 
 Notifications.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object)
+  items: PropTypes.arrayOf(PropTypes.shape(Notification.propTypes))
 };
 
 Notifications.defaultProps = {
