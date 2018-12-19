@@ -5,8 +5,9 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const cssnano = require('cssnano');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
@@ -93,22 +94,27 @@ module.exports = (env = {}, options = {}) => {
         {
           test: /\.scss$/,
           exclude: /node_modules/,
-          use: ExtractTextPlugin.extract([
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
             {
               loader: 'css-loader',
               options: {
                 importLoaders: 1,
-                minimize: isProduction,
                 sourceMap: true
               }
             },
             {
               loader: 'postcss-loader',
-              options: { plugins: [autoprefixer], sourceMap: true }
+              options: {
+                plugins: [autoprefixer].concat(isProduction ? [cssnano] : []),
+                sourceMap: true
+              }
             },
             { loader: 'resolve-url-loader' },
             { loader: 'sass-loader', options: { sourceMap: true } }
-          ])
+          ]
         },
         {
           test: /\.(svg|png|jpg|woff2?|ttf|eot)$/,
@@ -146,7 +152,9 @@ module.exports = (env = {}, options = {}) => {
       }
     },
     plugins: [
-      new ExtractTextPlugin('[name].[chunkhash].css'),
+      new MiniCssExtractPlugin({
+        filename: '[name].[contenthash].css'
+      }),
       new ManifestPlugin(),
       new MomentLocalesPlugin(),
       new SuppressChunksPlugin(
