@@ -10,11 +10,11 @@ import Icon from '../icon';
 import Time from '../time';
 
 const Notification = ({ meta, user, repository, time, type }) => {
-  if (!notificationTypes[type]) {
+  const notificationType = notificationTypes[type];
+
+  if (!notificationType) {
     return null;
   }
-
-  const notificationType = notificationTypes[type];
 
   return (
     <Card>
