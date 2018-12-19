@@ -7,6 +7,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 
@@ -147,6 +148,7 @@ module.exports = (env = {}, options = {}) => {
     plugins: [
       new ExtractTextPlugin('[name].[chunkhash].css'),
       new ManifestPlugin(),
+      new MomentLocalesPlugin(),
       new SuppressChunksPlugin(
         [
           {
