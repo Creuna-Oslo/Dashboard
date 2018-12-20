@@ -6,10 +6,9 @@ const autoprefixer = require('autoprefixer');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const cssnano = require('cssnano');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
-const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 
 module.exports = (env = {}, options = {}) => {
@@ -33,13 +32,10 @@ module.exports = (env = {}, options = {}) => {
     devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
     entry: {
       client: './source/static-client.js',
-      server: './source/static-server.js',
       style: './source/scss/style.scss'
     },
     output: {
       filename: '[name].[chunkhash].js',
-      globalObject: 'this',
-      libraryTarget: 'umd',
       path: path.resolve(__dirname, 'dist')
     },
     module: {
@@ -119,23 +115,31 @@ module.exports = (env = {}, options = {}) => {
       new MiniCssExtractPlugin({
         filename: '[name].[contenthash].css'
       }),
-      new ManifestPlugin(),
       new MomentLocalesPlugin(),
       new SuppressChunksPlugin([
         {
           name: 'style',
           match: /\.js(.map)?$/
-        },
-        'server'
-      ]),
-      new StaticSiteGeneratorPlugin({
-        entry: 'server',
-        locals: {
-          isProduction
-        },
-        paths: require('./source/static-site/pages/paths')
-      })
+        }
+      ])
     ]
+      .concat(
+        require('./source/static-site/pages/paths').map(
+          path =>
+            new HtmlWebpackPlugin({
+              filename:
+                path === '/'
+                  ? 'index.html'
+                  : `${path.replace('/', '')}/index.html`,
+              meta: {
+                viewport:
+                  'width=device-width, initial-scale=1, shrink-to-fit=no'
+              },
+              template: './source/static-site/page-template.html',
+              title: '🦄'
+            })
+        )
+      )
       .concat(
         // NOTE: This plugin currently makes the codebase crash when recompiling using webpack-dev-server
         isProduction ? [new webpack.optimize.ModuleConcatenationPlugin()] : []

@@ -66,11 +66,4 @@ klaw(pagesDirectory, { filter: item => path.basename(item)[0] !== '.' })
       ['..', 'source', 'static-site', 'pages', 'pages.js'],
       fileContent
     );
-
-    writeFile(
-      ['..', 'source', 'static-site', 'pages', 'paths.js'],
-      `${disclaimers}\n${`module.exports = [${pages.map(
-        page => `'${page.path}'`
-      )}]`.replace(',]', ']')}`
-    );
   });
