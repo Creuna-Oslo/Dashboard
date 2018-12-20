@@ -1,19 +1,27 @@
 /* eslint-env node */
 /* eslint-disable no-console */
 const path = require('path');
+const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
+const cssnano = require('cssnano');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 
 module.exports = (env = {}, options = {}) => {
-  const shouldMinify = options.mode === 'production';
+  const shouldBuildStaticSite = env.static === true;
+  const isProduction = options.mode === 'production';
   const shouldUseAnalyzer = env.analyzer === true;
 
-  console.log('🖥  Building static site');
+  if (shouldBuildStaticSite) {
+    console.log('🖥  Building static site');
+  }
 
-  if (shouldMinify) {
+  if (isProduction) {
     console.log('📦  Minifying code');
   }
 
@@ -24,18 +32,52 @@ module.exports = (env = {}, options = {}) => {
   return {
     devServer: {
       disableHostCheck: true,
+      inline: false,
       stats: 'minimal'
     },
-    devtool: shouldMinify ? 'source-map' : 'cheap-module-eval-source-map',
-    entry: {
-      site: ['babel-polyfill', 'whatwg-fetch', './source/app.js']
-    },
-    output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: '[name].[chunkhash].js',
-      libraryTarget: 'umd',
-      globalObject: 'this'
-    },
+    devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
+    entry: (() => {
+      const entries = {
+        style: './source/scss/style.scss'
+      };
+      const clientCommons = [
+        'whatwg-fetch',
+        './source/js/input-detection-loader'
+      ];
+
+      if (shouldBuildStaticSite) {
+        entries.client = clientCommons.concat(['./source/static-client.js']);
+        entries.server = './source/static-server.js';
+      } else {
+        entries.client = clientCommons.concat([
+          'expose-loader?React!react',
+          'expose-loader?ReactDOM!react-dom',
+          'expose-loader?Components!./source/app.components.js'
+        ]);
+        entries.server = [
+          './source/js/server-polyfills.js',
+          'expose-loader?React!react',
+          'expose-loader?ReactDOM!react-dom',
+          'expose-loader?ReactDOMServer!react-dom/server',
+          'expose-loader?Components!./source/app.components.js'
+        ];
+      }
+
+      return entries;
+    })(),
+    output: (() => {
+      const output = {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].[chunkhash].js'
+      };
+
+      if (shouldBuildStaticSite) {
+        output.libraryTarget = 'umd';
+        output.globalObject = 'this';
+      }
+
+      return output;
+    })(),
     module: {
       rules: [
         {
@@ -52,22 +94,27 @@ module.exports = (env = {}, options = {}) => {
         {
           test: /\.scss$/,
           exclude: /node_modules/,
-          use: ExtractTextPlugin.extract([
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
             {
               loader: 'css-loader',
               options: {
                 importLoaders: 1,
-                minimize: shouldMinify,
                 sourceMap: true
               }
             },
             {
               loader: 'postcss-loader',
-              options: { plugins: [autoprefixer], sourceMap: true }
+              options: {
+                plugins: [autoprefixer].concat(isProduction ? [cssnano] : []),
+                sourceMap: true
+              }
             },
             { loader: 'resolve-url-loader' },
             { loader: 'sass-loader', options: { sourceMap: true } }
-          ])
+          ]
         },
         {
           test: /\.(svg|png|jpg|woff2?|ttf|eot)$/,
@@ -105,19 +152,54 @@ module.exports = (env = {}, options = {}) => {
       }
     },
     plugins: [
-      new ExtractTextPlugin('[name].[chunkhash].css'),
-      new LodashModuleReplacementPlugin({
-        paths: true
+      new MiniCssExtractPlugin({
+        filename: '[name].[contenthash].css'
       }),
-      new SuppressChunksPlugin([
-        {
-          name: 'style',
-          match: /\.js(.map)?$/
-        }
-      ]),
-      new HtmlPlugin({
-        template: 'source/index.html'
-      })
+      new ManifestPlugin(),
+      new MomentLocalesPlugin(),
+      new SuppressChunksPlugin(
+        [
+          {
+            name: 'style',
+            match: /\.js(.map)?$/
+          }
+        ].concat(shouldBuildStaticSite ? ['server'] : [])
+      )
     ]
+      .concat(
+        // NOTE: This plugin currently makes the codebase crash when recompiling using webpack-dev-server
+        isProduction ? [new webpack.optimize.ModuleConcatenationPlugin()] : []
+      )
+      .concat(
+        shouldBuildStaticSite
+          ? [
+              new StaticSiteGeneratorPlugin({
+                entry: 'server',
+                locals: {
+                  isProduction
+                },
+                paths: require('./source/static-site/pages/paths')
+              })
+            ]
+          : []
+      )
+      .concat(shouldUseAnalyzer ? [new BundleAnalyzerPlugin()] : []),
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: module => {
+              if (module.resource && /^.*\.(css|scss)$/.test(module.resource)) {
+                return false;
+              }
+
+              return module.context && module.context.includes('node_modules');
+            },
+            chunks: chunk => chunk.name === 'client',
+            name: 'vendor'
+          }
+        }
+      }
+    }
   };
 };

@@ -1,5 +1,5 @@
 // Converts firebase snapshot (object) to array
-module.exports = snapshot => {
+export default snapshot => {
   if (!snapshot.val || !snapshot.val()) {
     return [];
   }

@@ -1,47 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import firebase from 'js/firebase-helper';
+const Main = ({ children }) => <div className="main">{children}</div>;
 
-import FlipMotion from 'react-flip-motion';
-
-import DebounceRender from '../debounce-render';
-import Grid from '../grid';
-import Notifications from '../notifications';
-import Project from '../project';
-
-class Main extends React.Component {
-  state = {
-    notifications: [],
-    projects: []
-  };
-
-  componentDidMount() {
-    firebase.onNotification(notifications => {
-      this.setState({ notifications });
-    });
-
-    firebase.onProjectUpdate(projects => {
-      this.setState({ projects });
-    });
-  }
-
-  render() {
-    return (
-      <div className="main">
-        <FlipMotion component={Grid}>
-          {this.state.projects.map(project => (
-            <DebounceRender key={project.name} wait={200}>
-              <Project {...project} />
-            </DebounceRender>
-          ))}
-        </FlipMotion>
-
-        <div className="notifications">
-          <Notifications items={this.state.notifications} />
-        </div>
-      </div>
-    );
-  }
-}
+Main.propTypes = {
+  children: PropTypes.node
+};
 
 export default Main;

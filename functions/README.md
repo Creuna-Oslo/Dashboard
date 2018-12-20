@@ -1,5 +1,11 @@
 # Cloud functions
 
+## GitHub webhooks
+
+Webhooks are documented [here](https://developer.github.com/webhooks/).
+
+The different events' response payloads are documented [here](https://developer.github.com/v3/activity/events/types/).
+
 ## Travis webhooks
 
 To add a Travis webhook for a repo, edit the `.travis.yml` for the repo like so:

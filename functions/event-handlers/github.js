@@ -3,6 +3,21 @@ const getUser = user => ({
   name: user.login
 });
 
+const issue_comment = payload => {
+  const { issue, repository } = payload;
+
+  return {
+    meta: {
+      number: issue.number,
+      title: issue.title
+    },
+    repository: {
+      name: repository.name
+    },
+    user: getUser(issue.user)
+  }
+};
+
 const issues = payload => {
   const { action, issue, repository } = payload;
 
@@ -87,6 +102,7 @@ const getRepositoryMeta = request => {
 
 // The names of the event handlers must match the event name from the 'x-github-event' header.
 const eventHandlers = {
+  issue_comment,
   issues,
   pull_request,
   push

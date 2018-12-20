@@ -23,7 +23,7 @@ const onProjectUpdate = callback => {
   });
 };
 
-module.exports = {
+export default {
   onNotification,
   onProjectUpdate
 };
