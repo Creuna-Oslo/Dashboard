@@ -8,7 +8,7 @@ script:
   - yarn lint # "test" cloud functions
   - cd ../app && yarn lint # "test" client
 before_deploy:
-  - yarn build # build static site
+  - yarn build:static # build static site
   - cd .. # deploy needs to be run from root
 deploy:
   provider: firebase
