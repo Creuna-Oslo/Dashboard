@@ -6,20 +6,14 @@ const autoprefixer = require('autoprefixer');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const cssnano = require('cssnano');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
-const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 
 module.exports = (env = {}, options = {}) => {
-  const shouldBuildStaticSite = env.static === true;
   const isProduction = options.mode === 'production';
   const shouldUseAnalyzer = env.analyzer === true;
-
-  if (shouldBuildStaticSite) {
-    console.log('🖥  Building static site');
-  }
 
   if (isProduction) {
     console.log('📦  Minifying code');
@@ -36,48 +30,14 @@ module.exports = (env = {}, options = {}) => {
       stats: 'minimal'
     },
     devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
-    entry: (() => {
-      const entries = {
-        style: './source/scss/style.scss'
-      };
-      const clientCommons = [
-        'whatwg-fetch',
-        './source/js/input-detection-loader'
-      ];
-
-      if (shouldBuildStaticSite) {
-        entries.client = clientCommons.concat(['./source/static-client.js']);
-        entries.server = './source/static-server.js';
-      } else {
-        entries.client = clientCommons.concat([
-          'expose-loader?React!react',
-          'expose-loader?ReactDOM!react-dom',
-          'expose-loader?Components!./source/app.components.js'
-        ]);
-        entries.server = [
-          './source/js/server-polyfills.js',
-          'expose-loader?React!react',
-          'expose-loader?ReactDOM!react-dom',
-          'expose-loader?ReactDOMServer!react-dom/server',
-          'expose-loader?Components!./source/app.components.js'
-        ];
-      }
-
-      return entries;
-    })(),
-    output: (() => {
-      const output = {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[chunkhash].js'
-      };
-
-      if (shouldBuildStaticSite) {
-        output.libraryTarget = 'umd';
-        output.globalObject = 'this';
-      }
-
-      return output;
-    })(),
+    entry: {
+      client: './source/static-client.js',
+      style: './source/scss/style.scss'
+    },
+    output: {
+      filename: '[name].[chunkhash].js',
+      path: path.resolve(__dirname, 'dist')
+    },
     module: {
       rules: [
         {
@@ -155,33 +115,34 @@ module.exports = (env = {}, options = {}) => {
       new MiniCssExtractPlugin({
         filename: '[name].[contenthash].css'
       }),
-      new ManifestPlugin(),
       new MomentLocalesPlugin(),
-      new SuppressChunksPlugin(
-        [
-          {
-            name: 'style',
-            match: /\.js(.map)?$/
-          }
-        ].concat(shouldBuildStaticSite ? ['server'] : [])
-      )
+      new SuppressChunksPlugin([
+        {
+          name: 'style',
+          match: /\.js(.map)?$/
+        }
+      ])
     ]
+      .concat(
+        require('./source/static-site/pages/paths').map(
+          path =>
+            new HtmlWebpackPlugin({
+              filename:
+                path === '/'
+                  ? 'index.html'
+                  : `${path.replace('/', '')}/index.html`,
+              meta: {
+                viewport:
+                  'width=device-width, initial-scale=1, shrink-to-fit=no'
+              },
+              template: './source/static-site/page-template.html',
+              title: '🦄'
+            })
+        )
+      )
       .concat(
         // NOTE: This plugin currently makes the codebase crash when recompiling using webpack-dev-server
         isProduction ? [new webpack.optimize.ModuleConcatenationPlugin()] : []
-      )
-      .concat(
-        shouldBuildStaticSite
-          ? [
-              new StaticSiteGeneratorPlugin({
-                entry: 'server',
-                locals: {
-                  isProduction
-                },
-                paths: require('./source/static-site/pages/paths')
-              })
-            ]
-          : []
       )
       .concat(shouldUseAnalyzer ? [new BundleAnalyzerPlugin()] : []),
     optimization: {
