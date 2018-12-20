@@ -14,8 +14,9 @@ const issue_comment = payload => {
     repository: {
       name: repository.name
     },
+    type: "issueComment",
     user: getUser(issue.user)
-  }
+  };
 };
 
 const issues = payload => {
