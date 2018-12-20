@@ -13,13 +13,8 @@ const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin'
 const SuppressChunksPlugin = require('suppress-chunks-webpack-plugin').default;
 
 module.exports = (env = {}, options = {}) => {
-  const shouldBuildStaticSite = env.static === true;
   const isProduction = options.mode === 'production';
   const shouldUseAnalyzer = env.analyzer === true;
-
-  if (shouldBuildStaticSite) {
-    console.log('🖥  Building static site');
-  }
 
   if (isProduction) {
     console.log('📦  Minifying code');
@@ -36,48 +31,17 @@ module.exports = (env = {}, options = {}) => {
       stats: 'minimal'
     },
     devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
-    entry: (() => {
-      const entries = {
-        style: './source/scss/style.scss'
-      };
-      const clientCommons = [
-        'whatwg-fetch',
-        './source/js/input-detection-loader'
-      ];
-
-      if (shouldBuildStaticSite) {
-        entries.client = clientCommons.concat(['./source/static-client.js']);
-        entries.server = './source/static-server.js';
-      } else {
-        entries.client = clientCommons.concat([
-          'expose-loader?React!react',
-          'expose-loader?ReactDOM!react-dom',
-          'expose-loader?Components!./source/app.components.js'
-        ]);
-        entries.server = [
-          './source/js/server-polyfills.js',
-          'expose-loader?React!react',
-          'expose-loader?ReactDOM!react-dom',
-          'expose-loader?ReactDOMServer!react-dom/server',
-          'expose-loader?Components!./source/app.components.js'
-        ];
-      }
-
-      return entries;
-    })(),
-    output: (() => {
-      const output = {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[chunkhash].js'
-      };
-
-      if (shouldBuildStaticSite) {
-        output.libraryTarget = 'umd';
-        output.globalObject = 'this';
-      }
-
-      return output;
-    })(),
+    entry: {
+      client: './source/static-client.js',
+      server: './source/static-server.js',
+      style: './source/scss/style.scss'
+    },
+    output: {
+      filename: '[name].[chunkhash].js',
+      globalObject: 'this',
+      libraryTarget: 'umd',
+      path: path.resolve(__dirname, 'dist')
+    },
     module: {
       rules: [
         {
@@ -157,31 +121,24 @@ module.exports = (env = {}, options = {}) => {
       }),
       new ManifestPlugin(),
       new MomentLocalesPlugin(),
-      new SuppressChunksPlugin(
-        [
-          {
-            name: 'style',
-            match: /\.js(.map)?$/
-          }
-        ].concat(shouldBuildStaticSite ? ['server'] : [])
-      )
+      new SuppressChunksPlugin([
+        {
+          name: 'style',
+          match: /\.js(.map)?$/
+        },
+        'server'
+      ]),
+      new StaticSiteGeneratorPlugin({
+        entry: 'server',
+        locals: {
+          isProduction
+        },
+        paths: require('./source/static-site/pages/paths')
+      })
     ]
       .concat(
         // NOTE: This plugin currently makes the codebase crash when recompiling using webpack-dev-server
         isProduction ? [new webpack.optimize.ModuleConcatenationPlugin()] : []
-      )
-      .concat(
-        shouldBuildStaticSite
-          ? [
-              new StaticSiteGeneratorPlugin({
-                entry: 'server',
-                locals: {
-                  isProduction
-                },
-                paths: require('./source/static-site/pages/paths')
-              })
-            ]
-          : []
       )
       .concat(shouldUseAnalyzer ? [new BundleAnalyzerPlugin()] : []),
     optimization: {
