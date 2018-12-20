@@ -3,7 +3,6 @@ import FlipMotion from 'react-flip-motion';
 
 import DebounceRender from '../debounce-render';
 import firebase from 'js/firebase-helper';
-import Grid from '../grid';
 import Project from '../project';
 
 class Projects extends React.Component {
@@ -19,7 +18,7 @@ class Projects extends React.Component {
 
   render() {
     return (
-      <FlipMotion className="projects" component={Grid}>
+      <FlipMotion className="projects">
         {this.state.projects.map(project => (
           <DebounceRender key={project.name} wait={200}>
             <Project {...project} />
