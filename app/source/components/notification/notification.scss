@@ -1,6 +1,11 @@
 .notification {
   align-items: center;
   display: flex;
+  position: relative;
+
+  @media (min-width: $breakpoint-m) {
+    position: static;
+  }
 
   b {
     display: inline-block;
@@ -56,11 +61,22 @@
   }
 }
 
-.notification-username {
-  margin-right: 0.3em;
+.notification-text {
+  @media (min-width: $breakpoint-m) {
+    margin-right: 15px;
+  }
 }
 
 .notification-time {
-  flex-shrink: 0;
-  margin-left: auto;
+  bottom: -15px;
+  position: absolute;
+  right: 0;
+
+  @media (min-width: $breakpoint-m) {
+    bottom: auto;
+    flex-shrink: 0;
+    margin-left: auto;
+    position: static;
+    right: auto;
+  }
 }

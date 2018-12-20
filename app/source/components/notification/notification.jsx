@@ -31,7 +31,7 @@ const Notification = ({ meta, user, repository, time, type }) => {
         </div>
 
         <div className="notification-text">
-          <b className="notification-username">{user.name}</b>
+          <b>{user.name}</b>{' '}
           <span
             dangerouslySetInnerHTML={{
               __html: `${notificationType.text(meta)} `
