@@ -81,7 +81,7 @@ const push = payload => {
   return {
     meta: { size: commits.length },
     repository: {
-      branch: ref.split("/").pop(),
+      branch: ref.split("/").slice(2).join('/'),
       name: repository.name
     },
     type: "push",
