@@ -18,3 +18,26 @@
     );
   }
 }
+
+.audio-actions {
+  background: rgba($dark-gray, 0.5);
+  border-radius: 10px;
+  bottom: 10px;
+  left: 10px;
+  padding: 10px;
+  position: fixed;
+}
+
+.audio-action {
+  background: $medium-gray;
+  border: 0;
+  border-radius: 10px;
+  color: white;
+  font: inherit;
+  margin-left: 10px;
+  padding: 10px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
