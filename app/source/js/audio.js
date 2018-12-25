@@ -1,14 +1,19 @@
 import noteFrequencies from './note-frequencies';
-import Sound from './sound';
+import playSound from './play-sound';
 
-const play = (context, frequency = noteFrequencies.gSharp3) => {
-  if (!context || isNaN(frequency)) {
+const play = context => {
+  if (!context) {
     return;
   }
 
-  const sound = new Sound(context);
-  sound.play(frequency);
-  sound.stop();
+  const outNode = context.createGain();
+  const time = context.currentTime;
+
+  playSound(context, noteFrequencies.g4, time, outNode);
+  playSound(context, noteFrequencies.a4, time + 0.15, outNode);
+  playSound(context, noteFrequencies.d5, time + 0.3, outNode);
+
+  outNode.connect(context.destination);
 };
 
 export default {
