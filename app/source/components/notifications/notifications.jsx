@@ -1,8 +1,7 @@
 import React from 'react';
 import FlipMotion from 'react-flip-motion';
 
-import audio from 'js/audio';
-import AudioContext from 'js/audio-context';
+import AudioPlayer from 'js/audio-player';
 import firebase from 'js/firebase-helper';
 import Notification from '../notification';
 
@@ -21,10 +20,12 @@ class Notifications extends React.Component {
     notifications: []
   };
 
-  audioContext = undefined;
+  audioPlayer = undefined;
 
   play = () => {
-    audio.play(this.audioContext);
+    if (this.audioPlayer) {
+      this.audioPlayer.play();
+    }
   };
 
   toggleMute = () => {
@@ -32,9 +33,9 @@ class Notifications extends React.Component {
       previousState => ({ isMuted: !previousState.isMuted }),
       () => {
         if (this.state.isMuted) {
-          this.audioContext = undefined;
+          this.audioPlayer = undefined;
         } else {
-          this.audioContext = new AudioContext();
+          this.audioPlayer = new AudioPlayer();
         }
       }
     );
