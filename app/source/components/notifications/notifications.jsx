@@ -1,7 +1,7 @@
 import React from 'react';
 import FlipMotion from 'react-flip-motion';
 
-import AudioPlayer from 'js/audio-player';
+import AudioPlayer from 'js/audio/audio-player';
 import firebase from 'js/firebase-helper';
 import Notification from '../notification';
 
