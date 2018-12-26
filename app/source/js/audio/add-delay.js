@@ -1,3 +1,5 @@
+import chain from './chain';
+
 function monoDelay(
   context,
   inputNode,
@@ -14,11 +16,8 @@ function monoDelay(
   feedbackNode.gain.value = feedback;
   gainNode.gain.value = gain;
 
-  inputNode.connect(delayNode);
-  delayNode.connect(feedbackNode);
-  feedbackNode.connect(delayNode);
-  delayNode.connect(gainNode);
-  gainNode.connect(outputNode);
+  chain(inputNode, delayNode, gainNode, outputNode);
+  chain(delayNode, feedbackNode, delayNode);
 }
 
 function pingPongDelay(
