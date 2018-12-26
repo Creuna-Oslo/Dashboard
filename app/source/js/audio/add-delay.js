@@ -13,7 +13,7 @@ function monoDelay(
   const gainNode = context.createGain();
 
   delayNode.delayTime.value = time;
-  feedbackNode.gain.value = feedback;
+  feedbackNode.gain.value = Math.min(0.99, feedback);
   gainNode.gain.value = gain;
 
   chain(inputNode, delayNode, gainNode, outputNode);
