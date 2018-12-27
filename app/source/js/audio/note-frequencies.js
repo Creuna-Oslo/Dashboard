@@ -110,30 +110,3 @@ const noteFrequencies = {
 };
 
 export default noteFrequencies;
-
-// NOTE: Used on http://pages.mtu.edu/~suits/notefreqs.html to extract frequencies
-const scrape = () => {
-  const frequencies = Array.from(document.querySelectorAll('tr'))
-    .filter(row => Array.from(row.querySelectorAll('td')).length === 3)
-    .map(row => {
-      const cells = Array.from(row.querySelectorAll('td'));
-      const identifier = cells[0].textContent
-        .split('/')[0]
-        .toLowerCase()
-        .trim()
-        .replace('#', 'Sharp');
-      const frequency = cells[1].textContent;
-
-      return {
-        name: identifier,
-        frequency: Number(frequency)
-      };
-    })
-    .reduce(
-      (accumulator, note) =>
-        Object.assign({}, accumulator, {
-          [note.name]: note.frequency
-        }),
-      {}
-    );
-};
