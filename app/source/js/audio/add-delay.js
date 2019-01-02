@@ -28,6 +28,12 @@ function pingPongDelay(
   feedback = 0.5,
   outputNode = context.destination
 ) {
+  // NOTE: Not all implementations have `createStereoPanner`
+  if (!context.createStereoPanner) {
+    monoDelay(context, inputNode, time, gain, feedback, outputNode);
+    return;
+  }
+
   const panLeftNode = context.createStereoPanner();
   const panRightNode = context.createStereoPanner();
   const delayNode = context.createDelay(time); // constructur sets maxDelayTime
