@@ -18,15 +18,20 @@ const Notification = ({ meta, user, repository, time, type }) => {
 
   return (
     <Card>
-      <div className={cn('notification', notificationType.className)}>
-        <img src={user.avatar} />
-        {notificationType.icon && (
-          <div className="notification-icon">
-            <Icon name={notificationType.icon} />
-          </div>
-        )}
+      <div className="notification">
+        <div className="notification-user">
+          <img className="notification-avatar" src={user.avatar} />
+          {notificationType.icon && (
+            <div
+              className={cn('notification-icon', notificationType.className)}
+            >
+              <Icon name={notificationType.icon} />
+            </div>
+          )}
+        </div>
+
         <div className="notification-text">
-          <b className="notification-username">{user.name}</b>
+          <b>{user.name}</b>{' '}
           <span
             dangerouslySetInnerHTML={{
               __html: `${notificationType.text(meta)} `

@@ -1,60 +1,82 @@
 .notification {
-  display: flex;
   align-items: center;
+  display: flex;
+  position: relative;
 
-  img {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
+  @media (min-width: $breakpoint-m) {
+    position: static;
   }
 
   b {
     display: inline-block;
   }
+}
+
+.notification-user {
+  align-self: flex-start;
+  flex-shrink: 0;
+  height: 40px;
+  margin-right: 35px;
+  position: relative;
+  width: 40px;
+}
+
+.notification-avatar {
+  border-radius: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.notification-icon {
+  align-items: center;
+  background-image: linear-gradient(150deg, $medium-gray, $dark-gray);
+  border-radius: 100%;
+  bottom: 0;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  position: absolute;
+  right: -20px;
+  width: 30px;
 
   &.theme-issue-close {
-    .notification-icon {
-      background-color: $bright-red;
-      background-image: linear-gradient(150deg, $bright-red, $red);
-    }
+    background-color: $bright-red;
+    background-image: linear-gradient(150deg, $bright-red, $red);
   }
 
   &.theme-pull-request,
   &.theme-issue-open {
-    .notification-icon {
-      background-color: $bright-green;
-      background-image: linear-gradient(150deg, $bright-green, $green);
-    }
+    background-color: $bright-green;
+    background-image: linear-gradient(150deg, $bright-green, $green);
+  }
+
+  &.theme-issue-comment {
+    background-color: $bright-blue;
+    background-image: linear-gradient(150deg, $bright-blue, $blue);
   }
 
   &.theme-merge {
-    .notification-icon {
-      background-color: $bright-purple;
-      background-image: linear-gradient(150deg, $bright-purple, $purple);
-    }
+    background-color: $bright-purple;
+    background-image: linear-gradient(150deg, $bright-purple, $purple);
   }
 }
 
-.notification-icon {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: flex-end;
-  height: 30px;
-  width: 30px;
-  margin-left: -10px;
-  margin-right: 15px;
-  border-radius: 100%;
-  background-image: linear-gradient(150deg, $medium-gray, $dark-gray);
-}
-
-.notification-username {
-  margin-right: 0.3em;
+.notification-text {
+  @media (min-width: $breakpoint-m) {
+    margin-right: 15px;
+  }
 }
 
 .notification-time {
-  flex-shrink: 0;
-  margin-left: auto;
+  bottom: -15px;
+  position: absolute;
+  right: 0;
+
+  @media (min-width: $breakpoint-m) {
+    bottom: auto;
+    flex-shrink: 0;
+    margin-left: auto;
+    position: static;
+    right: auto;
+  }
 }
