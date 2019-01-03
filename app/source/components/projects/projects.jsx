@@ -12,7 +12,15 @@ class Projects extends React.Component {
 
   componentDidMount() {
     firebase.onProjectUpdate(projects => {
-      this.setState({ projects });
+      const sortedProjects = projects.sort((a, b) => {
+        if ((a.build || a.npm) && !(b.build || b.npm)) {
+          return -1;
+        }
+
+        return b.build || b.npm ? 1 : 0;
+      });
+
+      this.setState({ projects: sortedProjects });
     });
   }
 
