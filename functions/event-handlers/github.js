@@ -20,7 +20,7 @@ const issue_comment = payload => {
 };
 
 const issues = payload => {
-  const { action, issue, repository } = payload;
+  const { action, issue, repository, sender } = payload;
 
   // Only notify when issues are opened and closed
   if (!["opened", "closed"].includes(action)) {
@@ -36,7 +36,7 @@ const issues = payload => {
       name: repository.name
     },
     type: action === "opened" ? "issueOpen" : "issueClose",
-    user: getUser(issue.user)
+    user: getUser(sender)
   };
 };
 
