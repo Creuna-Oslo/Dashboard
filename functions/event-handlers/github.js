@@ -1,6 +1,7 @@
 const getUser = user => ({
   avatar: user.avatar_url,
-  name: user.login
+  name: user.login,
+  url: user.url
 });
 
 const issue_comment = payload => {
@@ -81,7 +82,10 @@ const push = payload => {
   return {
     meta: { size: commits.length },
     repository: {
-      branch: ref.split("/").slice(2).join('/'),
+      branch: ref
+        .split("/")
+        .slice(2)
+        .join("/"),
       name: repository.name
     },
     type: "push",
