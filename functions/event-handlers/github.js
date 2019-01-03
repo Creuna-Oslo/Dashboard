@@ -4,7 +4,7 @@ const getUser = user => ({
 });
 
 const issue_comment = payload => {
-  const { issue, repository } = payload;
+  const { comment, issue, repository } = payload;
 
   return {
     meta: {
@@ -15,7 +15,7 @@ const issue_comment = payload => {
       name: repository.name
     },
     type: "issueComment",
-    user: getUser(issue.user)
+    user: getUser(comment.user)
   };
 };
 
