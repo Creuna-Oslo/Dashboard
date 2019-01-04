@@ -20,17 +20,12 @@
     background-color: $yellow;
   }
 
-  h2,
-  h3 {
+  h2 {
     font-size: 2em;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  h3 {
-    font-size: 1.2em;
   }
 }
 
