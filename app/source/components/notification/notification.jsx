@@ -21,7 +21,9 @@ const Notification = ({ meta, user, repository, time, type }) => {
     <Card>
       <div className="notification">
         <div className="notification-user">
-          <img className="notification-avatar" src={user.avatar} />
+          <Link className="notification-avatar" url={user.url}>
+            <img src={user.avatar} />
+          </Link>
           {notificationType.icon && (
             <div
               className={cn('notification-icon', notificationType.className)}
@@ -32,7 +34,10 @@ const Notification = ({ meta, user, repository, time, type }) => {
         </div>
 
         <div className="notification-text">
-          <b>{user.name}</b> {notificationType.text(meta)}{' '}
+          <b>
+            <Link url={user.url}>{user.name}</Link>
+          </b>{' '}
+          {notificationType.text(meta)}{' '}
           <b>
             <Link url={repository.url}>{repository.name}</Link>
             {repository.branch ? '/' + repository.branch : ''}

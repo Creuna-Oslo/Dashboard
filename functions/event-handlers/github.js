@@ -6,7 +6,8 @@ const getIssue = issue => ({
 
 const getUser = user => ({
   avatar: user.avatar_url,
-  name: user.login
+  name: user.login,
+  url: user.url
 });
 
 const getRepo = repository => ({
