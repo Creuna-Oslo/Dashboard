@@ -59,7 +59,8 @@ const pull_request = payload => {
   return {
     meta: {
       number,
-      title: pr.title
+      title: pr.title,
+      url: pr.html_url
     },
     repository: getRepo(pr.base.repo),
     type: merged ? "prMerge" : "prOpen",

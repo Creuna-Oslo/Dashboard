@@ -40,12 +40,18 @@ const issueOpen = {
   )
 };
 
+const PrLink = ({ number, title, url }) => (
+  <b>
+    <Link url={url}>{`#${number} ${title}`}</Link>
+  </b>
+);
+
 const prMerge = {
   className: 'theme-merge',
   icon: 'git-merge',
-  text: ({ number, title }) => (
+  text: meta => (
     <React.Fragment>
-      merged pull request <b>{`#${number} ${title}`}</b> in
+      merged pull request <PrLink {...meta} /> in
     </React.Fragment>
   )
 };
@@ -53,9 +59,9 @@ const prMerge = {
 const prOpen = {
   className: 'theme-pull-request',
   icon: 'git-pull-request',
-  text: ({ number, title }) => (
+  text: meta => (
     <React.Fragment>
-      created pull request <b>{`#${number} ${title}`}</b> in
+      created pull request <PrLink {...meta} /> in
     </React.Fragment>
   )
 };
