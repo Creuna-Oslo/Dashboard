@@ -79,13 +79,12 @@ const push = payload => {
 
   return {
     meta: { size: commits.length },
-    repository: {
-      ...getRepo(repository),
+    repository: Object.assign({}, getRepo(repository), {
       branch: ref
         .split("/")
         .slice(2)
         .join("/")
-    },
+    }),
     type: "push",
     user: getUser(sender)
   };
