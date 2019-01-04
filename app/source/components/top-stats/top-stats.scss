@@ -1,4 +1,4 @@
-.leaderboard {
+.top-stats {
   flex-grow: 1;
 
   p {
@@ -8,13 +8,13 @@
   }
 }
 
-.leaderboard-project {
+.top-stats-project {
   b {
     color: $bright-blue;
   }
 }
 
-.leaderboard-users {
+.top-stats-users {
   p:first-of-type {
     b {
       color: $bright-yellow;
@@ -32,7 +32,7 @@
   }
 }
 
-.leaderboard-issues {
+.top-stats-issues {
   b {
     color: $bright-green;
   }

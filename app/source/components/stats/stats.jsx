@@ -6,7 +6,7 @@ import peakActivity from './peak-activity';
 
 import Card from '../card';
 import Graph from '../graph';
-import Leaderboard from '../leaderboard';
+import TopStats from '../top-stats';
 
 class Stats extends React.Component {
   static propTypes = {};
@@ -49,7 +49,7 @@ class Stats extends React.Component {
           )}
         </Card>
 
-        <Leaderboard
+        <TopStats
           notifications={this.state.notifications}
           projects={this.state.projects}
         />

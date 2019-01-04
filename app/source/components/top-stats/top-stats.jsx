@@ -5,17 +5,17 @@ import stats from './leaderboard-stats';
 
 import Card from '../card';
 
-const Leaderboard = ({ notifications, projects }) => {
+const TopStats = ({ notifications, projects }) => {
   const issues = stats.mostOpenIssues(projects);
   const project = stats.mostActiveProject(projects);
   const users = stats.mostActiveUser(notifications);
 
   return (
-    <div className="leaderboard">
+    <div className="top-stats">
       <Card>
         <h2>Top things</h2>
         {!!project.activityCount && (
-          <div className="leaderboard-project">
+          <div className="top-stats-project">
             <h3>Most active project</h3>
             <p>
               <b>{project.name}</b> with <b>{project.activityCount}</b>{' '}
@@ -23,16 +23,18 @@ const Leaderboard = ({ notifications, projects }) => {
             </p>
           </div>
         )}
+
         {!!issues.issues && (
-          <div className="leaderboard-issues">
+          <div className="top-stats-issues">
             <h3>Most open issues</h3>
             <p>
               <b>{issues.name}</b> with <b>{issues.issues}</b> open issues
             </p>
           </div>
         )}
+
         {!!users.length && (
-          <div className="leaderboard-users">
+          <div className="top-stats-users">
             <h3>Most activ people</h3>
             {users.map(user => (
               <p key={user.name}>
@@ -47,9 +49,9 @@ const Leaderboard = ({ notifications, projects }) => {
   );
 };
 
-Leaderboard.propTypes = {
+TopStats.propTypes = {
   notifications: PropTypes.arrayOf(PropTypes.object),
   projects: PropTypes.arrayOf(PropTypes.object)
 };
 
-export default Leaderboard;
+export default TopStats;
