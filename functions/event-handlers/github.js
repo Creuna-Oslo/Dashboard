@@ -1,12 +1,17 @@
+const getIssue = issue => ({
+  number: issue.number,
+  title: issue.title,
+  url: issue.html_url
+});
+
 const getUser = user => ({
   avatar: user.avatar_url,
   name: user.login
 });
 
-const getIssue = issue => ({
-  number: issue.number,
-  title: issue.title,
-  url: issue.html_url
+const getRepo = repository => ({
+  name: repository.name,
+  url: repository.html_url
 });
 
 const issue_comment = payload => {
@@ -14,9 +19,7 @@ const issue_comment = payload => {
 
   return {
     meta: getIssue(issue),
-    repository: {
-      name: repository.name
-    },
+    repository: getRepo(repository),
     type: "issueComment",
     user: getUser(comment.user)
   };
@@ -32,9 +35,7 @@ const issues = payload => {
 
   return {
     meta: getIssue(issue),
-    repository: {
-      name: repository.name
-    },
+    repository: getRepo(repository),
     type: action === "opened" ? "issueOpen" : "issueClose",
     user: getUser(sender)
   };
@@ -59,9 +60,7 @@ const pull_request = payload => {
       number,
       title: pr.title
     },
-    repository: {
-      name: pr.base.repo.name
-    },
+    repository: getRepo(pr.base.repo),
     type: merged ? "prMerge" : "prOpen",
     user: getUser(pr.merged_by || pr.user)
   };
@@ -80,13 +79,12 @@ const push = payload => {
 
   return {
     meta: { size: commits.length },
-    repository: {
+    repository: Object.assign({}, getRepo(repository), {
       branch: ref
         .split("/")
         .slice(2)
-        .join("/"),
-      name: repository.name
-    },
+        .join("/")
+    }),
     type: "push",
     user: getUser(sender)
   };
