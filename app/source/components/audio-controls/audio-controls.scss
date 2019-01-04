@@ -20,25 +20,6 @@
   }
 }
 
-.audio-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  width: 40px;
-  background: $medium-gray;
-  border: 0;
-  border-radius: 30px;
-  color: white;
-  font: inherit;
-  margin: 0;
-  padding: 0;
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-}
-
 .audio-volume {
   display: flex;
   align-items: center;
