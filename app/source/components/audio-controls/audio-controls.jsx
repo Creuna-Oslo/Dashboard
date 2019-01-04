@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Icon from '../icon';
+
 const AudioControls = ({
   isMuted,
   onChangeVolume,
@@ -11,8 +13,12 @@ const AudioControls = ({
   <div className="audio-controls">
     <div className="audio-actions">
       <div className="audio-action">
-        <button className="audio-button" onClick={onClickMute}>
-          {isMuted ? 'Unmute' : 'Mute'}
+        <button
+          className="audio-button"
+          onClick={onClickMute}
+          title={isMuted ? 'Unmute' : 'Mute'}
+        >
+          <Icon name={isMuted ? 'mute' : 'unmute'} />
         </button>
       </div>
       <div className="audio-action">
@@ -26,11 +32,13 @@ const AudioControls = ({
 
             onClickPlay();
           }}
+          title="Play sound"
         >
-          Play sound
+          <Icon name="triangle-right" />
         </button>
       </div>
       <div className="audio-action audio-volume">
+        <Icon className="audio-volume-icon" name="volume" />
         <input
           className="audio-volume-input"
           disabled={isMuted}
