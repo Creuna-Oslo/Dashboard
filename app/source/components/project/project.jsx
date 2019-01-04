@@ -16,11 +16,11 @@ const Project = ({ activity, build, issues, name, npm, url }) => {
   const showLines = Boolean(build || npm);
 
   return (
-    <Card theme={buildStatus.theme}>
+    <Card theme={[Card.themes.grid, buildStatus.theme]}>
       <div className="project">
-        <h3>
+        <h2>
           <Link url={url}>{name}</Link>
-        </h3>
+        </h2>
         {issues ? (
           <p className="project-issues">
             <b>{issues}</b> {pluralizeLabel(issues, 'open issue')}
