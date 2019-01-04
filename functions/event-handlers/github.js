@@ -1,27 +1,33 @@
+const getIssue = issue => ({
+  number: issue.number,
+  title: issue.title,
+  url: issue.html_url
+});
+
 const getUser = user => ({
   avatar: user.avatar_url,
   name: user.login,
   url: user.url
 });
 
+const getRepo = repository => ({
+  name: repository.name,
+  url: repository.html_url
+});
+
 const issue_comment = payload => {
   const { comment, issue, repository } = payload;
 
   return {
-    meta: {
-      number: issue.number,
-      title: issue.title
-    },
-    repository: {
-      name: repository.name
-    },
+    meta: getIssue(issue),
+    repository: getRepo(repository),
     type: "issueComment",
     user: getUser(comment.user)
   };
 };
 
 const issues = payload => {
-  const { action, issue, repository } = payload;
+  const { action, issue, repository, sender } = payload;
 
   // Only notify when issues are opened and closed
   if (!["opened", "closed"].includes(action)) {
@@ -29,15 +35,10 @@ const issues = payload => {
   }
 
   return {
-    meta: {
-      number: issue.number,
-      title: issue.title
-    },
-    repository: {
-      name: repository.name
-    },
+    meta: getIssue(issue),
+    repository: getRepo(repository),
     type: action === "opened" ? "issueOpen" : "issueClose",
-    user: getUser(issue.user)
+    user: getUser(sender)
   };
 };
 
@@ -60,9 +61,7 @@ const pull_request = payload => {
       number,
       title: pr.title
     },
-    repository: {
-      name: pr.base.repo.name
-    },
+    repository: getRepo(pr.base.repo),
     type: merged ? "prMerge" : "prOpen",
     user: getUser(pr.merged_by || pr.user)
   };
@@ -81,13 +80,12 @@ const push = payload => {
 
   return {
     meta: { size: commits.length },
-    repository: {
+    repository: Object.assign({}, getRepo(repository), {
       branch: ref
         .split("/")
         .slice(2)
-        .join("/"),
-      name: repository.name
-    },
+        .join("/")
+    }),
     type: "push",
     user: getUser(sender)
   };

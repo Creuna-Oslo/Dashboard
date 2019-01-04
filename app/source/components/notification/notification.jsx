@@ -37,14 +37,11 @@ const Notification = ({ meta, user, repository, time, type }) => {
           <b>
             <Link url={user.url}>{user.name}</Link>
           </b>{' '}
-          <span
-            dangerouslySetInnerHTML={{
-              __html: `${notificationType.text(meta)} `
-            }}
-          />
-          <b>{`${repository.name}${
-            repository.branch ? '/' + repository.branch : ''
-          }`}</b>
+          {notificationType.text(meta)}{' '}
+          <b>
+            <Link url={repository.url}>{repository.name}</Link>
+            {repository.branch ? '/' + repository.branch : ''}
+          </b>
         </div>
 
         {/* Timestamps are stored as negative numbers in Firebase. */}
