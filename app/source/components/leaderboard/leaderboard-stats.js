@@ -34,7 +34,18 @@ const mostActiveUser = notifications => {
     .map(([name, activityCount]) => ({ name, activityCount }));
 };
 
+const mostOpenIssues = projects =>
+  projects.reduce(
+    (accumulator, project) => {
+      return project.issues > accumulator.issues
+        ? { name: project.name, issues: project.issues }
+        : accumulator;
+    },
+    { name: '', issues: 0 }
+  );
+
 export default {
   mostActiveProject,
-  mostActiveUser
+  mostActiveUser,
+  mostOpenIssues
 };

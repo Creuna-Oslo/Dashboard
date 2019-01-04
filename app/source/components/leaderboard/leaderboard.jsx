@@ -6,6 +6,7 @@ import stats from './leaderboard-stats';
 import Card from '../card';
 
 const Leaderboard = ({ notifications, projects }) => {
+  const issues = stats.mostOpenIssues(projects);
   const project = stats.mostActiveProject(projects);
   const users = stats.mostActiveUser(notifications);
 
@@ -22,9 +23,17 @@ const Leaderboard = ({ notifications, projects }) => {
             </p>
           </div>
         )}
+        {!!issues.issues && (
+          <div className="leaderboard-issues">
+            <h3>Most open issues</h3>
+            <p>
+              <b>{issues.name}</b> with <b>{issues.issues}</b> open issues
+            </p>
+          </div>
+        )}
         {!!users.length && (
           <div className="leaderboard-users">
-            <h3>Most activ users</h3>
+            <h3>Most activ people</h3>
             {users.map(user => (
               <p key={user.name}>
                 <b>{user.name}</b> with <b>{user.activityCount}</b>{' '}
