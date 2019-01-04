@@ -32,15 +32,10 @@ const Notification = ({ meta, user, repository, time, type }) => {
         </div>
 
         <div className="notification-text">
-          <b>{user.name}</b>{' '}
-          <span
-            dangerouslySetInnerHTML={{
-              __html: `${notificationType.text(meta)} `
-            }}
-          />
+          <b>{user.name}</b> {notificationType.text(meta)}{' '}
           <b>
             <Link url={repository.url}>{repository.name}</Link>
-            {`${repository.branch ? '/' + repository.branch : ''}`}
+            {repository.branch ? '/' + repository.branch : ''}
           </b>
         </div>
 

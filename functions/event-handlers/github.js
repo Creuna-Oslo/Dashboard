@@ -1,3 +1,9 @@
+const getIssue = issue => ({
+  number: issue.number,
+  title: issue.title,
+  url: issue.html_url
+});
+
 const getUser = user => ({
   avatar: user.avatar_url,
   name: user.login
@@ -12,10 +18,7 @@ const issue_comment = payload => {
   const { comment, issue, repository } = payload;
 
   return {
-    meta: {
-      number: issue.number,
-      title: issue.title
-    },
+    meta: getIssue(issue),
     repository: getRepo(repository),
     type: "issueComment",
     user: getUser(comment.user)
@@ -23,7 +26,7 @@ const issue_comment = payload => {
 };
 
 const issues = payload => {
-  const { action, issue, repository } = payload;
+  const { action, issue, repository, sender } = payload;
 
   // Only notify when issues are opened and closed
   if (!["opened", "closed"].includes(action)) {
@@ -31,13 +34,10 @@ const issues = payload => {
   }
 
   return {
-    meta: {
-      number: issue.number,
-      title: issue.title
-    },
+    meta: getIssue(issue),
     repository: getRepo(repository),
     type: action === "opened" ? "issueOpen" : "issueClose",
-    user: getUser(issue.user)
+    user: getUser(sender)
   };
 };
 
