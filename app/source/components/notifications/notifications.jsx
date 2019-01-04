@@ -1,6 +1,7 @@
 import React from 'react';
 import FlipMotion from 'react-flip-motion';
 
+import AudioControls from '../audio-controls';
 import AudioPlayer from 'js/audio/audio-player';
 import firebase from 'js/firebase-helper';
 import Notification from '../notification';
@@ -17,14 +18,19 @@ const shouldPlayAudio = (previousNotifications, nextNotifications) =>
 class Notifications extends React.Component {
   state = {
     isMuted: true,
-    notifications: []
+    notifications: [],
+    volume: 20
   };
 
   audioPlayer = undefined;
 
+  handleChangeVolume = volume => {
+    this.setState({ volume });
+  };
+
   play = () => {
     if (this.audioPlayer) {
-      this.audioPlayer.play();
+      this.audioPlayer.play(this.state.volume);
     }
   };
 
@@ -61,14 +67,13 @@ class Notifications extends React.Component {
             <Notification key={item.time} {...item} />
           ))}
         </FlipMotion>
-        <div className="audio-actions">
-          <button className="audio-action" onClick={this.toggleMute}>
-            {this.state.isMuted ? 'Unmute' : 'Mute'}
-          </button>
-          <button className="audio-action" onClick={this.play}>
-            Play sound
-          </button>
-        </div>
+        <AudioControls
+          isMuted={this.state.isMuted}
+          onChangeVolume={this.handleChangeVolume}
+          onClickMute={this.toggleMute}
+          onClickPlay={this.play}
+          volume={this.state.volume}
+        />
       </React.Fragment>
     );
   }

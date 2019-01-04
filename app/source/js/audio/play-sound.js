@@ -1,4 +1,10 @@
-function playSound(context, frequency, time, outputNode = context.destination) {
+function playSound(
+  context,
+  frequency,
+  time,
+  outputNode = context.destination,
+  volume = 50
+) {
   const gainNode = context.createGain();
   const oscillator = context.createOscillator();
 
@@ -8,9 +14,10 @@ function playSound(context, frequency, time, outputNode = context.destination) {
   oscillator.connect(gainNode);
 
   const { gain } = gainNode;
+  const maxVolume = Math.min(volume / 100, 1);
   gain.setValueAtTime(0, time);
-  gain.linearRampToValueAtTime(1, time + 0.1);
-  gain.setValueAtTime(1, time + 0.15);
+  gain.linearRampToValueAtTime(maxVolume, time + 0.1);
+  gain.setValueAtTime(maxVolume, time + 0.15);
   gain.exponentialRampToValueAtTime(0.001, time + 0.3);
 
   oscillator.start(time);
