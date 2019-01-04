@@ -27,6 +27,16 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  h3 {
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    margin-bottom: 0;
+    color: rgba(white, 0.6);
+  }
 }
 
 .card-content {
