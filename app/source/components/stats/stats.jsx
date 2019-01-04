@@ -11,12 +11,16 @@ class Stats extends React.Component {
   static propTypes = {};
 
   state = {
-    projects: []
+    projects: [],
+    notifications: []
   };
 
   componentDidMount() {
     firebase.onProjectUpdate(projects => {
       this.setState({ projects });
+    });
+    firebase.onNotificationByMonth(notifications => {
+      this.setState({ notifications });
     });
   }
 
@@ -38,7 +42,10 @@ class Stats extends React.Component {
             )}
           </Card>
         </div>
-        <Leaderboard projects={this.state.projects} />
+        <Leaderboard
+          notifications={this.state.notifications}
+          projects={this.state.projects}
+        />
       </div>
     );
   }

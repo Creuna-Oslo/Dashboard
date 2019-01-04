@@ -14,8 +14,16 @@
     margin-bottom: 0;
     font-size: 1.2em;
   }
+}
 
+.leaderboard-project {
   b {
     color: $bright-yellow;
+  }
+}
+
+.leaderboard-users {
+  b {
+    color: $bright-blue;
   }
 }
