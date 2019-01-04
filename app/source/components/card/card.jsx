@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 const themes = {
-  yellow: 'theme-yellow',
-  red: 'theme-red'
+  grid: 'theme-grid',
+  red: 'theme-red',
+  yellow: 'theme-yellow'
 };
 
 const Card = ({ children, theme }) => (
@@ -16,7 +17,10 @@ const Card = ({ children, theme }) => (
 
 Card.propTypes = {
   children: PropTypes.node,
-  theme: PropTypes.oneOf(Object.values(themes))
+  theme: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.oneOf(Object.values(themes))),
+    PropTypes.oneOf(Object.values(themes))
+  ])
 };
 
 Card.themes = themes;
