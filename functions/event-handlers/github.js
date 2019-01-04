@@ -3,7 +3,7 @@ const getUser = user => ({
   name: user.login
 });
 
-const getIssue = (issue = {
+const getIssue = issue => ({
   number: issue.number,
   title: issue.title,
   url: issue.html_url
