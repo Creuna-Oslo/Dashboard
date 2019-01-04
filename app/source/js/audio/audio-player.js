@@ -15,13 +15,13 @@ class AudioPlayer {
     this.outNode = outNode;
   }
 
-  play() {
+  play(volume = 50) {
     const { context, outNode } = this;
     const time = context.currentTime;
 
-    playSound(context, noteFrequencies.g4, time, outNode);
-    playSound(context, noteFrequencies.a4, time + 0.15, outNode);
-    playSound(context, noteFrequencies.d5, time + 0.3, outNode);
+    playSound(context, noteFrequencies.g4, time, outNode, volume);
+    playSound(context, noteFrequencies.a4, time + 0.15, outNode, volume);
+    playSound(context, noteFrequencies.d5, time + 0.3, outNode, volume);
   }
 }
 
