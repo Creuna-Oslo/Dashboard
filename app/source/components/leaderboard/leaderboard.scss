@@ -18,13 +18,25 @@
 
 .leaderboard-project {
   b {
-    color: $bright-yellow;
+    color: $bright-blue;
   }
 }
 
 .leaderboard-users {
+  p:first-of-type {
+    b {
+      color: $bright-yellow;
+    }
+  }
+
+  p:nth-of-type(2) {
+    b {
+      color: mix($bright-yellow, $bright-red);
+    }
+  }
+
   b {
-    color: $bright-blue;
+    color: $bright-red;
   }
 }
 
