@@ -27,21 +27,18 @@ class Stats extends React.Component {
   render() {
     return (
       <div className="stats">
-        <div className="stats-activity-wrapper">
-          <Card>
-            {this.state.projects.length > 0 && (
-              <React.Fragment>
-                <h2>Activity (past month)</h2>
-                <div className="stats-activity">
-                  <Graph
-                    className="stats-activity-graph"
-                    data={collapseActivity(this.state.projects)}
-                  />
-                </div>
-              </React.Fragment>
-            )}
-          </Card>
-        </div>
+        <Card className="stats-activity-wrapper">
+          <h2>Activity (past month)</h2>
+          {this.state.projects.length > 0 && (
+            <div className="stats-activity">
+              <Graph
+                className="stats-activity-graph"
+                data={collapseActivity(this.state.projects)}
+              />
+            </div>
+          )}
+        </Card>
+
         <Leaderboard
           notifications={this.state.notifications}
           projects={this.state.projects}

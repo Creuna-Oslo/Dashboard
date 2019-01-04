@@ -5,20 +5,23 @@
 }
 
 .stats-activity-wrapper {
+  position: relative;
+  display: flex;
   width: 50%;
+  margin-right: 30px;
 }
 
 .stats-activity {
-  position: relative;
+  position: absolute;
   height: 15vw;
-  top: 20px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
   overflow: hidden;
-  width: calc(100% + 50px);
-  margin-left: -25px;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
 }
 
 .stats-activity-graph {
-  height: 100%;
+  height: 15vw;
 }
