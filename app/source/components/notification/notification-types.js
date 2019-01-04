@@ -65,7 +65,7 @@ const push = {
   icon: 'git-commit',
   text: ({ size }) => (
     <React.Fragment>
-      pushed ${size > 1 ? `${size} commits` : 'a commit'} to
+      pushed {size > 1 ? `${size} commits` : 'a commit'} to
     </React.Fragment>
   )
 };
