@@ -13,7 +13,7 @@ const Leaderboard = ({ notifications, projects }) => {
   return (
     <div className="leaderboard">
       <Card>
-        <h2>Leaderboard</h2>
+        <h2>Top things</h2>
         {!!project.activityCount && (
           <div className="leaderboard-project">
             <h3>Most active project</h3>
