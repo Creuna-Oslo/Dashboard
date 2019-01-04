@@ -3,14 +3,17 @@ const getUser = user => ({
   name: user.login
 });
 
+const getIssue = (issue = {
+  number: issue.number,
+  title: issue.title,
+  url: issue.html_url
+});
+
 const issue_comment = payload => {
   const { comment, issue, repository } = payload;
 
   return {
-    meta: {
-      number: issue.number,
-      title: issue.title
-    },
+    meta: getIssue(issue),
     repository: {
       name: repository.name
     },
@@ -28,10 +31,7 @@ const issues = payload => {
   }
 
   return {
-    meta: {
-      number: issue.number,
-      title: issue.title
-    },
+    meta: getIssue(issue),
     repository: {
       name: repository.name
     },
@@ -81,7 +81,10 @@ const push = payload => {
   return {
     meta: { size: commits.length },
     repository: {
-      branch: ref.split("/").slice(2).join('/'),
+      branch: ref
+        .split("/")
+        .slice(2)
+        .join("/"),
       name: repository.name
     },
     type: "push",
