@@ -5,17 +5,18 @@ import firebase from 'js/firebase-helper';
 
 import Card from '../card';
 import Graph from '../graph';
+import Leaderboard from '../leaderboard';
 
 class Stats extends React.Component {
   static propTypes = {};
 
   state = {
-    activity: null
+    projects: []
   };
 
   componentDidMount() {
     firebase.onProjectUpdate(projects => {
-      this.setState({ activity: collapseActivity(projects) });
+      this.setState({ projects });
     });
   }
 
@@ -24,19 +25,20 @@ class Stats extends React.Component {
       <div className="stats">
         <div className="stats-activity-wrapper">
           <Card>
-            {this.state.activity && (
+            {this.state.projects.length > 0 && (
               <React.Fragment>
                 <h2>Activity (past month)</h2>
                 <div className="stats-activity">
                   <Graph
                     className="stats-activity-graph"
-                    data={this.state.activity}
+                    data={collapseActivity(this.state.projects)}
                   />
                 </div>
               </React.Fragment>
             )}
           </Card>
         </div>
+        <Leaderboard projects={this.state.projects} />
       </div>
     );
   }
