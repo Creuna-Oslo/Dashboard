@@ -1,3 +1,3 @@
-import IconButton from "./icon-button.jsx";
+import IconButton from './icon-button.jsx';
 
 export default IconButton;
