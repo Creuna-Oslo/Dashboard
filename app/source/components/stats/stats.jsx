@@ -32,7 +32,8 @@ class Stats extends React.Component {
     return (
       <div className="stats">
         <Card className="stats-activity-wrapper">
-          <h2>Activity (past month)</h2>
+          <h2>Activity</h2>
+          <p>Past month</p>
           {!!peak.activityCount && (
             <React.Fragment>
               <h3>Peak activity</h3>

@@ -14,6 +14,7 @@ const TopStats = ({ notifications, projects }) => {
     <div className="top-stats">
       <Card>
         <h2>Top things</h2>
+        <p>Past month</p>
         {!!project.activityCount && (
           <div className="top-stats-project">
             <h3>Most active project</h3>
