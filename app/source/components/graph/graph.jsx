@@ -30,19 +30,20 @@ const themes = {
   }
 };
 
-const Graph = ({ data, theme }) => {
+const Graph = ({ className, data, theme }) => {
   if (!Object.keys(data).length) {
     return null;
   }
 
   return (
-    <div className={cn('graph', theme.className)}>
+    <div className={cn('graph', className, theme.className)}>
       <Line height={40} {...graphUtils.getChartProps(data, theme.canvas)} />
     </div>
   );
 };
 
 Graph.propTypes = {
+  className: PropTypes.string,
   data: PropTypes.object,
   theme: PropTypes.oneOf(Object.values(themes))
 };
