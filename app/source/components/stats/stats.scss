@@ -1,0 +1,24 @@
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.stats-activity-wrapper {
+  width: 50%;
+}
+
+.stats-activity {
+  position: relative;
+  height: 15vw;
+  top: 20px;
+  overflow: hidden;
+  width: calc(100% + 50px);
+  margin-left: -25px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.stats-activity-graph {
+  height: 100%;
+}
