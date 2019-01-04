@@ -7,24 +7,39 @@ import Project from '../project';
 
 class Projects extends React.Component {
   state = {
-    projects: []
+    projects: [],
+    projectsWithoutStatus: []
   };
 
   componentDidMount() {
     firebase.onProjectUpdate(projects => {
-      this.setState({ projects });
+      this.setState({
+        projects: projects.filter(project => project.build || project.npm),
+        projectsWithoutStatus: projects.filter(
+          project => !project.build && !project.npm
+        )
+      });
     });
   }
 
   render() {
     return (
-      <FlipMotion className="projects">
-        {this.state.projects.map(project => (
-          <DebounceRender key={project.name} wait={200}>
-            <Project {...project} />
-          </DebounceRender>
-        ))}
-      </FlipMotion>
+      <React.Fragment>
+        <FlipMotion className="projects">
+          {this.state.projects.map(project => (
+            <DebounceRender key={project.name} wait={200}>
+              <Project {...project} />
+            </DebounceRender>
+          ))}
+        </FlipMotion>
+        <FlipMotion className="projects">
+          {this.state.projectsWithoutStatus.map(project => (
+            <DebounceRender key={project.name} wait={200}>
+              <Project {...project} />
+            </DebounceRender>
+          ))}
+        </FlipMotion>
+      </React.Fragment>
     );
   }
 }
