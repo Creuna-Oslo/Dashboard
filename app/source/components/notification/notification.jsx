@@ -7,6 +7,7 @@ import notificationTypes from './notification-types';
 
 import Card from '../card';
 import Icon from '../icon';
+import Link from '../link';
 import Time from '../time';
 
 const Notification = ({ meta, user, repository, time, type }) => {
@@ -37,9 +38,10 @@ const Notification = ({ meta, user, repository, time, type }) => {
               __html: `${notificationType.text(meta)} `
             }}
           />
-          <b>{`${repository.name}${
-            repository.branch ? '/' + repository.branch : ''
-          }`}</b>
+          <b>
+            <Link url={repository.url}>{repository.name}</Link>
+            {`${repository.branch ? '/' + repository.branch : ''}`}
+          </b>
         </div>
 
         {/* Timestamps are stored as negative numbers in Firebase. */}
