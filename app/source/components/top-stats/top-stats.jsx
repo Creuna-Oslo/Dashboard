@@ -12,7 +12,7 @@ const TopStats = ({ notifications, projects }) => {
 
   return (
     <div className="top-stats">
-      <Card>
+      <Card theme={Card.themes.grid}>
         <h2>Top things</h2>
         <p>Past month</p>
         {!!project.activityCount && (

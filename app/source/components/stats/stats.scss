@@ -1,28 +1,3 @@
 .stats {
   @include grid(20px, true, 2);
 }
-
-.stats-activity-wrapper {
-  position: relative;
-  display: flex;
-
-  p {
-    margin-top: 5px;
-    font-size: 1.2em;
-  }
-}
-
-.stats-activity {
-  position: absolute;
-  height: 15vw;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-}
-
-.stats-activity-graph {
-  height: 15vw;
-}

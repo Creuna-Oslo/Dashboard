@@ -1,0 +1,29 @@
+.total-activity-wrapper {
+  position: relative;
+  display: flex;
+  padding-bottom: 15vw;
+
+  @media (min-width: $breakpoint-m) {
+    padding-bottom: 0;
+  }
+
+  p {
+    margin-top: 5px;
+    font-size: 1.2em;
+  }
+}
+
+.total-activity {
+  position: absolute;
+  height: 15vw;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.total-activity-graph {
+  height: 15vw;
+}
