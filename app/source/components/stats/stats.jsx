@@ -14,9 +14,13 @@ class Stats extends React.Component {
   };
 
   componentDidMount() {
-    firebase.onProjectUpdate(projects => {
+    this.unsubscribe = firebase.onProjectUpdate(projects => {
       this.setState({ activity: collapseActivity(projects) });
     });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {

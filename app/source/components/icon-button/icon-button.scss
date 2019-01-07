@@ -1,0 +1,26 @@
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  background: $medium-gray;
+  border: 0;
+  border-radius: 30px;
+  color: white;
+  font: inherit;
+  margin: 0;
+  padding: 0;
+
+  &-active {
+    background-image: linear-gradient(150deg, $bright-blue, $blue);
+  }
+
+  &:not(:disabled):hover {
+    background-image: linear-gradient(150deg, $bright-green, $green);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

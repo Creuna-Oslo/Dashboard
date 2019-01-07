@@ -12,7 +12,7 @@ class Projects extends React.Component {
   };
 
   componentDidMount() {
-    firebase.onProjectUpdate(projects => {
+    this.unsubscribe = firebase.onProjectUpdate(projects => {
       this.setState({
         projects: projects.filter(project => project.build || project.npm),
         projectsWithoutStatus: projects.filter(
@@ -20,6 +20,10 @@ class Projects extends React.Component {
         )
       });
     });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {
