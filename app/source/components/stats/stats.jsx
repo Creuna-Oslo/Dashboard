@@ -17,12 +17,19 @@ class Stats extends React.Component {
   };
 
   componentDidMount() {
-    firebase.onProjectUpdate(projects => {
+    this.unsubscribeProjects = firebase.onProjectUpdate(projects => {
       this.setState({ projects });
     });
-    firebase.onNotificationByMonth(notifications => {
-      this.setState({ notifications });
-    });
+    this.unsubscribeNotifications = firebase.onNotificationByMonth(
+      notifications => {
+        this.setState({ notifications });
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeProjects();
+    this.unsubscribeNotifications();
   }
 
   render() {

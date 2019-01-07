@@ -7,7 +7,7 @@
 .audio-actions {
   align-items: stretch;
   background: rgba($dark-gray, 0.5);
-  border-radius: 20px;
+  border-radius: 30px;
   display: flex;
   padding: 10px;
 }
@@ -20,26 +20,25 @@
   }
 }
 
-.audio-button {
-  background: $medium-gray;
-  border: 0;
-  border-radius: 20px;
-  color: white;
-  font: inherit;
-  margin: 0;
-  padding: 10px 20px;
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-}
-
 .audio-volume {
-  align-items: center;
-  background: $medium-gray;
-  border-radius: 20px;
   display: flex;
-  padding: 0 20px;
+  align-items: center;
+  justify-content: center;
+  background: $medium-gray;
+  border-radius: 30px;
+  width: 40px;
+
+  &:hover {
+    width: auto;
+
+    .audio-volume-input {
+      display: block;
+    }
+
+    .audio-volume-icon {
+      display: none;
+    }
+  }
 }
 
 $track-color: white !default;
@@ -84,6 +83,8 @@ $ie-bottom-track-color: darken($track-color, $contrast) !default;
   background: transparent;
   margin: $thumb-height / 2 0;
   width: $track-width;
+  display: none;
+  padding: 0 20px;
 
   &::-moz-focus-outer {
     border: 0;

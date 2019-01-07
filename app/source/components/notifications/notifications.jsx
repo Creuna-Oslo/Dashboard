@@ -48,7 +48,7 @@ class Notifications extends React.Component {
   };
 
   componentDidMount() {
-    firebase.onNotification(notifications => {
+    this.unsubscribe = firebase.onNotification(notifications => {
       this.setState(previousState => {
         if (shouldPlayAudio(previousState.notifications, notifications)) {
           this.play();
@@ -57,6 +57,10 @@ class Notifications extends React.Component {
         return { notifications };
       });
     });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {

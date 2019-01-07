@@ -9,13 +9,19 @@ firebase.initializeApp(firebaseInit);
 const database = firebase.database();
 
 const onNotification = callback => {
-  database
-    .ref('notifications')
+  const reference = database.ref('notifications');
+
+  reference
     .orderByChild('time')
     .limitToFirst(30)
     .on('value', snapshot => {
       callback(firebaseToArray(snapshot));
     });
+
+  // NOTE: Returning `off` directly and calling it does not work, so we wrap instead of `bind`ing.
+  return () => {
+    reference.off();
+  };
 };
 
 const onNotificationByMonth = callback => {
@@ -29,9 +35,16 @@ const onNotificationByMonth = callback => {
 };
 
 const onProjectUpdate = callback => {
-  database.ref('projects').on('value', snapshot => {
+  const reference = database.ref('projects');
+
+  reference.on('value', snapshot => {
     callback(firebaseToArray(snapshot));
   });
+
+  // NOTE: Returning `off` directly and calling it does not work, so we wrap instead of `bind`ing.
+  return () => {
+    reference.off();
+  };
 };
 
 export default {

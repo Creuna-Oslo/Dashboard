@@ -1,6 +1,14 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
-const Layout = ({ children }) => children;
+import Navigation from '../components/navigation';
+
+const Layout = ({ children }) => (
+  <React.Fragment>
+    <Navigation />
+    {children}
+  </React.Fragment>
+);
 
 Layout.propTypes = {
   children: PropTypes.node
