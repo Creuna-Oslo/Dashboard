@@ -23,10 +23,6 @@ class Projects extends React.Component {
   }
 
   componentWillUnmount() {
-    if (!this.unsubscribe) {
-      return;
-    }
-
     this.unsubscribe();
   }
 
