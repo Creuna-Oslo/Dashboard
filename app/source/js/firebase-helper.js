@@ -25,13 +25,18 @@ const onNotification = callback => {
 };
 
 const onNotificationByMonth = callback => {
-  database
-    .ref('notifications')
+  const reference = database.ref('notifications');
+
+  reference
     .orderByChild('time')
     .endAt(-time.thisMonth()) // Notifications have a negative timestamp in the database
     .on('value', snapshot => {
       callback(firebaseToArray(snapshot));
     });
+
+  return () => {
+    reference.off();
+  };
 };
 
 const onProjectUpdate = callback => {
