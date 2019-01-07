@@ -1,13 +1,15 @@
 import time from 'js/time-helper';
 
-function getChartProps(data, theme) {
+function getChartProps(data, theme, showTooltips) {
   const points = getPoints(data);
   const maxY = Math.max(...points.map(p => p.y));
+  const labels = points.map(({ x }) => new Date(x).toDateString());
 
   return {
     data: canvas => ({
       datasets: [
         {
+          label: 'contributions',
           data: points,
           borderColor: getGradient(canvas, points, theme),
           backgroundColor: getGradient(canvas, points, theme, 0.3)
@@ -31,7 +33,14 @@ function getChartProps(data, theme) {
       legend: { display: false },
       maintainAspectRatio: false,
       tooltips: {
-        enabled: false
+        backgroundColor: '#3e4969',
+        displayColors: false,
+        enabled: showTooltips,
+        callbacks: {
+          title: ([tooltipItem]) => {
+            return labels[tooltipItem.index];
+          }
+        }
       },
       scales: {
         xAxes: [
