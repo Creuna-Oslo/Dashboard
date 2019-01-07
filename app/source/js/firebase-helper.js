@@ -3,6 +3,7 @@ import 'firebase/database';
 
 import firebaseInit from '../../../firebase-init.json';
 import firebaseToArray from './firebase-to-array';
+import time from 'js/time-helper';
 
 firebase.initializeApp(firebaseInit);
 const database = firebase.database();
@@ -23,6 +24,21 @@ const onNotification = callback => {
   };
 };
 
+const onNotificationByMonth = callback => {
+  const reference = database.ref('notifications');
+
+  reference
+    .orderByChild('time')
+    .endAt(-time.thisMonth()) // Notifications have a negative timestamp in the database
+    .on('value', snapshot => {
+      callback(firebaseToArray(snapshot));
+    });
+
+  return () => {
+    reference.off();
+  };
+};
+
 const onProjectUpdate = callback => {
   const reference = database.ref('projects');
 
@@ -38,5 +54,6 @@ const onProjectUpdate = callback => {
 
 export default {
   onNotification,
+  onNotificationByMonth,
   onProjectUpdate
 };

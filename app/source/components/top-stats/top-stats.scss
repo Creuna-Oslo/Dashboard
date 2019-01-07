@@ -1,0 +1,39 @@
+.top-stats {
+  flex-grow: 1;
+
+  p {
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-size: 1.2em;
+  }
+}
+
+.top-stats-project {
+  b {
+    color: $bright-blue;
+  }
+}
+
+.top-stats-users {
+  p:first-of-type {
+    b {
+      color: $bright-yellow;
+    }
+  }
+
+  p:nth-of-type(2) {
+    b {
+      color: mix($bright-yellow, $bright-red);
+    }
+  }
+
+  b {
+    color: $bright-red;
+  }
+}
+
+.top-stats-issues {
+  b {
+    color: $bright-green;
+  }
+}

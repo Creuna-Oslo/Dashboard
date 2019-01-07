@@ -9,14 +9,15 @@ const themes = {
   yellow: 'theme-yellow'
 };
 
-const Card = ({ children, theme }) => (
-  <div className={cn('card', theme)}>
+const Card = ({ children, className, theme }) => (
+  <div className={cn('card', className, theme)}>
     <div className="card-content">{children}</div>
   </div>
 );
 
 Card.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
   theme: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.oneOf(Object.values(themes))),
     PropTypes.oneOf(Object.values(themes))

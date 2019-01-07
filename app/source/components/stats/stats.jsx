@@ -2,45 +2,65 @@ import React from 'react';
 
 import collapseActivity from './collapse-activity';
 import firebase from 'js/firebase-helper';
+import peakActivity from './peak-activity';
 
 import Card from '../card';
 import Graph from '../graph';
+import TopStats from '../top-stats';
 
 class Stats extends React.Component {
   static propTypes = {};
 
   state = {
-    activity: null
+    projects: [],
+    notifications: []
   };
 
   componentDidMount() {
-    this.unsubscribe = firebase.onProjectUpdate(projects => {
-      this.setState({ activity: collapseActivity(projects) });
+    this.unsubscribeProjects = firebase.onProjectUpdate(projects => {
+      this.setState({ projects });
     });
+    this.unsubscribeNotifications = firebase.onNotificationByMonth(
+      notifications => {
+        this.setState({ notifications });
+      }
+    );
   }
 
   componentWillUnmount() {
-    this.unsubscribe();
+    this.unsubscribeProjects();
+    this.unsubscribeNotifications();
   }
 
   render() {
+    const activity = collapseActivity(this.state.projects);
+    const peak = peakActivity(activity);
+
     return (
       <div className="stats">
-        <div className="stats-activity-wrapper">
-          <Card>
-            {this.state.activity && (
-              <React.Fragment>
-                <h2>Activity (past month)</h2>
-                <div className="stats-activity">
-                  <Graph
-                    className="stats-activity-graph"
-                    data={this.state.activity}
-                  />
-                </div>
-              </React.Fragment>
-            )}
-          </Card>
-        </div>
+        <Card className="stats-activity-wrapper">
+          <h2>Activity</h2>
+          <p>Past month</p>
+          {!!peak.activityCount && (
+            <React.Fragment>
+              <h3>Peak activity</h3>
+              <p>
+                <b>{peak.time}</b> with <b>{peak.activityCount}</b>{' '}
+                contributions
+              </p>
+            </React.Fragment>
+          )}
+          {this.state.projects.length > 0 && (
+            <div className="stats-activity">
+              <Graph className="stats-activity-graph" data={activity} />
+            </div>
+          )}
+        </Card>
+
+        <TopStats
+          notifications={this.state.notifications}
+          projects={this.state.projects}
+        />
       </div>
     );
   }
