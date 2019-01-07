@@ -17,6 +17,7 @@ const onNotification = callback => {
       callback(firebaseToArray(snapshot));
     });
 
+  // NOTE: Returning `off` directly and calling it does not work, so we wrap instead of `bind`ing.
   return () => {
     reference.off();
   };
@@ -29,6 +30,7 @@ const onProjectUpdate = callback => {
     callback(firebaseToArray(snapshot));
   });
 
+  // NOTE: Returning `off` directly and calling it does not work, so we wrap instead of `bind`ing.
   return () => {
     reference.off();
   };
