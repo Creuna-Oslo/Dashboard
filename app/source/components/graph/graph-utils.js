@@ -37,9 +37,9 @@ function getChartProps(data, theme, showTooltips) {
         displayColors: false,
         enabled: showTooltips,
         callbacks: {
-          title: ([tooltipItem]) => {
-            return labels[tooltipItem.index];
-          }
+          title: ([tooltipItem]) => labels[tooltipItem.index],
+          // NOTE: points that originally have the value '0' are rendered using 0.3 to avoid clipping. They are rounded back down for the tooltip label
+          label: ({ yLabel }) => String(Math.round(yLabel))
         }
       },
       scales: {
