@@ -36,7 +36,7 @@ const TopStats = ({ notifications, projects }) => {
 
         {!!users.length && (
           <div className="top-stats-users">
-            <h3>Most activ people</h3>
+            <h3>Most active people</h3>
             {users.map(user => (
               <p key={user.name}>
                 <b>{user.name}</b> with <b>{user.activityCount}</b>{' '}
