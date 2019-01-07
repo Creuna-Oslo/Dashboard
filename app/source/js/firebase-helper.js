@@ -8,19 +8,30 @@ firebase.initializeApp(firebaseInit);
 const database = firebase.database();
 
 const onNotification = callback => {
-  database
-    .ref('notifications')
+  const reference = database.ref('notifications');
+
+  reference
     .orderByChild('time')
     .limitToFirst(30)
     .on('value', snapshot => {
       callback(firebaseToArray(snapshot));
     });
+
+  return () => {
+    reference.off();
+  };
 };
 
 const onProjectUpdate = callback => {
-  database.ref('projects').on('value', snapshot => {
+  const reference = database.ref('projects');
+
+  reference.on('value', snapshot => {
     callback(firebaseToArray(snapshot));
   });
+
+  return () => {
+    reference.off();
+  };
 };
 
 export default {
