@@ -34,6 +34,7 @@ class Stats extends React.Component {
   render() {
     const { notifications, projects } = this.state;
 
+    // NOTE: react-flip-motion for some reason crashes for this component unless children are arrays of components with keys
     return (
       <FlipMotion className="stats">
         {projects.length > 0 && notifications.length > 0
