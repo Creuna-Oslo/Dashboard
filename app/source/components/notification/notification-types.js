@@ -33,9 +33,9 @@ const issueComment = {
 const issueOpen = {
   className: 'theme-issue-open',
   icon: 'issue-opened',
-  text: ({ number, title }) => (
+  text: meta => (
     <React.Fragment>
-      created issue <b>{`#${number} ${title}`}</b> in
+      created issue <IssueLink {...meta} /> in
     </React.Fragment>
   )
 };
