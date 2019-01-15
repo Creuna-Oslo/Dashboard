@@ -681,10 +681,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@creuna/utils@^0.3.3":
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/@creuna/utils/-/utils-0.3.6.tgz#dd940d76fdd5bb1889113a401f9fce635151ac3e"
-  integrity sha512-+9BDrL58YMiYss8U2YE90TSjdozPF7+oGqGlp6PZI1SybIjsI3/NoA8taaJkyI3tlg6l77LXXVfCdAivMgJJgg==
+"@creuna/utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@creuna/utils/-/utils-1.1.0.tgz#af220620aa8abb0f4b943ef023717d57ec00d86b"
+  integrity sha512-VIYoR+WNdiFhi0VeKRyGV+oj5iSKfBLEm6WWEwSxqxCiZ9f2UtP7CxoCkY7P9JV6q3aqPGD956OTIZEUPeDGdA==
 
 "@firebase/app-types@0.3.2":
   version "0.3.2"
@@ -2723,7 +2723,7 @@ color-string@^1.5.2:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
 
-color@^3.0.0:
+color@^3.0.0, color@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/color/-/color-3.1.0.tgz#d8e9fb096732875774c84bf922815df0308d0ffc"
   integrity sha512-CwyopLkuRYO5ei2EpzpIh6LqJMt6Mt+jZhO5VI5f/wJLZriXQE32/SSqzmrh+QB+AZT81Cj8yv+7zwToW8ahZg==
