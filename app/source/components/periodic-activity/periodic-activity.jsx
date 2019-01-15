@@ -62,7 +62,7 @@ const PeriodicActivity = ({
 PeriodicActivity.propTypes = {
   getInterval: PropTypes.func, // Number -> Number. Groups times into intervals (like `time => new Date(time).getHours()`).
   getLabel: PropTypes.func, // Number -> String. Formats the x axis labels for each column
-  notifications: PropTypes.arrayOf(PropTypes.object),
+  notifications: PropTypes.arrayOf(PropTypes.shape({ time: PropTypes.number })),
   shiftThreshold: PropTypes.number, // Shifts points that have an x axis value below 'shiftThreshold' to the end of the array
   subtitle: PropTypes.string,
   title: PropTypes.string
