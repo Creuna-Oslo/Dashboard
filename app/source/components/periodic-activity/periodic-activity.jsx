@@ -44,7 +44,7 @@ const PeriodicActivity = ({
       <Card theme={Card.themes.grid}>
         <h2>{title}</h2>
         <p>{subtitle}</p>
-        <h3>Peak</h3>
+        <h3>Peak activity</h3>
         <p>
           <b>{getLabel(peak[0])}</b> with <b>{peak[1]}</b> contributions
         </p>
