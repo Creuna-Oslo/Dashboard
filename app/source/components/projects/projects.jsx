@@ -5,6 +5,12 @@ import DebounceRender from '../debounce-render';
 import firebase from 'js/firebase-helper';
 import Project from '../project';
 
+const largestKey = obj => Math.max(...Object.keys(obj));
+
+// NOTE: project.activity is an object with timestamps as keys
+const sortByActivity = (a, b) =>
+  largestKey(b.activity) - largestKey(a.activity);
+
 class Projects extends React.Component {
   state = {
     projects: [],
@@ -14,7 +20,9 @@ class Projects extends React.Component {
   componentDidMount() {
     this.unsubscribe = firebase.onProjectUpdate(projects => {
       this.setState({
-        projects: projects.filter(project => project.build || project.npm),
+        projects: projects
+          .filter(project => project.build || project.npm)
+          .sort(sortByActivity),
         projectsWithoutStatus: projects.filter(
           project => !project.build && !project.npm
         )
