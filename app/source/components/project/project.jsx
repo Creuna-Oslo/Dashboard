@@ -21,13 +21,17 @@ const Project = ({ activity, build, issues, name, npm, url }) => {
         <h2>
           <Link url={url}>{name}</Link>
         </h2>
-        {issues ? (
-          <p className="project-issues">
-            <b>{issues}</b> {pluralizeLabel(issues, 'open issue')}
-          </p>
-        ) : (
-          <p className="project-issues">No open issues! ✨</p>
-        )}
+        <p className="project-issues">
+          <Link url={url + '/issues'}>
+            {issues ? (
+              <>
+                <b>{issues}</b> {pluralizeLabel(issues, 'open issue')}
+              </>
+            ) : (
+              'No open issues! ✨'
+            )}
+          </Link>
+        </p>
         {showLines && <hr />}
         {build && (
           <div className="project-build">
