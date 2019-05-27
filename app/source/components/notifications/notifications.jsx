@@ -4,9 +4,10 @@ import FlipMotion from 'react-flip-motion';
 import AudioControls from '../audio-controls';
 import AudioPlayer from 'js/audio/audio-player';
 import firebase from 'js/firebase-helper';
-import Notification from '../notification';
+import NotificationComponent from '../notification';
+import spawnNativeNotification from '../notification/native-notification';
 
-const shouldPlayAudio = (previousNotifications, nextNotifications) =>
+const newNotification = (previousNotifications, nextNotifications) =>
   previousNotifications &&
   nextNotifications &&
   previousNotifications.length > 0 &&
@@ -19,13 +20,21 @@ class Notifications extends React.Component {
   state = {
     isMuted: true,
     notifications: [],
-    volume: 20
+    volume: 20,
+    nativeNotificationPermission: Notification.permission
   };
 
   audioPlayer = undefined;
 
   handleChangeVolume = volume => {
     this.setState({ volume });
+  };
+
+  handleNewNotification = () => {
+    this.play();
+    if (this.state.nativeNotificationPermission === 'granted') {
+      spawnNativeNotification(this.state.notifications[0]);
+    }
   };
 
   play = () => {
@@ -47,13 +56,19 @@ class Notifications extends React.Component {
     );
   };
 
+  requestNativeNotificationPermission = () => {
+    Notification.requestPermission().then(result =>
+      this.setState({ nativeNotificationPermission: result })
+    );
+  };
+
   componentDidMount() {
+    this.requestNativeNotificationPermission();
     this.unsubscribe = firebase.onNotification(notifications => {
       this.setState(previousState => {
-        if (shouldPlayAudio(previousState.notifications, notifications)) {
-          this.play();
+        if (newNotification(previousState.notifications, notifications)) {
+          this.handleNewNotification();
         }
-
         return { notifications };
       });
     });
@@ -68,7 +83,7 @@ class Notifications extends React.Component {
       <React.Fragment>
         <FlipMotion className="notifications">
           {this.state.notifications.map(item => (
-            <Notification key={item.time} {...item} />
+            <NotificationComponent key={item.time} {...item} />
           ))}
         </FlipMotion>
         <AudioControls

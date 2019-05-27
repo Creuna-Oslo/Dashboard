@@ -12,30 +12,33 @@ const IssueLink = ({ number, title, url }) => (
 
 const issueClose = {
   className: 'theme-issue-close',
+  description: 'closed issue',
   icon: 'issue-closed',
   text: meta => (
     <React.Fragment>
-      closed issue <IssueLink {...meta} /> in
+      {issueClose.description} <IssueLink {...meta} /> in
     </React.Fragment>
   )
 };
 
 const issueComment = {
   className: 'theme-issue-comment',
+  description: 'commented on issue',
   icon: 'issue-comment',
   text: meta => (
     <React.Fragment>
-      commented on issue <IssueLink {...meta} /> in
+      {issueComment.description} <IssueLink {...meta} /> in
     </React.Fragment>
   )
 };
 
 const issueOpen = {
   className: 'theme-issue-open',
+  description: 'created issue',
   icon: 'issue-opened',
   text: meta => (
     <React.Fragment>
-      created issue <IssueLink {...meta} /> in
+      {issueOpen.description} <IssueLink {...meta} /> in
     </React.Fragment>
   )
 };
@@ -48,32 +51,34 @@ const PrLink = ({ number, title, url }) => (
 
 const prMerge = {
   className: 'theme-merge',
+  description: 'merged pull request',
   icon: 'git-merge',
   text: meta => (
     <React.Fragment>
-      merged pull request <PrLink {...meta} /> in
+      {prMerge.description} <PrLink {...meta} /> in
     </React.Fragment>
   )
 };
 
 const prOpen = {
   className: 'theme-pull-request',
+  description: 'created pull request',
   icon: 'git-pull-request',
   text: meta => (
     <React.Fragment>
-      created pull request <PrLink {...meta} /> in
+      {prOpen.description} <PrLink {...meta} /> in
     </React.Fragment>
   )
 };
 
 const push = {
   className: 'theme-push',
+  description: ({ size }) => {
+    let commits = size > 1 ? `${size} commits` : 'a commit';
+    return `pushed ${commits} to`;
+  },
   icon: 'git-commit',
-  text: ({ size }) => (
-    <React.Fragment>
-      pushed {size > 1 ? `${size} commits` : 'a commit'} to
-    </React.Fragment>
-  )
+  text: ({ size }) => <React.Fragment>{push.description(size)}</React.Fragment>
 };
 
 export default { issueClose, issueComment, issueOpen, prMerge, prOpen, push };
