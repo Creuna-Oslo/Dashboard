@@ -20,8 +20,7 @@ class Notifications extends React.Component {
   state = {
     isMuted: true,
     notifications: [],
-    volume: 20,
-    nativeNotificationPermission: Notification.permission
+    volume: 20
   };
 
   audioPlayer = undefined;
@@ -32,7 +31,7 @@ class Notifications extends React.Component {
 
   handleNewNotification = () => {
     this.play();
-    if (this.state.nativeNotificationPermission === 'granted') {
+    if (Notification.permission === 'granted') {
       spawnNativeNotification(this.state.notifications[0]);
     }
   };
