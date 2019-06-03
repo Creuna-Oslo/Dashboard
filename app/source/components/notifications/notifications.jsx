@@ -7,7 +7,7 @@ import firebase from 'js/firebase-helper';
 import NotificationComponent from '../notification';
 import spawnNativeNotification from '../notification/native-notification';
 
-const newNotification = (previousNotifications, nextNotifications) =>
+const hasNewNotification = (previousNotifications, nextNotifications) =>
   previousNotifications &&
   nextNotifications &&
   previousNotifications.length > 0 &&
@@ -65,7 +65,7 @@ class Notifications extends React.Component {
     this.requestNativeNotificationPermission();
     this.unsubscribe = firebase.onNotification(notifications => {
       this.setState(previousState => {
-        if (newNotification(previousState.notifications, notifications)) {
+        if (hasNewNotification(previousState.notifications, notifications)) {
           this.handleNewNotification();
         }
         return { notifications };
