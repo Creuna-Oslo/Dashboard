@@ -3,6 +3,8 @@
   margin-bottom: 60px;
 
   > div:last-child {
-    grid-column: 1 / span 2;
+    @media (min-width: $breakpoint-m) {
+      grid-column: 1 / span 2;
+    }
   }
 }

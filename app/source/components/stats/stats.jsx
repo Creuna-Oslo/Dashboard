@@ -15,7 +15,8 @@ class Stats extends React.Component {
 
   state = {
     projects: [],
-    notifications: []
+    notifications: [],
+    notificationsY: []
   };
 
   componentDidMount() {
@@ -27,6 +28,11 @@ class Stats extends React.Component {
         this.setState({ notifications });
       }
     );
+    this.unsubscribeNotifications = firebase.onNotificationByYear(
+      notificationsY => {
+        this.setState({ notificationsY });
+      }
+    );
   }
 
   componentWillUnmount() {
@@ -35,12 +41,14 @@ class Stats extends React.Component {
   }
 
   render() {
-    const { notifications, projects } = this.state;
+    const { notifications, projects, notificationsY } = this.state;
 
     // NOTE: react-flip-motion for some reason crashes for this component unless children are arrays of components with keys
     return (
       <FlipMotion className="stats">
-        {projects.length > 0 && notifications.length > 0
+        {projects.length > 0 &&
+        notifications.length > 0 &&
+        notificationsY.length > 0
           ? [
               <TotalActivity
                 key="total-activity"
@@ -71,7 +79,7 @@ class Stats extends React.Component {
               />,
               <StatsTable
                 key="year-stats"
-                notifications={this.state.notifications}
+                notifications={this.state.notificationsY}
                 title="Activity by year"
               />
             ]

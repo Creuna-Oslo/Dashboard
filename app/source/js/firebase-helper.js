@@ -39,6 +39,21 @@ const onNotificationByMonth = callback => {
   };
 };
 
+const onNotificationByYear = callback => {
+  const reference = database.ref('notifications');
+
+  reference
+    .orderByChild('time')
+    .endAt(-time.thisYear()) // Notifications have a negative timestamp in the database
+    .on('value', snapshot => {
+      callback(firebaseToArray(snapshot));
+    });
+
+  return () => {
+    reference.off();
+  };
+};
+
 const onProjectUpdate = callback => {
   const reference = database.ref('projects');
 
@@ -55,5 +70,6 @@ const onProjectUpdate = callback => {
 export default {
   onNotification,
   onNotificationByMonth,
+  onNotificationByYear,
   onProjectUpdate
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import notificationTypes from '../notification/notification-types';
 import PropTypes from 'prop-types';
 import Card from 'components/card';
+import { utc } from 'moment';
 
 const months = [
   'January',
@@ -26,9 +27,10 @@ class StatsTable extends React.Component {
 
   state = {
     types: {},
-    maxIssues: 0
+    maxIssues: {}
   };
 
+  componentDidUpdate() {}
   componentDidMount() {
     this.fillDataStuff(this.props.notifications);
   }
@@ -44,22 +46,27 @@ class StatsTable extends React.Component {
 
   fillDataStuff = notifications => {
     let types = {};
-    let maxIssues = 0;
+    let maxIssues = {};
     Object.keys(notificationTypes).forEach(
       type => (types[type] = new Array(12).fill(0))
     );
-
     notifications.forEach(notification => {
-      types[notification.type][4]++;
-      if (types[notification.type][4] > maxIssues) {
-        maxIssues = types[notification.type][4];
+      var date = new Date(-notification.time);
+      var month = date.getMonth();
+      types[notification.type][month]++;
+
+      if (
+        types[notification.type][month] > maxIssues[notification.type] ||
+        !maxIssues[notification.type]
+      ) {
+        maxIssues[notification.type] = types[notification.type][month];
       }
     });
     this.setState({ maxIssues, types });
   };
 
-  getClass = val => {
-    let percentOfMax = (val / this.state.maxIssues) * 100;
+  getClass = (type, val) => {
+    let percentOfMax = (val / this.state.maxIssues[type]) * 100;
     if (percentOfMax > 80) return 'purple';
     if (percentOfMax > 60) return 'blue';
     if (percentOfMax > 40) return 'green';
@@ -77,14 +84,14 @@ class StatsTable extends React.Component {
               <tr>
                 <th />
                 {months.map(month => (
-                  <th>{month}</th>
+                  <th key={month}>{month}</th>
                 ))}
               </tr>
               {Object.keys(this.state.types).map(type => (
-                <tr>
+                <tr key={type}>
                   <th>{type}</th>
                   {this.state.types[type].map(val => (
-                    <td className={this.getClass(val)}>{val}</td>
+                    <td className={this.getClass(type, val)}>{val}</td>
                   ))}
                 </tr>
               ))}
