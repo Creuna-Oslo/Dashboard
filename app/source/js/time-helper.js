@@ -20,6 +20,7 @@ const tomorrow = () => today() + hours(24);
 // The time when the current month started
 const thisMonth = () => today() - days(30);
 
+// The time since 1st of January this year until now
 const thisYear = () => today() - (today() - Date.UTC(new Date().getFullYear()));
 
 export default {
