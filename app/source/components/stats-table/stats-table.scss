@@ -1,0 +1,39 @@
+.stats-table {
+  width: 100%;
+  text-align: center;
+
+  // tr {
+  //   display: flex;
+  //   th,
+  //   td {
+  //     flex: 1;
+  //   }
+  // }
+
+  tr:first-of-type th:not(:first-child) {
+    // background: red;
+  }
+
+  th:first-of-type {
+    text-align: left;
+  }
+
+  td {
+    background: #000;
+    &.red {
+      background: #5e0000;
+    }
+    &.yellow {
+      background-color: #d77900;
+    }
+    &.green {
+      background: #6d9521;
+    }
+    &.blue {
+      background: #4a92b7;
+    }
+    &.purple {
+      background: #83579d;
+    }
+  }
+}

@@ -8,6 +8,7 @@ import FlipMotion from 'react-flip-motion';
 import PeriodicActivity from 'components/periodic-activity';
 import TotalActivity from 'components/total-activity';
 import TopStats from '../top-stats';
+import StatsTable from '../stats-table';
 
 class Stats extends React.Component {
   static propTypes = {};
@@ -67,6 +68,11 @@ class Stats extends React.Component {
                 shiftThreshold={1}
                 subtitle="Past month"
                 title="Activity by weekday"
+              />,
+              <StatsTable
+                key="year-stats"
+                notifications={this.state.notifications}
+                title="Activity by year"
               />
             ]
           : [<div key="empty" />]}

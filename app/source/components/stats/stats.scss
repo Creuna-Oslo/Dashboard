@@ -1,3 +1,8 @@
 .stats {
   @include grid(20px, true, 2);
+  margin-bottom: 60px;
+
+  > div:last-child {
+    grid-column: 1 / span 2;
+  }
 }
