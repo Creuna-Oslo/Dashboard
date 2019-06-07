@@ -1,7 +1,7 @@
 .stats-table {
   width: 100%;
   text-align: center;
-  margin: 20px 0;
+  margin: 40px 0 20px 0;
 
   .spacer {
     background: transparent;
@@ -11,8 +11,16 @@
   }
 
   th {
+    position: relative;
     height: 2rem;
     padding-bottom: 10px;
+
+    div {
+      position: absolute;
+      top: -30px;
+      width: 100%;
+      font-size: 1.3rem;
+    }
   }
 
   th:first-of-type {

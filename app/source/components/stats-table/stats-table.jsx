@@ -27,6 +27,7 @@ const getMonths = () => {
 };
 
 const currentMonth = new Date().getMonth();
+const currentYear = new Date().getFullYear();
 
 class StatsTable extends React.Component {
   static propTypes = {
@@ -108,7 +109,11 @@ class StatsTable extends React.Component {
                 {getMonths().map((month, index) => (
                   <React.Fragment>
                     {index === currentMonth + 1 && <th class="spacer" />}
-                    <th key={month}>{month}</th>
+                    <th key={month}>
+                      {month}
+                      {index === 0 && <div>{currentYear - 1}</div>}
+                      {index === currentMonth + 1 && <div>{currentYear}</div>}
+                    </th>
                   </React.Fragment>
                 ))}
               </tr>
