@@ -19,6 +19,15 @@ const months = [
   'Desember'
 ];
 
+const getMonths = () => {
+  let currentMonth = new Date().getMonth();
+  let currentYear = months.slice(0, currentMonth + 1);
+  let prevYear = months.slice(currentMonth + 1);
+  return prevYear.concat(currentYear);
+};
+
+const currentMonth = new Date().getMonth();
+
 class StatsTable extends React.Component {
   static propTypes = {
     notifications: PropTypes.array,
@@ -44,6 +53,17 @@ class StatsTable extends React.Component {
     </tr>
   ));
 
+  coolIndex = index => {
+    let currentMonth = new Date().getMonth();
+    let newIndex;
+    if (index <= currentMonth) {
+      newIndex = index + currentMonth + 1;
+    } else {
+      newIndex = index - (currentMonth + 1);
+    }
+    return newIndex;
+  };
+
   fillDataStuff = notifications => {
     let types = {};
     let maxIssues = {};
@@ -53,13 +73,15 @@ class StatsTable extends React.Component {
     notifications.forEach(notification => {
       var date = new Date(-notification.time);
       var month = date.getMonth();
-      types[notification.type][month]++;
+      types[notification.type][this.coolIndex(month)]++;
 
       if (
-        types[notification.type][month] > maxIssues[notification.type] ||
+        types[notification.type][this.coolIndex(month)] >
+          maxIssues[notification.type] ||
         !maxIssues[notification.type]
       ) {
-        maxIssues[notification.type] = types[notification.type][month];
+        maxIssues[notification.type] =
+          types[notification.type][this.coolIndex(month)];
       }
     });
     this.setState({ maxIssues, types });
@@ -83,15 +105,21 @@ class StatsTable extends React.Component {
             <tbody>
               <tr>
                 <th />
-                {months.map(month => (
-                  <th key={month}>{month}</th>
+                {getMonths().map((month, index) => (
+                  <React.Fragment>
+                    {index === currentMonth + 1 && <th class="spacer" />}
+                    <th key={month}>{month}</th>
+                  </React.Fragment>
                 ))}
               </tr>
               {Object.keys(this.state.types).map(type => (
                 <tr key={type}>
                   <th>{type}</th>
-                  {this.state.types[type].map(val => (
-                    <td className={this.getClass(type, val)}>{val}</td>
+                  {this.state.types[type].map((val, index) => (
+                    <React.Fragment>
+                      {index === currentMonth + 1 && <td class="spacer" />}
+                      <td className={this.getClass(type, val)}>{val}</td>
+                    </React.Fragment>
                   ))}
                 </tr>
               ))}

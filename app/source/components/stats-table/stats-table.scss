@@ -1,17 +1,18 @@
 .stats-table {
   width: 100%;
   text-align: center;
+  margin: 20px 0;
 
-  // tr {
-  //   display: flex;
-  //   th,
-  //   td {
-  //     flex: 1;
-  //   }
-  // }
+  .spacer {
+    background: transparent;
+    &:before {
+      content: "\00a0";
+    }
+  }
 
-  tr:first-of-type th:not(:first-child) {
-    // background: red;
+  th {
+    height: 2rem;
+    padding-bottom: 10px;
   }
 
   th:first-of-type {
@@ -20,20 +21,32 @@
 
   td {
     background: #000;
+    height: 2rem;
+
+    &:hover:not(.spacer) {
+      transform: scale(1.4);
+      border: 2px solid white;
+      border-radius: 5px;
+    }
+
     &.red {
       background: #5e0000;
     }
     &.yellow {
       background-color: #d77900;
+      font-size: 1.1rem;
     }
     &.green {
       background: #6d9521;
+      font-size: 1.2rem;
     }
     &.blue {
       background: #4a92b7;
+      font-size: 1.2rem;
     }
     &.purple {
       background: #83579d;
+      font-size: 1.25rem;
     }
   }
 }
