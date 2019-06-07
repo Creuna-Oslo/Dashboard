@@ -103,7 +103,7 @@ class StatsTable extends React.Component {
         <th />
         {getMonths().map((month, index) => (
           <React.Fragment>
-            {index === currentMonth + 1 && <th class="spacer" />}
+            {index === currentMonth + 1 && <th className="spacer" />}
             <th key={month}>
               {month}
               {index === 0 && <div>{currentYear - 1}</div>}
@@ -115,19 +115,19 @@ class StatsTable extends React.Component {
     );
 
     const tableBody = () => (
-      <tbody>
+      <React.Fragment>
         {Object.keys(this.state.types).map(type => (
           <tr key={type}>
             <th>{type}</th>
             {this.state.types[type].map((val, index) => (
               <React.Fragment>
-                {index === currentMonth + 1 && <td class="spacer" />}
+                {index === currentMonth + 1 && <td className="spacer" />}
                 <td className={this.getClass(type, val)}>{val}</td>
               </React.Fragment>
             ))}
           </tr>
         ))}
-      </tbody>
+      </React.Fragment>
     );
 
     return (
@@ -135,8 +135,10 @@ class StatsTable extends React.Component {
         <Card theme={Card.themes.grid}>
           <h2>{this.props.title}</h2>
           <table className="stats-table">
-            {topRowHeaders}
-            {tableBody}
+            <tbody>
+              {topRowHeaders()}
+              {tableBody()}
+            </tbody>
           </table>
         </Card>
       </div>
