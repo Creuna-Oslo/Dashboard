@@ -98,37 +98,45 @@ class StatsTable extends React.Component {
   };
 
   render() {
+    const topRowHeaders = () => (
+      <tr>
+        <th />
+        {getMonths().map((month, index) => (
+          <React.Fragment>
+            {index === currentMonth + 1 && <th class="spacer" />}
+            <th key={month}>
+              {month}
+              {index === 0 && <div>{currentYear - 1}</div>}
+              {index === currentMonth + 1 && <div>{currentYear}</div>}
+            </th>
+          </React.Fragment>
+        ))}
+      </tr>
+    );
+
+    const tableBody = () => (
+      <tbody>
+        {Object.keys(this.state.types).map(type => (
+          <tr key={type}>
+            <th>{type}</th>
+            {this.state.types[type].map((val, index) => (
+              <React.Fragment>
+                {index === currentMonth + 1 && <td class="spacer" />}
+                <td className={this.getClass(type, val)}>{val}</td>
+              </React.Fragment>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    );
+
     return (
       <div>
         <Card theme={Card.themes.grid}>
           <h2>{this.props.title}</h2>
           <table className="stats-table">
-            <tbody>
-              <tr>
-                <th />
-                {getMonths().map((month, index) => (
-                  <React.Fragment>
-                    {index === currentMonth + 1 && <th class="spacer" />}
-                    <th key={month}>
-                      {month}
-                      {index === 0 && <div>{currentYear - 1}</div>}
-                      {index === currentMonth + 1 && <div>{currentYear}</div>}
-                    </th>
-                  </React.Fragment>
-                ))}
-              </tr>
-              {Object.keys(this.state.types).map(type => (
-                <tr key={type}>
-                  <th>{type}</th>
-                  {this.state.types[type].map((val, index) => (
-                    <React.Fragment>
-                      {index === currentMonth + 1 && <td class="spacer" />}
-                      <td className={this.getClass(type, val)}>{val}</td>
-                    </React.Fragment>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
+            {topRowHeaders}
+            {tableBody}
           </table>
         </Card>
       </div>
