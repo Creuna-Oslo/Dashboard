@@ -2,39 +2,9 @@ import React from 'react';
 import notificationTypes from '../notification/notification-types';
 import PropTypes from 'prop-types';
 import Card from 'components/card';
+import { months, actionTypes } from '../../js/utils';
+import { currentYear, currentMonth } from '../../js/time-helper';
 
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-
-const actionTypes = {
-  issueClose: 'Issues closed',
-  issueComment: 'Issue comments',
-  issueOpen: 'Issues opened',
-  prMerge: 'Pull requests merged',
-  prOpen: 'Pull requests closed',
-  push: 'Pushes'
-};
-
-const currentMonth = new Date().getMonth();
-const currentYear = new Date().getFullYear();
-
-const lastTwelveMonths = () => {
-  let currentYear = months.slice(0, currentMonth + 1);
-  let prevYear = months.slice(currentMonth + 1);
-  return prevYear.concat(currentYear);
-};
 class StatsTable extends React.Component {
   static propTypes = {
     notifications: PropTypes.array.isRequired,
@@ -49,6 +19,12 @@ class StatsTable extends React.Component {
   componentDidMount() {
     this.fillTable(this.props.notifications);
   }
+
+  lastTwelveMonths = () => {
+    let currentYear = months.slice(0, currentMonth + 1);
+    let prevYear = months.slice(currentMonth + 1);
+    return prevYear.concat(currentYear);
+  };
 
   getMonthIndex = index =>
     index <= currentMonth
@@ -85,11 +61,11 @@ class StatsTable extends React.Component {
     if (percentOfMax > 0) return 'table-0';
   };
 
-  render() {
-    const topRowHeaders = () => (
-      <tr>
-        <th />
-        {lastTwelveMonths().map((month, index) => (
+  topRowHeaders = () => (
+    <tr>
+      <th />
+      {months &&
+        this.lastTwelveMonths().map((month, index) => (
           <React.Fragment key={month}>
             {index === currentMonth + 1 && <th className="spacer" />}
             <th key={month}>
@@ -102,33 +78,32 @@ class StatsTable extends React.Component {
             </th>
           </React.Fragment>
         ))}
-      </tr>
-    );
+    </tr>
+  );
 
-    const tableBody = () => (
-      <React.Fragment>
-        {Object.keys(this.state.types).map(type => (
-          <tr key={type}>
-            <th>{actionTypes[type]}</th>
-            {this.state.types[type].map((val, index) => (
-              <React.Fragment key={type + index}>
-                {index === currentMonth + 1 && <td className="spacer" />}
-                <td className={this.getClass(type, val)}>{val}</td>
-              </React.Fragment>
-            ))}
-          </tr>
+  tableBody = types => {
+    return Object.keys(types).map(type => (
+      <tr key={type}>
+        <th>{actionTypes[type]}</th>
+        {types[type].map((val, index) => (
+          <React.Fragment key={type + index}>
+            {index === currentMonth + 1 && <td className="spacer" />}
+            <td className={this.getClass(type, val)}>{val}</td>
+          </React.Fragment>
         ))}
-      </React.Fragment>
-    );
+      </tr>
+    ));
+  };
 
+  render() {
     return (
       <div className="stats-table">
         <Card theme={Card.themes.grid}>
           <h2>{this.props.title}</h2>
           <table>
             <tbody>
-              {topRowHeaders()}
-              {tableBody()}
+              {this.topRowHeaders()}
+              {this.tableBody(this.state.types)}
             </tbody>
           </table>
           <div className="legend" />
