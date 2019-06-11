@@ -2,7 +2,6 @@ import React from 'react';
 import notificationTypes from '../notification/notification-types';
 import PropTypes from 'prop-types';
 import Card from 'components/card';
-import { utc } from 'moment';
 
 const months = [
   'January',
@@ -19,19 +18,17 @@ const months = [
   'Desember'
 ];
 
-const getMonths = () => {
-  let currentMonth = new Date().getMonth();
+const currentMonth = new Date().getMonth();
+const currentYear = new Date().getFullYear();
+
+const lastTwelveMonths = () => {
   let currentYear = months.slice(0, currentMonth + 1);
   let prevYear = months.slice(currentMonth + 1);
   return prevYear.concat(currentYear);
 };
-
-const currentMonth = new Date().getMonth();
-const currentYear = new Date().getFullYear();
-
 class StatsTable extends React.Component {
   static propTypes = {
-    notifications: PropTypes.array,
+    notifications: PropTypes.array.isRequired,
     title: PropTypes.string
   };
 
@@ -41,49 +38,32 @@ class StatsTable extends React.Component {
   };
 
   componentDidMount() {
-    this.fillDataStuff(this.props.notifications);
+    this.fillTable(this.props.notifications);
   }
 
-  fillTable = Object.keys(this.state.types).map(type => (
-    <tr>
-      <th>{type}</th>
-      {this.state.types[type].map(val => (
-        <td>{val}</td>
-      ))}
-    </tr>
-  ));
+  getMonthIndex = index =>
+    index <= currentMonth
+      ? index + currentMonth + 1
+      : index - (currentMonth + 1);
 
-  coolIndex = index => {
-    let currentMonth = new Date().getMonth();
-    let newIndex;
-    if (index <= currentMonth) {
-      newIndex = index + currentMonth + 1;
-    } else {
-      newIndex = index - (currentMonth + 1);
-    }
-    return newIndex;
-  };
-
-  fillDataStuff = notifications => {
+  fillTable = notifications => {
     let types = {};
     let maxIssues = {};
-    Object.keys(notificationTypes).forEach(
-      type => (types[type] = new Array(12).fill(0))
-    );
-    notifications.forEach(notification => {
-      var date = new Date(-notification.time);
-      var month = date.getMonth();
-      types[notification.type][this.coolIndex(month)]++;
 
-      if (
-        types[notification.type][this.coolIndex(month)] >
-          maxIssues[notification.type] ||
-        !maxIssues[notification.type]
-      ) {
-        maxIssues[notification.type] =
-          types[notification.type][this.coolIndex(month)];
+    Object.keys(notificationTypes).forEach(
+      type => (types[type] = new Array(12).fill(0)) //12months, initial count = 0
+    );
+
+    notifications.forEach(notification => {
+      let month = new Date(-notification.time).getMonth();
+      let count = types[notification.type][this.getMonthIndex(month)]++;
+      let max = maxIssues[notification.type];
+
+      if (!max || count > max) {
+        maxIssues[notification.type] = count;
       }
     });
+
     this.setState({ maxIssues, types });
   };
 
@@ -100,7 +80,7 @@ class StatsTable extends React.Component {
     const topRowHeaders = () => (
       <tr>
         <th />
-        {getMonths().map((month, index) => (
+        {lastTwelveMonths().map((month, index) => (
           <React.Fragment>
             {index === currentMonth + 1 && <th className="spacer" />}
             <th key={month}>
