@@ -15,7 +15,7 @@ const months = [
   'September',
   'October',
   'November',
-  'Desember'
+  'December'
 ];
 
 const currentMonth = new Date().getMonth();
