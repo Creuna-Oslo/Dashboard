@@ -89,11 +89,11 @@ class StatsTable extends React.Component {
 
   getClass = (type, val) => {
     let percentOfMax = (val / this.state.maxIssues[type]) * 100;
-    if (percentOfMax > 80) return 'purple';
-    if (percentOfMax > 60) return 'blue';
-    if (percentOfMax > 40) return 'green';
-    if (percentOfMax > 20) return 'yellow';
-    if (percentOfMax > 0) return 'red';
+    if (percentOfMax > 80) return 'table-80';
+    if (percentOfMax > 60) return 'table-60';
+    if (percentOfMax > 40) return 'table-40';
+    if (percentOfMax > 20) return 'table-20';
+    if (percentOfMax > 0) return 'table-0';
   };
 
   render() {
@@ -139,6 +139,7 @@ class StatsTable extends React.Component {
               {tableBody()}
             </tbody>
           </table>
+          <div className="legend" />
         </Card>
       </div>
     );

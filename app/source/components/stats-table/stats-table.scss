@@ -1,3 +1,10 @@
+//table color scale based on percentage of max value per row (category).
+$table-0: #5e0000;
+$table-20: #d77900;
+$table-40: #6d9521;
+$table-60: #4a92b7;
+$table-80: #83579d;
+
 .stats-table {
   width: 100%;
   text-align: center;
@@ -37,24 +44,55 @@
       border-radius: 5px;
     }
 
-    &.red {
-      background: #5e0000;
+    &.table-0 {
+      background: $table-0;
     }
-    &.yellow {
-      background-color: #d77900;
+    &.table-20 {
+      background-color: $table-20;
       font-size: 1.1rem;
     }
-    &.green {
-      background: #6d9521;
+    &.table-40 {
+      background: $table-40;
       font-size: 1.2rem;
     }
-    &.blue {
-      background: #4a92b7;
+    &.table-60 {
+      background: $table-60;
       font-size: 1.2rem;
     }
-    &.purple {
-      background: #83579d;
+    &.table-80 {
+      background: $table-80;
       font-size: 1.25rem;
     }
+  }
+}
+
+.legend {
+  position: relative;
+  height: 20px;
+  width: 300px;
+  margin-left: auto;
+  margin-bottom: 20px;
+  background: linear-gradient(
+    to right,
+    black 1%,
+    $table-0 3%,
+    $table-20 20%,
+    $table-40 40%,
+    $table-60 60%,
+    $table-80 80%
+  );
+
+  &:before {
+    content: "0%";
+    position: absolute;
+    left: 0;
+    top: 20px;
+  }
+
+  &:after {
+    content: "100%";
+    position: absolute;
+    right: 0;
+    top: 20px;
   }
 }
