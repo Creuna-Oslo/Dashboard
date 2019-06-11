@@ -18,6 +18,6 @@ export const actionTypes = {
   issueComment: 'Issue comments',
   issueOpen: 'Issues opened',
   prMerge: 'Pull requests merged',
-  prOpen: 'Pull requests closed',
+  prOpen: 'Pull requests created',
   push: 'Pushes'
 };
