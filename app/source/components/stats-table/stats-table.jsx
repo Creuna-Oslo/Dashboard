@@ -40,7 +40,6 @@ class StatsTable extends React.Component {
     maxIssues: {}
   };
 
-  componentDidUpdate() {}
   componentDidMount() {
     this.fillDataStuff(this.props.notifications);
   }
