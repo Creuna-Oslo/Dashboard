@@ -18,6 +18,15 @@ const months = [
   'December'
 ];
 
+const actionTypes = {
+  issueClose: 'Issues closed',
+  issueComment: 'Issue comments',
+  issueOpen: 'Issues opened',
+  prMerge: 'Pull requests merged',
+  prOpen: 'Pull requests closed',
+  push: 'Pushes'
+};
+
 const currentMonth = new Date().getMonth();
 const currentYear = new Date().getFullYear();
 
@@ -97,7 +106,7 @@ class StatsTable extends React.Component {
       <React.Fragment>
         {Object.keys(this.state.types).map(type => (
           <tr key={type}>
-            <th>{type}</th>
+            <th>{actionTypes[type]}</th>
             {this.state.types[type].map((val, index) => (
               <React.Fragment>
                 {index === currentMonth + 1 && <td className="spacer" />}
