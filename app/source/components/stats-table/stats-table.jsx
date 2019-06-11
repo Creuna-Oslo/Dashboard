@@ -90,12 +90,15 @@ class StatsTable extends React.Component {
       <tr>
         <th />
         {lastTwelveMonths().map((month, index) => (
-          <React.Fragment>
+          <React.Fragment key={month}>
             {index === currentMonth + 1 && <th className="spacer" />}
             <th key={month}>
               {month}
-              {index === 0 && <div>{currentYear - 1}</div>}
-              {index === currentMonth + 1 && <div>{currentYear}</div>}
+              {index === 0 && currentMonth !== 0 && (
+                <div>{currentYear - 1}</div>
+              )}
+              {index === currentMonth + 1 ||
+                (currentMonth === 0 && <div>{currentYear}</div>)}
             </th>
           </React.Fragment>
         ))}
@@ -108,7 +111,7 @@ class StatsTable extends React.Component {
           <tr key={type}>
             <th>{actionTypes[type]}</th>
             {this.state.types[type].map((val, index) => (
-              <React.Fragment>
+              <React.Fragment key={type + index}>
                 {index === currentMonth + 1 && <td className="spacer" />}
                 <td className={this.getClass(type, val)}>{val}</td>
               </React.Fragment>
