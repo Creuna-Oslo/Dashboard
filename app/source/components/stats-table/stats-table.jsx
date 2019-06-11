@@ -17,7 +17,7 @@ class StatsTable extends React.Component {
   };
 
   componentDidMount() {
-    this.fillTable(this.props.notifications);
+    this.countActionsPerType(this.props.notifications);
   }
 
   lastTwelveMonths = () => {
@@ -31,10 +31,9 @@ class StatsTable extends React.Component {
       ? index + currentMonth + 1
       : index - (currentMonth + 1);
 
-  fillTable = notifications => {
-    let types = {};
+  countActionsPerType = notifications => {
     let maxIssues = {};
-
+    let types = {};
     Object.keys(notificationTypes).forEach(
       type => (types[type] = new Array(12).fill(0)) //12months, initial count = 0
     );
