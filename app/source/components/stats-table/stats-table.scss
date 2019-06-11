@@ -14,7 +14,7 @@ $table-80: #83579d;
     .spacer {
       background: transparent;
       &:before {
-        content: "\00a0";
+        content: "\00a0\00a0";
       }
     }
 
@@ -33,6 +33,20 @@ $table-80: #83579d;
 
     th:first-of-type {
       text-align: left;
+    }
+
+    tr {
+      display: flex;
+
+      th:not(.spacer),
+      td:not(.spacer) {
+        flex: 2;
+      }
+
+      > th:first-of-type {
+        flex: 3;
+        min-width: 180px;
+      }
     }
 
     td {
