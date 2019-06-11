@@ -6,93 +6,95 @@ $table-60: #4a92b7;
 $table-80: #83579d;
 
 .stats-table {
-  width: 100%;
-  text-align: center;
-  margin: 40px 0 20px 0;
+  table {
+    width: 100%;
+    text-align: center;
+    margin: 40px 0 20px 0;
 
-  .spacer {
-    background: transparent;
-    &:before {
-      content: "\00a0";
+    .spacer {
+      background: transparent;
+      &:before {
+        content: "\00a0";
+      }
+    }
+
+    th {
+      position: relative;
+      height: 2rem;
+      padding-bottom: 10px;
+
+      div {
+        position: absolute;
+        top: -30px;
+        width: 100%;
+        font-size: 1.3rem;
+      }
+    }
+
+    th:first-of-type {
+      text-align: left;
+    }
+
+    td {
+      background: #000;
+      height: 2rem;
+
+      &:hover:not(.spacer) {
+        transform: scale(1.4);
+        border: 2px solid white;
+        border-radius: 5px;
+      }
+
+      &.table-0 {
+        background: $table-0;
+      }
+      &.table-20 {
+        background-color: $table-20;
+        font-size: 1.1rem;
+      }
+      &.table-40 {
+        background: $table-40;
+        font-size: 1.2rem;
+      }
+      &.table-60 {
+        background: $table-60;
+        font-size: 1.2rem;
+      }
+      &.table-80 {
+        background: $table-80;
+        font-size: 1.25rem;
+      }
     }
   }
 
-  th {
+  .legend {
     position: relative;
-    height: 2rem;
-    padding-bottom: 10px;
+    height: 20px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-bottom: 20px;
+    background: linear-gradient(
+      to right,
+      black 1%,
+      $table-0 3%,
+      $table-20 20%,
+      $table-40 40%,
+      $table-60 60%,
+      $table-80 80%
+    );
 
-    div {
+    &:before {
+      content: "0%";
       position: absolute;
-      top: -30px;
-      width: 100%;
-      font-size: 1.3rem;
-    }
-  }
-
-  th:first-of-type {
-    text-align: left;
-  }
-
-  td {
-    background: #000;
-    height: 2rem;
-
-    &:hover:not(.spacer) {
-      transform: scale(1.4);
-      border: 2px solid white;
-      border-radius: 5px;
+      left: 0;
+      top: 20px;
     }
 
-    &.table-0 {
-      background: $table-0;
+    &:after {
+      content: "100%";
+      position: absolute;
+      right: 0;
+      top: 20px;
     }
-    &.table-20 {
-      background-color: $table-20;
-      font-size: 1.1rem;
-    }
-    &.table-40 {
-      background: $table-40;
-      font-size: 1.2rem;
-    }
-    &.table-60 {
-      background: $table-60;
-      font-size: 1.2rem;
-    }
-    &.table-80 {
-      background: $table-80;
-      font-size: 1.25rem;
-    }
-  }
-}
-
-.legend {
-  position: relative;
-  height: 20px;
-  width: 300px;
-  margin-left: auto;
-  margin-bottom: 20px;
-  background: linear-gradient(
-    to right,
-    black 1%,
-    $table-0 3%,
-    $table-20 20%,
-    $table-40 40%,
-    $table-60 60%,
-    $table-80 80%
-  );
-
-  &:before {
-    content: "0%";
-    position: absolute;
-    left: 0;
-    top: 20px;
-  }
-
-  &:after {
-    content: "100%";
-    position: absolute;
-    right: 0;
-    top: 20px;
   }
 }

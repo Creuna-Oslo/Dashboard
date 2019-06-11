@@ -110,10 +110,10 @@ class StatsTable extends React.Component {
     );
 
     return (
-      <div>
+      <div className="stats-table">
         <Card theme={Card.themes.grid}>
           <h2>{this.props.title}</h2>
-          <table className="stats-table">
+          <table>
             <tbody>
               {topRowHeaders()}
               {tableBody()}
