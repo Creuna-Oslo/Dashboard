@@ -4,9 +4,10 @@ import FlipMotion from 'react-flip-motion';
 import AudioControls from '../audio-controls';
 import AudioPlayer from 'js/audio/audio-player';
 import firebase from 'js/firebase-helper';
-import Notification from '../notification';
+import NotificationComponent from '../notification';
+import spawnNativeNotification from '../notification/native-notification';
 
-const shouldPlayAudio = (previousNotifications, nextNotifications) =>
+const hasNewNotification = (previousNotifications, nextNotifications) =>
   previousNotifications &&
   nextNotifications &&
   previousNotifications.length > 0 &&
@@ -28,6 +29,13 @@ class Notifications extends React.Component {
     this.setState({ volume });
   };
 
+  handleNewNotification = () => {
+    this.play();
+    if (Notification.permission === 'granted') {
+      spawnNativeNotification(this.state.notifications[0]);
+    }
+  };
+
   play = () => {
     if (this.audioPlayer) {
       this.audioPlayer.play(this.state.volume);
@@ -47,13 +55,19 @@ class Notifications extends React.Component {
     );
   };
 
+  requestNativeNotificationPermission = () => {
+    Notification.requestPermission().then(result =>
+      this.setState({ nativeNotificationPermission: result })
+    );
+  };
+
   componentDidMount() {
+    this.requestNativeNotificationPermission();
     this.unsubscribe = firebase.onNotification(notifications => {
       this.setState(previousState => {
-        if (shouldPlayAudio(previousState.notifications, notifications)) {
-          this.play();
+        if (hasNewNotification(previousState.notifications, notifications)) {
+          this.handleNewNotification();
         }
-
         return { notifications };
       });
     });
@@ -68,7 +82,7 @@ class Notifications extends React.Component {
       <React.Fragment>
         <FlipMotion className="notifications">
           {this.state.notifications.map(item => (
-            <Notification key={item.time} {...item} />
+            <NotificationComponent key={item.time} {...item} />
           ))}
         </FlipMotion>
         <AudioControls
