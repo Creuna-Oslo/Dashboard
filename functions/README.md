@@ -28,7 +28,7 @@ The cloud function URL should be encrypted. To do this, install the [travis cli]
 travis encrypt http://example.com/hook
 ```
 
-Put the resulting has as the URL in `.travis.yml`
+Put the resulting hash as the URL in `.travis.yml`
 
 ## NPM webhooks
 
