@@ -80,7 +80,8 @@ class Stats extends React.Component {
               <StatsTable
                 key="year-stats"
                 notifications={this.state.notificationsY}
-                title="Activity by year"
+                subtitle="Past year"
+                title="Activity by type"
               />
             ]
           : [<div key="empty" />]}

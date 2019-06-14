@@ -8,7 +8,8 @@ import { currentYear, currentMonth } from '../../js/time-helper';
 class StatsTable extends React.Component {
   static propTypes = {
     notifications: PropTypes.array.isRequired,
-    title: PropTypes.string
+    title: PropTypes.string,
+    subtitle: PropTypes.string
   };
 
   state = {
@@ -100,6 +101,7 @@ class StatsTable extends React.Component {
       <div className="stats-table">
         <Card theme={Card.themes.grid}>
           <h2>{this.props.title}</h2>
+          <p>{this.props.subtitle}</p>
           <table>
             <tbody>
               {this.topRowHeaders()}

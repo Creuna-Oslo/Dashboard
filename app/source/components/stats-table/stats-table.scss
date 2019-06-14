@@ -8,6 +8,12 @@ $table-color-80: rgba($base-color, 0.8);
 $table-color-100: $base-color;
 
 .stats-table {
+  p {
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-size: 1.2em;
+  }
+
   table {
     width: 100%;
     text-align: center;
