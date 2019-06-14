@@ -1,9 +1,11 @@
 //table color scale based on percentage of max value per row (category).
-$table-0: #5e0000;
-$table-20: #d77900;
-$table-40: #6d9521;
-$table-60: #4a92b7;
-$table-80: #83579d;
+$base-color: #268ebe;
+$table-color-0: transparent;
+$table-color-20: rgba($base-color, 0.2);
+$table-color-40: rgba($base-color, 0.4);
+$table-color-60: rgba($base-color, 0.6);
+$table-color-80: rgba($base-color, 0.8);
+$table-color-100: $base-color;
 
 .stats-table {
   table {
@@ -54,22 +56,26 @@ $table-80: #83579d;
       height: 2rem;
 
       &.table-0 {
-        background: $table-0;
+        background: $table-color-0;
       }
       &.table-20 {
-        background-color: $table-20;
+        background-color: $table-color-20;
         font-size: 1.1rem;
       }
       &.table-40 {
-        background: $table-40;
+        background: $table-color-40;
         font-size: 1.2rem;
       }
       &.table-60 {
-        background: $table-60;
+        background: $table-color-60;
         font-size: 1.2rem;
       }
       &.table-80 {
-        background: $table-80;
+        background: $table-color-80;
+        font-size: 1.25rem;
+      }
+      &.table-100 {
+        background: $table-color-100;
         font-size: 1.25rem;
       }
     }
@@ -83,12 +89,11 @@ $table-80: #83579d;
     margin-bottom: 20px;
     background: linear-gradient(
       to right,
-      black 1%,
-      $table-0 3%,
-      $table-20 20%,
-      $table-40 40%,
-      $table-60 60%,
-      $table-80 80%
+      $table-color-20 0%,
+      $table-color-40 20%,
+      $table-color-60 40%,
+      $table-color-80 60%,
+      $table-color-80 80%
     );
 
     &:before {
