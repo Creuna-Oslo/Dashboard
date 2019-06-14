@@ -1,3 +1,6 @@
+export const currentYear = new Date().getFullYear();
+export const currentMonth = new Date().getMonth();
+
 const hours = numberOfHours => 60 * 60 * 1000 * numberOfHours;
 
 const days = numberOfDays => hours(24) * numberOfDays;
@@ -20,11 +23,20 @@ const tomorrow = () => today() + hours(24);
 // The time when the current month started
 const thisMonth = () => today() - days(30);
 
+// The last 12 months
+const lastYear = () =>
+  today() - (today() - new Date().setUTCFullYear(currentYear - 1));
+
+// The time since 1st of January this year until now
+const thisYearSoFar = () => today() - (today() - Date.UTC(currentYear));
+
 export default {
   dayAfter,
   dayBefore,
+  lastYear,
   today,
   tomorrow,
   thisMonth,
+  thisYearSoFar,
   yesterday
 };
