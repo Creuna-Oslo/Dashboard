@@ -53,12 +53,6 @@ $table-80: #83579d;
       background: #000;
       height: 2rem;
 
-      &:hover:not(.spacer) {
-        transform: scale(1.4);
-        border: 2px solid white;
-        border-radius: 5px;
-      }
-
       &.table-0 {
         background: $table-0;
       }
