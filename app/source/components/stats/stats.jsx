@@ -8,6 +8,7 @@ import FlipMotion from 'react-flip-motion';
 import PeriodicActivity from 'components/periodic-activity';
 import TotalActivity from 'components/total-activity';
 import TopStats from '../top-stats';
+import pastActivity from './past-activity';
 
 class Stats extends React.Component {
   static propTypes = {};
@@ -19,7 +20,10 @@ class Stats extends React.Component {
 
   componentDidMount() {
     this.unsubscribeProjects = firebase.onProjectUpdate(projects => {
-      this.setState({ projects });
+      const filteredProjects = pastActivity.pastMonth(projects);
+      this.setState({
+        projects: filteredProjects
+      });
     });
     this.unsubscribeNotifications = firebase.onNotificationByMonth(
       notifications => {
@@ -35,7 +39,6 @@ class Stats extends React.Component {
 
   render() {
     const { notifications, projects } = this.state;
-
     // NOTE: react-flip-motion for some reason crashes for this component unless children are arrays of components with keys
     return (
       <FlipMotion className="stats">

@@ -73,11 +73,6 @@ function getPoints(data) {
       const dayBeforeTime = time.dayBefore(timestamp);
       const dayAfterTime = time.dayAfter(timestamp);
 
-      if (timestamp < time.thisMonth()) {
-        // Don't include items older than 30 days
-        return accum;
-      }
-
       // Since a repository might not have activity every day, there will be some holes in the data, which will result in the slope of the graph being wrong. To fix this, insert a data point before and/or after each non-zero point, if those points doesn't already exist.
       if (!accum.hasOwnProperty(dayBeforeTime)) {
         Object.assign(accum, { [dayBeforeTime]: 0 });
