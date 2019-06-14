@@ -45,7 +45,7 @@ const onNotificationByYear = callback => {
   reference
     .orderByChild('time')
     .endAt(-time.lastYear()) // Notifications have a negative timestamp in the database
-    .on('value', snapshot => {
+    .once('value', snapshot => {
       callback(firebaseToArray(snapshot));
     });
 
