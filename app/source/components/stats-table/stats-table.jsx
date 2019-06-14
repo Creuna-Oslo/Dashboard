@@ -74,8 +74,9 @@ class StatsTable extends React.Component {
               {index === 0 && currentMonth !== 0 && (
                 <div>{currentYear - 1}</div>
               )}
-              {index === currentMonth + 1 ||
-                (currentMonth === 0 && <div>{currentYear}</div>)}
+              {(index === currentMonth + 1 || currentMonth === 0) && (
+                <div>{currentYear}</div>
+              )}
             </th>
           </React.Fragment>
         ))}
