@@ -1,5 +1,5 @@
 //table color scale based on percentage of max value per row (category).
-$base-color: #268ebe;
+$base-color: mix($blue, $bright-blue, 75%);
 $table-color-0: transparent;
 $table-color-20: rgba($base-color, 0.2);
 $table-color-40: rgba($base-color, 0.4);
