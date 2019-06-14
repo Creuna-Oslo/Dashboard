@@ -88,7 +88,7 @@ class StatsTable extends React.Component {
         {types[type].map((val, index) => (
           <React.Fragment key={type + index}>
             {index === currentMonth + 1 && <td className="spacer" />}
-            <td className={this.getClass(type, val)}>{val}</td>
+            <td className={this.getClass(type, val)}>{val > 0 ? val : '-'}</td>
           </React.Fragment>
         ))}
       </tr>
