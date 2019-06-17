@@ -17,6 +17,13 @@ export default labels => ({
         ticks: { fontColor: 'white' }
       }
     ],
-    yAxes: [{ display: false }]
+    yAxes: [
+      {
+        display: false,
+        ticks: {
+          beginAtZero: true
+        }
+      }
+    ]
   }
 });

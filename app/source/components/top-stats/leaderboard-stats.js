@@ -1,6 +1,8 @@
+import time from 'js/time-helper';
+
 const sumActivity = activity =>
   Object.entries(activity).reduce((accumulator, [timeStamp, value]) => {
-    return accumulator + value;
+    return timeStamp > time.thisMonth() ? accumulator + value : accumulator;
   }, 0);
 
 const mostActiveProject = projects =>

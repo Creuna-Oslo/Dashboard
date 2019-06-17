@@ -8,26 +8,29 @@ import FlipMotion from 'react-flip-motion';
 import PeriodicActivity from 'components/periodic-activity';
 import TotalActivity from 'components/total-activity';
 import TopStats from '../top-stats';
-import pastActivity from './past-activity';
+import StatsTable from '../stats-table';
 
 class Stats extends React.Component {
   static propTypes = {};
 
   state = {
     projects: [],
-    notifications: []
+    notifications: [],
+    notificationsY: []
   };
 
   componentDidMount() {
     this.unsubscribeProjects = firebase.onProjectUpdate(projects => {
-      const filteredProjects = pastActivity.pastMonth(projects);
-      this.setState({
-        projects: filteredProjects
-      });
+      this.setState({ projects });
     });
     this.unsubscribeNotifications = firebase.onNotificationByMonth(
       notifications => {
         this.setState({ notifications });
+      }
+    );
+    this.unsubscribeNotifications = firebase.onNotificationByYear(
+      notificationsY => {
+        this.setState({ notificationsY });
       }
     );
   }
@@ -38,11 +41,14 @@ class Stats extends React.Component {
   }
 
   render() {
-    const { notifications, projects } = this.state;
+    const { notifications, projects, notificationsY } = this.state;
+
     // NOTE: react-flip-motion for some reason crashes for this component unless children are arrays of components with keys
     return (
       <FlipMotion className="stats">
-        {projects.length > 0 && notifications.length > 0
+        {projects.length > 0 &&
+        notifications.length > 0 &&
+        notificationsY.length > 0
           ? [
               <TotalActivity
                 key="total-activity"
@@ -70,6 +76,12 @@ class Stats extends React.Component {
                 shiftThreshold={1}
                 subtitle="Past month"
                 title="Activity by weekday"
+              />,
+              <StatsTable
+                key="year-stats"
+                notifications={this.state.notificationsY}
+                subtitle="Past year"
+                title="Activity by type"
               />
             ]
           : [<div key="empty" />]}
