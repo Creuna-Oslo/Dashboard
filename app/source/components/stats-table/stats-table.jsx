@@ -48,7 +48,6 @@ class StatsTable extends React.Component {
         maxIssues[notification.type] = count;
       }
     });
-
     this.setState({ maxIssues, types });
   };
 
@@ -68,13 +67,13 @@ class StatsTable extends React.Component {
       {months &&
         this.lastTwelveMonths().map((month, index) => (
           <React.Fragment key={month}>
-            {index === currentMonth + 1 && <th className="spacer" />}
+            {index === 11 - currentMonth && <th className="spacer" />}
             <th key={month}>
               {month}
               {index === 0 && currentMonth !== 0 && (
                 <div>{currentYear - 1}</div>
               )}
-              {(index === currentMonth + 1 || currentMonth === 0) && (
+              {(index === 11 - currentMonth || currentMonth === 0) && (
                 <div>{currentYear}</div>
               )}
             </th>
@@ -89,7 +88,7 @@ class StatsTable extends React.Component {
         <th>{actionTypes[type]}</th>
         {types[type].map((val, index) => (
           <React.Fragment key={type + index}>
-            {index === currentMonth + 1 && <td className="spacer" />}
+            {index === 11 - currentMonth && <td className="spacer" />}
             <td className={this.getClass(type, val)}>{val > 0 ? val : '-'}</td>
           </React.Fragment>
         ))}
