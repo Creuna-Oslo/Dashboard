@@ -28,9 +28,9 @@ class StatsTable extends React.Component {
   };
 
   getMonthIndex = index =>
-    index <= currentMonth
-      ? index + currentMonth + 1
-      : index - (currentMonth + 1);
+    index >= currentMonth
+      ? currentMonth + 11 - index
+      : currentMonth - (index + 1);
 
   countActionsPerType = notifications => {
     let maxIssues = {};
