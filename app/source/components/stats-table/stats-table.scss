@@ -58,9 +58,7 @@ $table-color-100: $base-color;
     }
 
     td {
-      background: #000;
       height: 2rem;
-
       &.table-0 {
         background: $table-color-0;
       }

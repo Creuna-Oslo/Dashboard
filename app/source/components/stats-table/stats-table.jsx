@@ -28,9 +28,9 @@ class StatsTable extends React.Component {
   };
 
   getMonthIndex = index =>
-    index <= currentMonth
-      ? index + currentMonth + 1
-      : index - (currentMonth + 1);
+    index >= currentMonth
+      ? currentMonth + 11 - index
+      : currentMonth - (index + 1);
 
   countActionsPerType = notifications => {
     let maxIssues = {};
@@ -48,7 +48,6 @@ class StatsTable extends React.Component {
         maxIssues[notification.type] = count;
       }
     });
-
     this.setState({ maxIssues, types });
   };
 
@@ -62,19 +61,23 @@ class StatsTable extends React.Component {
     return 'table-0';
   };
 
+  isFirstMonthOfCurrentYear = index =>
+    index === months.length - currentMonth - 1;
+  showPreviousYearTitle = index => index === 0 && currentMonth !== 0;
+
   topRowHeaders = () => (
     <tr>
       <th />
       {months &&
         this.lastTwelveMonths().map((month, index) => (
           <React.Fragment key={month}>
-            {index === currentMonth + 1 && <th className="spacer" />}
+            {this.isFirstMonthOfCurrentYear(index) && <th className="spacer" />}
             <th key={month}>
               {month}
-              {index === 0 && currentMonth !== 0 && (
+              {this.showPreviousYearTitle(index) && (
                 <div>{currentYear - 1}</div>
               )}
-              {(index === currentMonth + 1 || currentMonth === 0) && (
+              {this.isFirstMonthOfCurrentYear(index) && (
                 <div>{currentYear}</div>
               )}
             </th>
@@ -89,7 +92,7 @@ class StatsTable extends React.Component {
         <th>{actionTypes[type]}</th>
         {types[type].map((val, index) => (
           <React.Fragment key={type + index}>
-            {index === currentMonth + 1 && <td className="spacer" />}
+            {this.isFirstMonthOfCurrentYear(index) && <td className="spacer" />}
             <td className={this.getClass(type, val)}>{val > 0 ? val : '-'}</td>
           </React.Fragment>
         ))}
