@@ -1,8 +1,8 @@
 {
-  "apiKey": "AIzaSyAdG1jHTkfXivvhFTVRcNA92aJSy8A2RPU",
-  "authDomain": "creuna-dashboard.firebaseapp.com",
-  "databaseURL": "https://creuna-dashboard.firebaseio.com",
-  "projectId": "creuna-dashboard",
-  "storageBucket": "creuna-dashboard.appspot.com",
-  "messagingSenderId": "802936731682"
+  "apiKey": "<API key here>",
+  "authDomain": "<Auth domain here>",
+  "databaseURL": "<Database URL here>",
+  "projectId": "<Project id here>",
+  "storageBucket": "<Storage bucket URL here>",
+  "messagingSenderId": "<Messaging sender id here>"
 }
