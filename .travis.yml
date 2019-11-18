@@ -10,13 +10,17 @@ script:
 before_deploy:
   - yarn build # build static site
   - cd .. # deploy needs to be run from root
-deploy:
-  provider: firebase
-  token: $FIREBASE_TOKEN
-  project: creuna-dashboard
-  on:
-    branch: master
-  skip_cleanup: true
+
+# NOTE: In order to automatically deploy this, add a FIREBASE_TOKEN environment variable for this repo in the Travis-CI web interface
+
+# deploy:
+#   provider: firebase
+#   token: $FIREBASE_TOKEN
+#   project: creuna-dashboard
+#   on:
+#     branch: master
+#   skip_cleanup: true
+
 # notifications:
 #   webhooks:
 #     on_start: always
